@@ -25,6 +25,7 @@ namespace Pass4Win
                 if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
                 {
                     Properties.Settings.Default.PassDirectory = folderBrowserDialog1.SelectedPath;
+                    // TODO: Check what happens when directory is empy or not valid
                 }
                 else
                 {
@@ -44,7 +45,7 @@ namespace Pass4Win
                     Application.Exit();
                 }
             }
-
+            // Setting the exe location for the GPG Dll
             GpgInterface.ExePath = Properties.Settings.Default.GPGEXE;
 
             // GPG key
@@ -60,7 +61,7 @@ namespace Pass4Win
             // saving settings
             Properties.Settings.Default.Save();
 
-            // Init program
+            // Setting up datagrid
             dt.Columns.Add("colPath", typeof(string));
             dt.Columns.Add("colText", typeof(string));
 
@@ -70,8 +71,10 @@ namespace Pass4Win
             dataPass.Columns[0].Visible=false;
         }
 
+        // Used for class access to the data
         private DataTable dt = new DataTable();
 
+        // Fills the datagrid
         private void ListDirectory(DirectoryInfo path, string prefix)
         {
             foreach (var directory in path.GetDirectories())
@@ -94,6 +97,7 @@ namespace Pass4Win
             foreach (var ffile in path.GetFiles())
                 if (!ffile.Name.StartsWith("."))
                 {
+                    // TODO: Check if it's a GPG file or not
                     DataRow newItemRow = dt.NewRow();
 
                     newItemRow["colPath"] = ffile.FullName;
@@ -103,11 +107,13 @@ namespace Pass4Win
                 }
         }
 
+        // Search handler
         private void txtPass_TextChanged(object sender, EventArgs e)
         {
                 dt.DefaultView.RowFilter = "colText LIKE '%" + txtPass.Text + "%'";
         }
 
+        // Decrypt the selected entry when pressing enter in textbox
         private void txtPass_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
@@ -116,8 +122,10 @@ namespace Pass4Win
             }
         }
 
+        // Class access to the tempfile
         private string tmpfile;
 
+        // Decrypt the file into a tempfile. With async thread
         private void decrypt_pass(string path)
         {
             tmpfile = Path.GetTempFileName();
@@ -127,6 +135,7 @@ namespace Pass4Win
             }
         }
 
+        // Class function for the callback to use.
         private void AppendDecryptedtxt(string value)
         {
             if (InvokeRequired)
@@ -137,6 +146,7 @@ namespace Pass4Win
             txtPassDetail.Text = value;
         }
         
+        // Callback for the async thread
         private void Callback(GpgInterfaceResult result)
         {
             if (result.Status == GpgInterfaceStatus.Success)
@@ -150,6 +160,7 @@ namespace Pass4Win
             }
         }
 
+        // If clicked in the datagrid then decrypt that entry
         private void dataPass_Click(object sender, EventArgs e)
         {
             decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
