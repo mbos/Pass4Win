@@ -1,5 +1,5 @@
 # Pass4Win
-Windows version of Pass (http://www.passwordstore.org/)
+Windows version of Pass (http://www.passwordstore.org/) in the sense that the store (password structure) is and should be exactly the same between the two programs.
 
 This is **alpha software**. Currently it can read an existing password store and decrypt it's contents.
 
