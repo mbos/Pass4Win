@@ -9,6 +9,9 @@ So I needed a Windows implementation.....
 Make sure you have GnuPG for windows installed (http://www.gpg4win.org/) and have at least one secret key.
 You need to compile it yourself for the moment as I'm not going to provide binaries for an alpha release.
 
+I'm using GpgAPI (https://gpgapi.codeplex.com/) for interfacing with GnuPG. I used nupkg, but you can also build it yourself.
+
+
 Regards,
 
 Mike
