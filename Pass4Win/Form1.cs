@@ -6,10 +6,12 @@ using System.Drawing;
 using System.Linq;
 using System.Security;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using GpgApi;
+
 
 namespace Pass4Win
 {
@@ -166,5 +168,113 @@ namespace Pass4Win
             decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
         }
 
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // rename the entry
+            InputBoxValidation validation = delegate(string val)
+            {
+                if (val == "")
+                    return "Value cannot be empty.";
+                if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
+                    return "Not a valid name, can only use characters or numbers and - \\.";
+                return "";
+            };
+
+            string value = dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[1].Value.ToString();
+            if (InputBox.Show("Enter a new name", "Name:", ref value, validation) == DialogResult.OK)
+            {
+                // parse path
+                string tmpPath = Properties.Settings.Default.PassDirectory + "\\" + value + ".gpg";
+                Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
+                File.Move(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(), tmpPath);
+                dt.Clear();
+                processDirectory(Properties.Settings.Default.PassDirectory);
+                ListDirectory(new DirectoryInfo(Properties.Settings.Default.PassDirectory), "");
+
+            }
+
+        }
+
+        // cleanup script to remove empty directories from the password store
+        private static void processDirectory(string startLocation)
+        {
+            foreach (var directory in Directory.GetDirectories(startLocation))
+            {
+                processDirectory(directory);
+                if (Directory.GetFiles(directory).Length == 0 && Directory.GetDirectories(directory).Length == 0)
+                {
+                    Directory.Delete(directory, false);
+                }
+            }
+        }
+
     }
+
+    public class InputBox
+    {
+        public static DialogResult Show(string title, string promptText, ref string value)
+        {
+            return Show(title, promptText, ref value, null);
+        }
+
+        public static DialogResult Show(string title, string promptText, ref string value,
+                                        InputBoxValidation validation)
+        {
+            Form form = new Form();
+            Label label = new Label();
+            TextBox textBox = new TextBox();
+            Button buttonOk = new Button();
+            Button buttonCancel = new Button();
+
+            form.Text = title;
+            label.Text = promptText;
+            textBox.Text = value;
+
+            buttonOk.Text = "OK";
+            buttonCancel.Text = "Cancel";
+            buttonOk.DialogResult = DialogResult.OK;
+            buttonCancel.DialogResult = DialogResult.Cancel;
+
+            label.SetBounds(9, 20, 372, 13);
+            textBox.SetBounds(12, 36, 372, 20);
+            buttonOk.SetBounds(228, 72, 75, 23);
+            buttonCancel.SetBounds(309, 72, 75, 23);
+
+            label.AutoSize = true;
+            textBox.Anchor = textBox.Anchor | AnchorStyles.Right;
+            buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+            form.ClientSize = new Size(396, 107);
+            form.Controls.AddRange(new Control[] { label, textBox, buttonOk, buttonCancel });
+            form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
+            form.FormBorderStyle = FormBorderStyle.FixedDialog;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.MinimizeBox = false;
+            form.MaximizeBox = false;
+            form.AcceptButton = buttonOk;
+            form.CancelButton = buttonCancel;
+            if (validation != null)
+            {
+                form.FormClosing += delegate(object sender, FormClosingEventArgs e)
+                {
+                    if (form.DialogResult == DialogResult.OK)
+                    {
+                        string errorText = validation(textBox.Text);
+                        if (e.Cancel = (errorText != ""))
+                        {
+                            MessageBox.Show(form, errorText, "Validation Error",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            textBox.Focus();
+                        }
+                    }
+                };
+            }
+            DialogResult dialogResult = form.ShowDialog();
+            value = textBox.Text;
+            return dialogResult;
+        }
+    }
+    public delegate string InputBoxValidation(string errorMessage);
 }
+

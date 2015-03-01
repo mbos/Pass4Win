@@ -45,6 +45,7 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSettings = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusPass.SuspendLayout();
             this.detailsMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
@@ -142,6 +143,7 @@
             this.dataPass.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataPass.ColumnHeadersVisible = false;
             this.dataPass.ContextMenuStrip = this.dataMenu;
+            this.dataPass.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataPass.Location = new System.Drawing.Point(3, 31);
             this.dataPass.MultiSelect = false;
             this.dataPass.Name = "dataPass";
@@ -158,22 +160,23 @@
             // 
             this.dataMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editToolStripMenuItem,
+            this.renameToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.dataMenu.Name = "dataMenu";
-            this.dataMenu.Size = new System.Drawing.Size(108, 48);
+            this.dataMenu.Size = new System.Drawing.Size(118, 70);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // btnSettings
@@ -191,6 +194,13 @@
             this.openFileDialog1.DefaultExt = "exe";
             this.openFileDialog1.FileName = "gpg2.exe";
             this.openFileDialog1.Filter = "gpg2.exe|gpg2.exe";
+            // 
+            // renameToolStripMenuItem
+            // 
+            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.renameToolStripMenuItem.Text = "Rename";
+            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -235,6 +245,7 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
     }
 }
 
