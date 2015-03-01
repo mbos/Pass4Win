@@ -75,39 +75,12 @@ namespace Pass4Win
 
         // Used for class access to the data
         private DataTable dt = new DataTable();
+        // Class access to the tempfile
+        private string tmpfile;
 
-        // Fills the datagrid
-        private void ListDirectory(DirectoryInfo path, string prefix)
-        {
-            foreach (var directory in path.GetDirectories())
-            {
-                if (!directory.Name.StartsWith("."))
-                {
-                    string tmpPrefix;
-                    if (prefix != "")
-                    {
-                        tmpPrefix = prefix + "\\" + directory;
-                    }
-                    else
-                    {
-                        tmpPrefix = prefix + directory;
-                    }
-                    ListDirectory(directory, tmpPrefix);
-                }
-            }
-
-            foreach (var ffile in path.GetFiles())
-                if (!ffile.Name.StartsWith("."))
-                {
-                    // TODO: Check if it's a GPG file or not
-                    DataRow newItemRow = dt.NewRow();
-
-                    newItemRow["colPath"] = ffile.FullName;
-                    newItemRow["colText"] = prefix + "\\" + Path.GetFileNameWithoutExtension(ffile.Name);
-
-                    dt.Rows.Add(newItemRow);
-                }
-        }
+        //
+        // UI stuff
+        //
 
         // Search handler
         private void txtPass_TextChanged(object sender, EventArgs e)
@@ -124,8 +97,15 @@ namespace Pass4Win
             }
         }
 
-        // Class access to the tempfile
-        private string tmpfile;
+        // If clicked in the datagrid then decrypt that entry
+        private void dataPass_Click(object sender, EventArgs e)
+        {
+            decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+        }
+
+        //
+        // Decrypt functions
+        //
 
         // Decrypt the file into a tempfile. With async thread
         private void decrypt_pass(string path)
@@ -162,12 +142,9 @@ namespace Pass4Win
             }
         }
 
-        // If clicked in the datagrid then decrypt that entry
-        private void dataPass_Click(object sender, EventArgs e)
-        {
-            decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
-        }
-
+        //
+        // All the menu options for the datagrid
+        //
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // rename the entry
@@ -187,12 +164,60 @@ namespace Pass4Win
                 string tmpPath = Properties.Settings.Default.PassDirectory + "\\" + value + ".gpg";
                 Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
                 File.Move(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(), tmpPath);
-                dt.Clear();
-                processDirectory(Properties.Settings.Default.PassDirectory);
-                ListDirectory(new DirectoryInfo(Properties.Settings.Default.PassDirectory), "");
+                ResetDatagrid();
 
             }
 
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            File.Delete(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+            ResetDatagrid();
+        }
+
+        //
+        // Generic / Util functions
+        //
+
+        // reset the datagrid (clear & Fill)
+        private void ResetDatagrid(){
+            dt.Clear();
+            processDirectory(Properties.Settings.Default.PassDirectory);
+            ListDirectory(new DirectoryInfo(Properties.Settings.Default.PassDirectory), "");
+        }
+
+        // Fill the datagrid
+        private void ListDirectory(DirectoryInfo path, string prefix)
+        {
+            foreach (var directory in path.GetDirectories())
+            {
+                if (!directory.Name.StartsWith("."))
+                {
+                    string tmpPrefix;
+                    if (prefix != "")
+                    {
+                        tmpPrefix = prefix + "\\" + directory;
+                    }
+                    else
+                    {
+                        tmpPrefix = prefix + directory;
+                    }
+                    ListDirectory(directory, tmpPrefix);
+                }
+            }
+
+            foreach (var ffile in path.GetFiles())
+                if (!ffile.Name.StartsWith("."))
+                {
+                    // TODO: Check if it's a GPG file or not
+                    DataRow newItemRow = dt.NewRow();
+
+                    newItemRow["colPath"] = ffile.FullName;
+                    newItemRow["colText"] = prefix + "\\" + Path.GetFileNameWithoutExtension(ffile.Name);
+
+                    dt.Rows.Add(newItemRow);
+                }
         }
 
         // cleanup script to remove empty directories from the password store
@@ -207,6 +232,8 @@ namespace Pass4Win
                 }
             }
         }
+
+
 
     }
 
