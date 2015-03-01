@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.IO;
 using GpgApi;
+using LibGit2Sharp;
 
 
 namespace Pass4Win
