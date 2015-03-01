@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 using System.IO;
 using GpgApi;
 
@@ -77,6 +78,8 @@ namespace Pass4Win
         private DataTable dt = new DataTable();
         // Class access to the tempfile
         private string tmpfile;
+        static System.Threading.Timer _timer;
+
 
         //
         // UI stuff
@@ -126,6 +129,18 @@ namespace Pass4Win
                 return;
             }
             txtPassDetail.Text = value;
+            // copy to clipboard
+            Clipboard.SetText(new string(txtPassDetail.Text.TakeWhile(c => c != '\n').ToArray()));
+            // set progressbar as notification
+            statusPB.Maximum = 45;
+            statusPB.Value = 0;
+            statusPB.Step = 1;
+            statusPB.Visible = true;
+            statusTxt.Text = "Countdown to clearing clipboard  ";
+            //Create the timer
+            _timer = new System.Threading.Timer(ClearClipboard, null, 0, 1000);
+            
+
         }
         
         // Callback for the async thread
@@ -179,6 +194,23 @@ namespace Pass4Win
         //
         // Generic / Util functions
         //
+
+        // clear the clipboard
+        void ClearClipboard(object o)
+        {
+            if (statusPB.Value == 45)
+            {
+                _timer.Dispose();
+                this.BeginInvoke((Action)(() => Clipboard.Clear()));
+                this.BeginInvoke((Action)(() => statusPB.Visible = false));
+                this.BeginInvoke((Action)(() => statusTxt.Text = "Ready"));
+            }
+            else
+            {
+                this.BeginInvoke((Action)(() => statusPB.PerformStep()));
+            }
+            
+        }
 
         // reset the datagrid (clear & Fill)
         private void ResetDatagrid(){

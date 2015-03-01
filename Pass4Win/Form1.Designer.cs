@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.btnAdd = new System.Windows.Forms.Button();
             this.statusPass = new System.Windows.Forms.StatusStrip();
             this.statusTxt = new System.Windows.Forms.ToolStripStatusLabel();
@@ -163,19 +164,19 @@
             this.renameToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.dataMenu.Name = "dataMenu";
-            this.dataMenu.Size = new System.Drawing.Size(153, 92);
+            this.dataMenu.Size = new System.Drawing.Size(118, 70);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // renameToolStripMenuItem
             // 
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.renameToolStripMenuItem.Text = "Rename";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
@@ -183,7 +184,7 @@
             // 
             this.deleteToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -215,6 +216,7 @@
             this.Controls.Add(this.statusPass);
             this.Controls.Add(this.btnAdd);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.Text = "Pass4Win";
