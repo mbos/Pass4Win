@@ -36,9 +36,6 @@
             this.statusPB = new System.Windows.Forms.ToolStripProgressBar();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.txtPassDetail = new System.Windows.Forms.RichTextBox();
-            this.detailsMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.clipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.dataPass = new System.Windows.Forms.DataGridView();
             this.dataMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -48,7 +45,6 @@
             this.btnSettings = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.statusPass.SuspendLayout();
-            this.detailsMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
             this.SuspendLayout();
@@ -95,33 +91,13 @@
             // 
             // txtPassDetail
             // 
-            this.txtPassDetail.ContextMenuStrip = this.detailsMenu;
             this.txtPassDetail.Location = new System.Drawing.Point(370, 32);
             this.txtPassDetail.Name = "txtPassDetail";
             this.txtPassDetail.ReadOnly = true;
             this.txtPassDetail.Size = new System.Drawing.Size(283, 255);
             this.txtPassDetail.TabIndex = 5;
             this.txtPassDetail.Text = "";
-            // 
-            // detailsMenu
-            // 
-            this.detailsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clipboardToolStripMenuItem,
-            this.editToolStripMenuItem1});
-            this.detailsMenu.Name = "detailsMenu";
-            this.detailsMenu.Size = new System.Drawing.Size(127, 48);
-            // 
-            // clipboardToolStripMenuItem
-            // 
-            this.clipboardToolStripMenuItem.Name = "clipboardToolStripMenuItem";
-            this.clipboardToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.clipboardToolStripMenuItem.Text = "Clipboard";
-            // 
-            // editToolStripMenuItem1
-            // 
-            this.editToolStripMenuItem1.Name = "editToolStripMenuItem1";
-            this.editToolStripMenuItem1.Size = new System.Drawing.Size(126, 22);
-            this.editToolStripMenuItem1.Text = "Edit";
+            this.txtPassDetail.Leave += new System.EventHandler(this.txtPassDetail_Leave);
             // 
             // txtPass
             // 
@@ -172,6 +148,7 @@
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.editToolStripMenuItem.Text = "Edit";
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // renameToolStripMenuItem
             // 
@@ -222,7 +199,6 @@
             this.Text = "Pass4Win";
             this.statusPass.ResumeLayout(false);
             this.statusPass.PerformLayout();
-            this.detailsMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).EndInit();
             this.dataMenu.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -243,9 +219,6 @@
         private System.Windows.Forms.ContextMenuStrip dataMenu;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip detailsMenu;
-        private System.Windows.Forms.ToolStripMenuItem clipboardToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;

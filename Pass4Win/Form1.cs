@@ -107,60 +107,75 @@ namespace Pass4Win
             decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
         }
 
+
+        private void txtPassDetail_Leave(object sender, EventArgs e)
+        {
+            if (txtPassDetail.ReadOnly == false)
+            {
+                txtPassDetail.ReadOnly = false;
+                txtPassDetail.BackColor = Color.LightGray;
+                // TODO put here the encryption stuff
+            }
+        }
+
         //
         // Decrypt functions
         //
 
         // Decrypt the file into a tempfile. With async thread
-        private void decrypt_pass(string path)
+        private void decrypt_pass(string path, bool clear=true)
         {
             tmpfile = Path.GetTempFileName();
             GpgDecrypt decrypt = new GpgDecrypt(path, tmpfile);
             {
-                    decrypt.ExecuteAsync(Callback);
+                // The current thread is blocked until the decryption is finished.
+                GpgInterfaceResult result = decrypt.Execute();
+                Callback(result, clear);
             }
         }
 
-        // Class function for the callback to use.
-        private void AppendDecryptedtxt(string value)
-        {
-            if (InvokeRequired)
-            {
-                this.Invoke(new Action<string>(AppendDecryptedtxt), new object[] { value });
-                return;
-            }
-            txtPassDetail.Text = value;
-            // copy to clipboard
-            Clipboard.SetText(new string(txtPassDetail.Text.TakeWhile(c => c != '\n').ToArray()));
-            // set progressbar as notification
-            statusPB.Maximum = 45;
-            statusPB.Value = 0;
-            statusPB.Step = 1;
-            statusPB.Visible = true;
-            statusTxt.Text = "Countdown to clearing clipboard  ";
-            //Create the timer
-            _timer = new System.Threading.Timer(ClearClipboard, null, 0, 1000);
-            
-
-        }
-        
-        // Callback for the async thread
-        private void Callback(GpgInterfaceResult result)
+         // Callback for the async thread
+        private void Callback(GpgInterfaceResult result, bool clear)
         {
             if (result.Status == GpgInterfaceStatus.Success)
             {
-                AppendDecryptedtxt(File.ReadAllText(this.tmpfile));
+                txtPassDetail.Text = File.ReadAllText(this.tmpfile);
                 File.Delete(tmpfile);
+                // copy to clipboard
+                Clipboard.SetText(new string(txtPassDetail.Text.TakeWhile(c => c != '\n').ToArray()));
+                if (clear){
+                    // set progressbar as notification
+                    statusPB.Maximum = 45;
+                    statusPB.Value = 0;
+                    statusPB.Step = 1;
+                    statusPB.Visible = true;
+                    statusTxt.Text = "Countdown to clearing clipboard  ";
+                    //Create the timer
+                    _timer = new System.Threading.Timer(ClearClipboard, null, 0, 1000);
+                }
             }
             else
             {
-                AppendDecryptedtxt("Something went wrong.....");
+                txtPassDetail.Text = "Something went wrong.....";
             }
         }
 
         //
         // All the menu options for the datagrid
         //
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // dispose timer thread and clear ui.
+            _timer.Dispose();
+            statusPB.Visible = false;
+            statusTxt.Text = "Ready";
+            // make control editable, give focus and content
+            decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(),false);
+            txtPassDetail.ReadOnly = false;
+            txtPassDetail.BackColor = Color.White;
+            txtPassDetail.Focus();
+        }
+
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // rename the entry
@@ -205,6 +220,7 @@ namespace Pass4Win
                 this.BeginInvoke((Action)(() => Clipboard.Clear()));
                 this.BeginInvoke((Action)(() => statusPB.Visible = false));
                 this.BeginInvoke((Action)(() => statusTxt.Text = "Ready"));
+                this.BeginInvoke((Action)(() => txtPassDetail.Clear()));
             }
             else
             {
@@ -265,8 +281,6 @@ namespace Pass4Win
                 }
             }
         }
-
-
 
     }
 
