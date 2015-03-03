@@ -25,13 +25,13 @@ namespace Pass4Win
             publicKeys.Execute();
             foreach (Key key in publicKeys.Keys)
             {
-                comboBox1.Items.Add(key.UserInfos[0].Email + "#" + key.Id);
+                comboBox1.Items.Add(key.UserInfos[0].Email + "(" + key.Id + ")");
             }
         }
 
          public string gpgkey
         {
-            get { return comboBox1.Text.Split('#')[1]; }
+            get { return comboBox1.Text.Split('(')[0]; }
         }
 
     }

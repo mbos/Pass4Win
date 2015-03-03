@@ -253,7 +253,10 @@ namespace Pass4Win
                     DataRow newItemRow = dt.NewRow();
 
                     newItemRow["colPath"] = ffile.FullName;
-                    newItemRow["colText"] = prefix + "\\" + Path.GetFileNameWithoutExtension(ffile.Name);
+                    if (prefix != "")
+                        newItemRow["colText"] = prefix + "\\" + Path.GetFileNameWithoutExtension(ffile.Name);
+                    else
+                        newItemRow["colText"] = Path.GetFileNameWithoutExtension(ffile.Name);
 
                     dt.Rows.Add(newItemRow);
                 }
