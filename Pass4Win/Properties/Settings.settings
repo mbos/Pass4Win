@@ -5,9 +5,6 @@
     <Setting Name="PassDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)">firstrun</Value>
     </Setting>
-    <Setting Name="GPGKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">firstrun</Value>
-    </Setting>
     <Setting Name="GPGEXE" Type="System.String" Scope="User">
       <Value Profile="(Default)">firstrun</Value>
     </Setting>

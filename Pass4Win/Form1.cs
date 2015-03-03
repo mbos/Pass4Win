@@ -52,16 +52,6 @@ namespace Pass4Win
             // Setting the exe location for the GPG Dll
             GpgInterface.ExePath = Properties.Settings.Default.GPGEXE;
 
-            // GPG key
-            if (Properties.Settings.Default.GPGKey == "firstrun")
-            {
-                KeySelect newKeySelect = new KeySelect();
-                if (newKeySelect.ShowDialog() == DialogResult.OK)
-                {
-                    Properties.Settings.Default.GPGKey = newKeySelect.gpgkey;
-                }
-            }
-
             // saving settings
             Properties.Settings.Default.Save();
 
@@ -280,6 +270,12 @@ namespace Pass4Win
                     Directory.Delete(directory, false);
                 }
             }
+        }
+
+        private void btnKeyManager_Click(object sender, EventArgs e)
+        {
+            frmKeyManager KeyManager = new frmKeyManager();
+            KeyManager.Show();
         }
 
     }

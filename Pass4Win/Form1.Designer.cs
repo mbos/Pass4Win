@@ -42,7 +42,7 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSettings = new System.Windows.Forms.Button();
+            this.btnKeyManager = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.statusPass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
@@ -165,15 +165,16 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
-            // btnSettings
+            // btnKeyManager
             // 
-            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSettings.Location = new System.Drawing.Point(578, 5);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(75, 23);
-            this.btnSettings.TabIndex = 3;
-            this.btnSettings.Text = "Settings";
-            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnKeyManager.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnKeyManager.Location = new System.Drawing.Point(578, 5);
+            this.btnKeyManager.Name = "btnKeyManager";
+            this.btnKeyManager.Size = new System.Drawing.Size(75, 23);
+            this.btnKeyManager.TabIndex = 3;
+            this.btnKeyManager.Text = "Keys";
+            this.btnKeyManager.UseVisualStyleBackColor = true;
+            this.btnKeyManager.Click += new System.EventHandler(this.btnKeyManager_Click);
             // 
             // openFileDialog1
             // 
@@ -186,7 +187,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(659, 312);
-            this.Controls.Add(this.btnSettings);
+            this.Controls.Add(this.btnKeyManager);
             this.Controls.Add(this.dataPass);
             this.Controls.Add(this.txtPass);
             this.Controls.Add(this.txtPassDetail);
@@ -219,7 +220,7 @@
         private System.Windows.Forms.ContextMenuStrip dataMenu;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.Button btnSettings;
+        private System.Windows.Forms.Button btnKeyManager;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
     }

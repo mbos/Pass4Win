@@ -38,18 +38,6 @@ namespace Pass4Win.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("firstrun")]
-        public string GPGKey {
-            get {
-                return ((string)(this["GPGKey"]));
-            }
-            set {
-                this["GPGKey"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("firstrun")]
         public string GPGEXE {
             get {
                 return ((string)(this["GPGEXE"]));
