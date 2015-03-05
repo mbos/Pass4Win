@@ -78,16 +78,35 @@ namespace Pass4Win
                 }
 
                 DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(Properties.Settings.Default.PassDirectory) + "\\" + treeView1.SelectedNode.FullPath);
-                //
-                // TODO: also for the underlying directories, don't forget to delete all .gpg-id if this is root
-                //
+
                 foreach (var ffile in path.GetFiles())
                 {
                     if (!ffile.Name.StartsWith("."))
                         recrypt(ffile.FullName);
                 }
+                
+                ScanDirectory(path);
             }
              
+        }
+
+        private void ScanDirectory(DirectoryInfo path)
+        {
+            foreach (var directory in path.GetDirectories())
+            {
+                if (!File.Exists(directory.FullName + "\\" + ".gpg-id"))
+                {
+                    foreach (var ffile in directory.GetFiles())
+                    {
+                        if (!ffile.Name.StartsWith("."))
+                            recrypt(ffile.FullName);
+                    }
+                }
+                if (!directory.Name.StartsWith("."))
+                {
+                    ScanDirectory(directory);
+                }
+            }
         }
 
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -107,9 +126,15 @@ namespace Pass4Win
                         }
                     }
                 }
-            //
-            // TODO reencrypt
-            //
+            DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(Properties.Settings.Default.PassDirectory) + "\\" + treeView1.SelectedNode.FullPath);
+
+            foreach (var ffile in path.GetFiles())
+            {
+                if (!ffile.Name.StartsWith("."))
+                    recrypt(ffile.FullName);
+            }
+
+            ScanDirectory(path);
         }
 
         private void recrypt(string path)

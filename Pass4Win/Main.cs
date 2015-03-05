@@ -86,9 +86,7 @@ namespace Pass4Win
         private void txtPass_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
-            {
                 decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
-            }
         }
 
         // If clicked in the datagrid then decrypt that entry
@@ -249,16 +247,18 @@ namespace Pass4Win
             foreach (var ffile in path.GetFiles())
                 if (!ffile.Name.StartsWith("."))
                 {
-                    // TODO: Check if it's a GPG file or not
-                    DataRow newItemRow = dt.NewRow();
+                    if (ffile.Extension.ToLower() == ".gpg")
+                    {
+                        DataRow newItemRow = dt.NewRow();
 
-                    newItemRow["colPath"] = ffile.FullName;
-                    if (prefix != "")
-                        newItemRow["colText"] = prefix + "\\" + Path.GetFileNameWithoutExtension(ffile.Name);
-                    else
-                        newItemRow["colText"] = Path.GetFileNameWithoutExtension(ffile.Name);
+                        newItemRow["colPath"] = ffile.FullName;
+                        if (prefix != "")
+                            newItemRow["colText"] = prefix + "\\" + Path.GetFileNameWithoutExtension(ffile.Name);
+                        else
+                            newItemRow["colText"] = Path.GetFileNameWithoutExtension(ffile.Name);
 
-                    dt.Rows.Add(newItemRow);
+                        dt.Rows.Add(newItemRow);
+                    }
                 }
         }
 
