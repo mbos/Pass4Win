@@ -2,7 +2,6 @@
 Windows version of Pass (http://www.passwordstore.org/) in the sense that the store (password structure) is and should be exactly the same between the two programs.
 
 This is **alpha software**. The following functionality is not implemented yet:
-- Check if a password store is valid (or should get an init)
 - Adding passwords
 - Git integration
 
