@@ -1,7 +1,10 @@
 # Pass4Win
 Windows version of Pass (http://www.passwordstore.org/) in the sense that the store (password structure) is and should be exactly the same between the two programs.
 
-This is **alpha software**. Currently it can read an existing password store and decrypt it's contents.
+This is **alpha software**. The following functionality is not implemented yet:
+- Check if a password store is valid (or should get an init)
+- Adding passwords
+- Git integration
 
 I really liked the idea of a password store I could access on my shell, and even Android devices. But my main PC is a Windows machine.
 So I needed a Windows implementation.....
