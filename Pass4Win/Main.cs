@@ -23,17 +23,17 @@ namespace Pass4Win
         {
             InitializeComponent();
             // Checking for appsettings
-            // Pass directory
+
+            // Do we have a valid password store
             if (Properties.Settings.Default.PassDirectory == "firstrun")
             {
                 if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
                 {
                     Properties.Settings.Default.PassDirectory = folderBrowserDialog1.SelectedPath;
-                    // TODO: Check what happens when directory is empy or not valid
                 }
                 else
                 {
-                    Application.Exit();
+                    System.Environment.Exit(1);
                 }
             }
 
@@ -46,7 +46,24 @@ namespace Pass4Win
                 }
                 else
                 {
-                    Application.Exit();
+                    System.Environment.Exit(1);
+                }
+            }
+
+            // Init if needed
+            string gpgfile = Properties.Settings.Default.PassDirectory;
+            gpgfile += "\\.gpg-id";
+            // Check if we need to init the directory
+            if (!File.Exists(gpgfile))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(gpgfile));
+                KeySelect newKeySelect = new KeySelect();
+                if (newKeySelect.ShowDialog() == DialogResult.OK)
+                {
+                    using (StreamWriter w = new StreamWriter(gpgfile))
+                    {
+                        w.Write(newKeySelect.gpgkey);
+                    }
                 }
             }
             // Setting the exe location for the GPG Dll
@@ -109,7 +126,7 @@ namespace Pass4Win
                 // check if .gpg-id exists otherwise get the root .gpg-id
                 if (!File.Exists(gpgfile))
                 {
-                    gpgfile = Path.GetDirectoryName(Properties.Settings.Default.PassDirectory);
+                    gpgfile = Properties.Settings.Default.PassDirectory;
                     gpgfile += "\\.gpg-id";
                 }
                 List<string> GPGRec = new List<string>() { };
