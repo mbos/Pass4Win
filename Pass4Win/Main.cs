@@ -103,6 +103,50 @@ namespace Pass4Win
                 txtPassDetail.ReadOnly = false;
                 txtPassDetail.BackColor = Color.LightGray;
                 // TODO put here the encryption stuff
+                // read .gpg-id
+                string gpgfile = Path.GetDirectoryName(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+                gpgfile += "\\.gpg-id";
+                // check if .gpg-id exists otherwise get the root .gpg-id
+                if (!File.Exists(gpgfile))
+                {
+                    gpgfile = Path.GetDirectoryName(Properties.Settings.Default.PassDirectory);
+                    gpgfile += "\\.gpg-id";
+                }
+                List<string> GPGRec = new List<string>() { };
+                using (StreamReader r = new StreamReader(gpgfile))
+                {
+                    string line;
+                    while ((line = r.ReadLine()) != null)
+                    {
+                        GPGRec.Add(line);
+                    }
+                }
+                // match keyid
+                List<GpgApi.KeyId> recipients = new List<KeyId>() { };
+                foreach (var line in GPGRec)
+                {
+                    GpgListSecretKeys publicKeys = new GpgListSecretKeys();
+                    publicKeys.Execute();
+                    foreach (Key key in publicKeys.Keys)
+                    {
+                        if (key.UserInfos[0].Email == line.ToString())
+                        {
+                            recipients.Add(key.Id);
+                        }
+                    }
+                }
+                // encrypt
+                string tmpFile = Path.GetTempFileName();
+                string tmpFile2 = Path.GetTempFileName();
+
+                using (StreamWriter w = new StreamWriter(tmpFile))
+                {
+                    w.Write(txtPassDetail.Text);
+                }
+
+                GpgEncrypt encrypt = new GpgEncrypt(tmpFile, tmpFile2, false, false, null, recipients, GpgApi.CipherAlgorithm.None);
+                GpgInterfaceResult enc_result = encrypt.Execute();
+                Encrypt_Callback(enc_result, tmpFile, tmpFile2, dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
             }
         }
 
@@ -110,7 +154,7 @@ namespace Pass4Win
         // Decrypt functions
         //
 
-        // Decrypt the file into a tempfile. With async thread
+        // Decrypt the file into a tempfile. 
         private void decrypt_pass(string path, bool clear=true)
         {
             tmpfile = Path.GetTempFileName();
@@ -118,12 +162,27 @@ namespace Pass4Win
             {
                 // The current thread is blocked until the decryption is finished.
                 GpgInterfaceResult result = decrypt.Execute();
-                Callback(result, clear);
+                Decrypt_Callback(result, clear);
             }
         }
 
-         // Callback for the async thread
-        private void Callback(GpgInterfaceResult result, bool clear)
+        // Callback for the encrypt thread
+        public void Encrypt_Callback(GpgInterfaceResult result, string tmpFile, string tmpFile2, string path)
+        {
+            if (result.Status == GpgInterfaceStatus.Success)
+            {
+                File.Delete(tmpFile);
+                File.Delete(path);
+                File.Move(tmpFile2, path);
+            }
+            else
+            {
+                // shit happened
+            }
+        }
+
+         // Callback for the decrypt thread
+        private void Decrypt_Callback(GpgInterfaceResult result, bool clear)
         {
             if (result.Status == GpgInterfaceStatus.Success)
             {
