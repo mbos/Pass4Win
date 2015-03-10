@@ -58,6 +58,7 @@
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // statusPass
             // 
@@ -131,7 +132,7 @@
             this.dataPass.ShowEditingIcon = false;
             this.dataPass.Size = new System.Drawing.Size(361, 256);
             this.dataPass.TabIndex = 4;
-            this.dataPass.Click += new System.EventHandler(this.dataPass_Click);
+            this.dataPass.SelectionChanged += new System.EventHandler(this.dataPass_SelectionChanged);
             // 
             // dataMenu
             // 

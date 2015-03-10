@@ -93,6 +93,58 @@ namespace Pass4Win
         // UI stuff
         //
 
+        private void btnKeyManager_Click(object sender, EventArgs e)
+        {
+            frmKeyManager KeyManager = new frmKeyManager();
+            KeyManager.Show();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            // get the new entryname
+            InputBoxValidation validation = delegate(string val)
+            {
+                if (val == "")
+                    return "Value cannot be empty.";
+                if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
+                    return "Not a valid name, can only use characters or numbers and - \\.";
+                if (File.Exists(Properties.Settings.Default.PassDirectory + "\\" + @val + ".gpg"))
+                     return "Entry already exists.";
+                return "";
+            };
+
+            string value = "";
+            if (InputBox.Show("Enter a new name", "Name:", ref value, validation) == DialogResult.OK)
+            {
+                // parse path
+                string tmpPath = Properties.Settings.Default.PassDirectory + "\\" + @value + ".gpg";;
+                Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
+                using (File.Create(tmpPath)) { }
+                
+                ResetDatagrid();
+                // set the selected item.
+                foreach (DataGridViewRow row in dataPass.Rows)
+                {
+                    if (row.Cells[1].Value.ToString().Equals(value))
+                    {
+                        dataPass.CurrentCell = row.Cells[1];
+                        row.Selected = true;
+                        break;
+                    }
+                }
+                // dispose timer thread and clear ui.
+                _timer.Dispose();
+                statusPB.Visible = false;
+                statusTxt.Text = "Ready";
+                // Set the text detail to the correct state
+                txtPassDetail.Text = "";
+                txtPassDetail.ReadOnly = false;
+                txtPassDetail.BackColor = Color.White;
+                // dataPass.Enabled = false;
+                txtPassDetail.Focus();
+            }
+        }
+
         // Search handler
         private void txtPass_TextChanged(object sender, EventArgs e)
         {
@@ -106,10 +158,10 @@ namespace Pass4Win
                 decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
         }
 
-        // If clicked in the datagrid then decrypt that entry
-        private void dataPass_Click(object sender, EventArgs e)
+        private void dataPass_SelectionChanged(object sender, EventArgs e)
         {
-            decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+            if (dataPass.CurrentCell != null)
+                decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
         }
 
 
@@ -119,7 +171,6 @@ namespace Pass4Win
             {
                 txtPassDetail.ReadOnly = false;
                 txtPassDetail.BackColor = Color.LightGray;
-                // TODO put here the encryption stuff
                 // read .gpg-id
                 string gpgfile = Path.GetDirectoryName(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
                 gpgfile += "\\.gpg-id";
@@ -165,6 +216,8 @@ namespace Pass4Win
                 GpgInterfaceResult enc_result = encrypt.Execute();
                 Encrypt_Callback(enc_result, tmpFile, tmpFile2, dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
             }
+            
+            dataPass.Enabled = true;
         }
 
         //
@@ -172,14 +225,18 @@ namespace Pass4Win
         //
 
         // Decrypt the file into a tempfile. 
-        private void decrypt_pass(string path, bool clear=true)
+        private void decrypt_pass(string path, bool clear = true)
         {
-            tmpfile = Path.GetTempFileName();
-            GpgDecrypt decrypt = new GpgDecrypt(path, tmpfile);
+            FileInfo f = new FileInfo(path);
+            if (f.Length > 0)
             {
-                // The current thread is blocked until the decryption is finished.
-                GpgInterfaceResult result = decrypt.Execute();
-                Decrypt_Callback(result, clear);
+                tmpfile = Path.GetTempFileName();
+                GpgDecrypt decrypt = new GpgDecrypt(path, tmpfile);
+                {
+                    // The current thread is blocked until the decryption is finished.
+                    GpgInterfaceResult result = decrypt.Execute();
+                    Decrypt_Callback(result, clear);
+                }
             }
         }
 
@@ -206,16 +263,20 @@ namespace Pass4Win
                 txtPassDetail.Text = File.ReadAllText(this.tmpfile);
                 File.Delete(tmpfile);
                 // copy to clipboard
-                Clipboard.SetText(new string(txtPassDetail.Text.TakeWhile(c => c != '\n').ToArray()));
-                if (clear){
-                    // set progressbar as notification
-                    statusPB.Maximum = 45;
-                    statusPB.Value = 0;
-                    statusPB.Step = 1;
-                    statusPB.Visible = true;
-                    statusTxt.Text = "Countdown to clearing clipboard  ";
-                    //Create the timer
-                    _timer = new System.Threading.Timer(ClearClipboard, null, 0, 1000);
+                if (txtPassDetail.Text != "")
+                { 
+                    Clipboard.SetText(new string(txtPassDetail.Text.TakeWhile(c => c != '\n').ToArray()));
+                    if (clear)
+                    {
+                        // set progressbar as notification
+                        statusPB.Maximum = 45;
+                        statusPB.Value = 0;
+                        statusPB.Step = 1;
+                        statusPB.Visible = true;
+                        statusTxt.Text = "Countdown to clearing clipboard  ";
+                        //Create the timer
+                        _timer = new System.Threading.Timer(ClearClipboard, null, 0, 1000);
+                    }
                 }
             }
             else
@@ -249,6 +310,8 @@ namespace Pass4Win
                     return "Value cannot be empty.";
                 if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
                     return "Not a valid name, can only use characters or numbers and - \\.";
+                if (File.Exists(Properties.Settings.Default.PassDirectory + "\\" + @val + ".gpg"))
+                    return "Entry already exists.";
                 return "";
             };
 
@@ -256,7 +319,7 @@ namespace Pass4Win
             if (InputBox.Show("Enter a new name", "Name:", ref value, validation) == DialogResult.OK)
             {
                 // parse path
-                string tmpPath = Properties.Settings.Default.PassDirectory + "\\" + value + ".gpg";
+                string tmpPath = Properties.Settings.Default.PassDirectory + "\\" + @value + ".gpg";
                 Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
                 File.Move(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(), tmpPath);
                 ResetDatagrid();
@@ -350,13 +413,6 @@ namespace Pass4Win
                 }
             }
         }
-
-        private void btnKeyManager_Click(object sender, EventArgs e)
-        {
-            frmKeyManager KeyManager = new frmKeyManager();
-            KeyManager.Show();
-        }
-
     }
 
     public class InputBox
