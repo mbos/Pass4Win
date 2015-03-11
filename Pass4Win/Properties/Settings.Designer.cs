@@ -46,5 +46,29 @@ namespace Pass4Win.Properties {
                 this["GPGEXE"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GitRemote {
+            get {
+                return ((string)(this["GitRemote"]));
+            }
+            set {
+                this["GitRemote"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GitUser {
+            get {
+                return ((string)(this["GitUser"]));
+            }
+            set {
+                this["GitUser"] = value;
+            }
+        }
     }
 }

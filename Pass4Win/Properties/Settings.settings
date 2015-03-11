@@ -8,5 +8,11 @@
     <Setting Name="GPGEXE" Type="System.String" Scope="User">
       <Value Profile="(Default)">firstrun</Value>
     </Setting>
+    <Setting Name="GitRemote" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="GitUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

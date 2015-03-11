@@ -50,7 +50,50 @@ namespace Pass4Win
                 }
             }
 
-            // Init if needed
+            //checking git status
+            if (!Repository.IsValid(Properties.Settings.Default.PassDirectory))
+            {
+                string value = "";
+                string gitpass = "";
+                // Do we have a remote
+                if (InputBox.Show("Enter the remote git repo or blank for no remote", "Remote Git:", ref value) == DialogResult.OK)
+                {
+                    Properties.Settings.Default.GitRemote = value;
+                    if (Properties.Settings.Default.GitRemote != "")
+                    {
+                        // Get username and password
+                        value = "";
+                        if (InputBox.Show("Username", "Remote Username:", ref value) == DialogResult.OK)
+                        {
+                            Properties.Settings.Default.GitUser = value;
+                            value = "";
+                            if (InputBox.Show("Password", "Remote Password:", ref value) == DialogResult.OK)
+                            {
+                                gitpass = value;
+
+                                // We have all the info clone it
+                                Repository.Clone(Properties.Settings.Default.GitRemote, Properties.Settings.Default.PassDirectory, new CloneOptions()
+                                {
+                                    CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                                    {
+                                        Username = Properties.Settings.Default.GitUser,
+                                        Password = gitpass
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+                // Checking if the remote is cloned succesfull
+                if (!Repository.IsValid(Properties.Settings.Default.PassDirectory))
+                {
+                    // creating new Git
+                    Repository.Init(Properties.Settings.Default.PassDirectory);
+                }
+
+            }
+
+            // Init GPG if needed
             string gpgfile = Properties.Settings.Default.PassDirectory;
             gpgfile += "\\.gpg-id";
             // Check if we need to init the directory
@@ -347,7 +390,6 @@ namespace Pass4Win
                 this.BeginInvoke((Action)(() => Clipboard.Clear()));
                 this.BeginInvoke((Action)(() => statusPB.Visible = false));
                 this.BeginInvoke((Action)(() => statusTxt.Text = "Ready"));
-                this.BeginInvoke((Action)(() => txtPassDetail.Clear()));
             }
             else
             {
