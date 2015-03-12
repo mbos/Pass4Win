@@ -70,5 +70,17 @@ namespace Pass4Win.Properties {
                 this["GitUser"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GitPass {
+            get {
+                return ((string)(this["GitPass"]));
+            }
+            set {
+                this["GitPass"] = value;
+            }
+        }
     }
 }

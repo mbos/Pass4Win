@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.IO;
+using System.Security.Cryptography;
 using GpgApi;
 using LibGit2Sharp;
 
@@ -54,7 +55,6 @@ namespace Pass4Win
             if (!Repository.IsValid(Properties.Settings.Default.PassDirectory))
             {
                 string value = "";
-                string gitpass = "";
                 // Do we have a remote
                 if (InputBox.Show("Enter the remote git repo or blank for no remote", "Remote Git (HTTPS):", ref value) == DialogResult.OK)
                 {
@@ -65,20 +65,31 @@ namespace Pass4Win
                         value = "";
                         if (InputBox.Show("Username", "Remote Username:", ref value) == DialogResult.OK)
                         {
-                            Properties.Settings.Default.GitUser = value;
+                            GitUsername = value;
                             value = "";
                             if (InputBox.Show("Password", "Remote Password:", ref value) == DialogResult.OK)
                             {
-                                gitpass = value;
+                                GitPassword = value;
                                 // We have all the info clone it
-                                Repository.Clone(Properties.Settings.Default.GitRemote, Properties.Settings.Default.PassDirectory, new CloneOptions()
+                                try
                                 {
-                                    CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                                    string clonedRepoPath = Repository.Clone(Properties.Settings.Default.GitRemote, Properties.Settings.Default.PassDirectory, new CloneOptions()
                                     {
-                                        Username = Properties.Settings.Default.GitUser,
-                                        Password = gitpass
-                                    }
-                                });
+                                        CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                                        {
+                                            Username = GitUsername,
+                                            Password = GitPassword
+                                        }
+                                    });
+                                }
+                                catch
+                                {
+                                    MessageBox.Show("Couldn't connect to remote git repository. Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    System.Environment.Exit(1);
+                                }
+                                // save encrypted version of user and pass for git
+                                Properties.Settings.Default.GitUser = EncryptConfig(GitUsername, "pass4win");
+                                Properties.Settings.Default.GitPass = EncryptConfig(GitPassword, "pass4win");
                             }
                         }
                     }
@@ -89,7 +100,12 @@ namespace Pass4Win
                     // creating new Git
                     Repository.Init(Properties.Settings.Default.PassDirectory);
                 }
-
+            }
+            else
+            // so we have a repository let's load the user/pass
+            {
+                GitUsername = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win");
+                GitPassword = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win");
             }
 
             // Init GPG if needed
@@ -129,6 +145,9 @@ namespace Pass4Win
         // Class access to the tempfile
         private string tmpfile;
         static System.Threading.Timer _timer;
+        private string GitUsername;
+        private string GitPassword;
+
 
 
         //
@@ -307,7 +326,7 @@ namespace Pass4Win
             }
             else
             {
-                // shit happened
+                MessageBox.Show("You shouldn't see this.... Awkward right... Encryption failed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -409,6 +428,26 @@ namespace Pass4Win
         // Generic / Util functions
         //
 
+        static public string EncryptConfig(string password, string salt)
+        {
+            byte[] passwordBytes = Encoding.Unicode.GetBytes(password);
+            byte[] saltBytes = Encoding.Unicode.GetBytes(salt);
+
+            byte[] cipherBytes = ProtectedData.Protect(passwordBytes, saltBytes, DataProtectionScope.CurrentUser);
+
+            return Convert.ToBase64String(cipherBytes);
+        }
+
+        static public string DecryptConfig(string cipher, string salt)
+        {
+            byte[] cipherBytes = Convert.FromBase64String(cipher);
+            byte[] saltBytes = Encoding.Unicode.GetBytes(salt);
+
+            byte[] passwordBytes = ProtectedData.Unprotect(cipherBytes, saltBytes, DataProtectionScope.CurrentUser);
+
+            return Encoding.Unicode.GetString(passwordBytes);
+        }
+        
         // clear the clipboard
         void ClearClipboard(object o)
         {
