@@ -377,7 +377,15 @@ namespace Pass4Win
                 // parse path
                 string tmpPath = Properties.Settings.Default.PassDirectory + "\\" + @value + ".gpg";
                 Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
-                File.Move(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(), tmpPath);
+                File.Copy(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(), tmpPath);
+                using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
+                {
+                    // add the file
+                    repo.Remove(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+                    repo.Stage(tmpPath);
+                    // Commit
+                    repo.Commit("password moved", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
+                }
                 ResetDatagrid();
 
             }
@@ -386,7 +394,14 @@ namespace Pass4Win
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            File.Delete(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+            // remove from git
+            using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
+            {
+                // remove the file
+                repo.Remove(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+                // Commit
+                repo.Commit("password removed", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
+            }
             ResetDatagrid();
         }
 
