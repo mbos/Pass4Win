@@ -56,7 +56,7 @@ namespace Pass4Win
                 string value = "";
                 string gitpass = "";
                 // Do we have a remote
-                if (InputBox.Show("Enter the remote git repo or blank for no remote", "Remote Git:", ref value) == DialogResult.OK)
+                if (InputBox.Show("Enter the remote git repo or blank for no remote", "Remote Git (HTTPS):", ref value) == DialogResult.OK)
                 {
                     Properties.Settings.Default.GitRemote = value;
                     if (Properties.Settings.Default.GitRemote != "")
@@ -70,7 +70,6 @@ namespace Pass4Win
                             if (InputBox.Show("Password", "Remote Password:", ref value) == DialogResult.OK)
                             {
                                 gitpass = value;
-
                                 // We have all the info clone it
                                 Repository.Clone(Properties.Settings.Default.GitRemote, Properties.Settings.Default.PassDirectory, new CloneOptions()
                                 {
@@ -174,6 +173,12 @@ namespace Pass4Win
                         row.Selected = true;
                         break;
                     }
+                }
+                // add to git
+                using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
+                {
+                    // Stage the file
+                    repo.Stage(tmpPath);
                 }
                 // dispose timer thread and clear ui.
                 _timer.Dispose();
@@ -291,6 +296,14 @@ namespace Pass4Win
                 File.Delete(tmpFile);
                 File.Delete(path);
                 File.Move(tmpFile2, path);
+                // add to git
+                using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
+                {
+                    // Stage the file
+                    repo.Stage(path);
+                    // Commit
+                    repo.Commit("password changes", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
+                }
             }
             else
             {
