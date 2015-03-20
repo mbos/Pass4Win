@@ -34,6 +34,7 @@ namespace Pass4Win
                 }
                 else
                 {
+                    MessageBox.Show("We need a place to store stuff. Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     System.Environment.Exit(1);
                 }
             }
@@ -47,6 +48,7 @@ namespace Pass4Win
                 }
                 else
                 {
+                    MessageBox.Show("We really need GPG2.exe. Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     System.Environment.Exit(1);
                 }
             }
@@ -99,14 +101,31 @@ namespace Pass4Win
                 {
                     // creating new Git
                     Repository.Init(Properties.Settings.Default.PassDirectory);
+                    Properties.Settings.Default.GitUser = EncryptConfig("RandomGarbage", "pass4win");
+                    Properties.Settings.Default.GitPass = EncryptConfig("RandomGarbage", "pass4win");
                 }
             }
             else
-            
             {
                 // so we have a repository let's load the user/pass
-                GitUsername = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win");
-                GitPassword = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win");
+                if (Properties.Settings.Default.GitUser != "")
+                {
+                    GitUsername = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win");
+                    GitPassword = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win");
+                }
+                else
+                {
+                    string value = "";
+                    if (InputBox.Show("Username", "Remote Username:", ref value) == DialogResult.OK)
+                    {
+                        GitUsername = value;
+                        value = "";
+                        if (InputBox.Show("Password", "Remote Password:", ref value) == DialogResult.OK)
+                        {
+                            GitPassword = value;
+                        }
+                    }
+                }
 
                 // Check if we have the latest
                 using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
@@ -141,6 +160,11 @@ namespace Pass4Win
                     {
                         w.Write(newKeySelect.gpgkey);
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Need key...... Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Environment.Exit(1);
                 }
             }
             // Setting the exe location for the GPG Dll
@@ -433,6 +457,17 @@ namespace Pass4Win
                     repo.Stage(tmpPath);
                     // Commit
                     repo.Commit("password moved", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
+                    //push
+                    var remote = repo.Network.Remotes["origin"];
+                    var options = new PushOptions();
+                    options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                    {
+                        Username = GitUsername,
+                        Password = GitPassword
+                    };
+                    var pushRefSpec = @"refs/heads/master";
+                    repo.Network.Push(remote, pushRefSpec, options, new Signature("pass4win", "push@pass4win.com", DateTimeOffset.Now),
+                        "pushed changes");
                 }
                 ResetDatagrid();
 
@@ -449,6 +484,17 @@ namespace Pass4Win
                 repo.Remove(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
                 // Commit
                 repo.Commit("password removed", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
+                // push
+                var remote = repo.Network.Remotes["origin"];
+                var options = new PushOptions();
+                options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                {
+                    Username = GitUsername,
+                    Password = GitPassword
+                };
+                var pushRefSpec = @"refs/heads/master";
+                repo.Network.Push(remote, pushRefSpec, options, new Signature("pass4win", "push@pass4win.com", DateTimeOffset.Now),
+                    "pushed changes");
             }
             ResetDatagrid();
         }
@@ -613,6 +659,7 @@ namespace Pass4Win
                     }
                 };
             }
+
             DialogResult dialogResult = form.ShowDialog();
             value = textBox.Text;
             return dialogResult;

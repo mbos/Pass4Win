@@ -27,6 +27,8 @@ namespace Pass4Win
             {
                 comboBox1.Items.Add(key.UserInfos[0].Email + "(" + key.Id + ")");
             }
+            comboBox1.SelectedIndex= 0;
+            this.TopMost = true;
         }
 
          public string gpgkey
