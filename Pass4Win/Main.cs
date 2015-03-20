@@ -125,6 +125,18 @@ namespace Pass4Win
                             GitPassword = value;
                         }
                     }
+                    if (GitUsername == null)
+                    {
+                        MessageBox.Show("We really need a username. Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Environment.Exit(1);
+                    }
+                    if (GitPassword == null)
+                    {
+                        MessageBox.Show("We really need a password. Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Environment.Exit(1);
+                    }
+                    Properties.Settings.Default.GitUser = EncryptConfig(GitUsername, "pass4win");
+                    Properties.Settings.Default.GitPass = EncryptConfig(GitPassword, "pass4win");
                 }
 
                 // Check if we have the latest
@@ -187,7 +199,9 @@ namespace Pass4Win
         private DataTable dt = new DataTable();
         // Class access to the tempfile
         private string tmpfile;
+        // timer for clearing clipboard
         static System.Threading.Timer _timer;
+        // Git vars
         private string GitUsername;
         private string GitPassword;
 
@@ -243,7 +257,8 @@ namespace Pass4Win
                     repo.Stage(tmpPath);
                 }
                 // dispose timer thread and clear ui.
-                _timer.Dispose();
+                
+                if (_timer != null) _timer.Dispose();
                 statusPB.Visible = false;
                 statusTxt.Text = "Ready";
                 // Set the text detail to the correct state
@@ -419,7 +434,7 @@ namespace Pass4Win
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // dispose timer thread and clear ui.
-            _timer.Dispose();
+            if (_timer != null) _timer.Dispose();
             statusPB.Visible = false;
             statusTxt.Text = "Ready";
             // make control editable, give focus and content
@@ -528,7 +543,7 @@ namespace Pass4Win
         {
             if (statusPB.Value == 45)
             {
-                _timer.Dispose();
+                if (_timer != null) _timer.Dispose();
                 this.BeginInvoke((Action)(() => Clipboard.Clear()));
                 this.BeginInvoke((Action)(() => statusPB.Visible = false));
                 this.BeginInvoke((Action)(() => statusTxt.Text = "Ready"));
@@ -659,6 +674,12 @@ namespace Pass4Win
                     }
                 };
             }
+
+            form.Shown += delegate(object sender, EventArgs e)
+            {
+                form.TopMost = true;
+                form.Activate();
+            };
 
             DialogResult dialogResult = form.ShowDialog();
             value = textBox.Text;
