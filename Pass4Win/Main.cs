@@ -102,10 +102,29 @@ namespace Pass4Win
                 }
             }
             else
-            // so we have a repository let's load the user/pass
+            
             {
+                // so we have a repository let's load the user/pass
                 GitUsername = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win");
                 GitPassword = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win");
+
+                // Check if we have the latest
+                using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
+                {
+                    Signature Signature = new Signature("pass4win","pull@pass4win.com", new DateTimeOffset(2011, 06, 16, 10, 58, 27, TimeSpan.FromHours(2)));
+                    FetchOptions fetchOptions = new FetchOptions();
+                    fetchOptions.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                                        {
+                                            Username = GitUsername,
+                                            Password = GitPassword
+                                        };
+                    MergeOptions mergeOptions = new MergeOptions();
+                    PullOptions pullOptions = new PullOptions();
+                    pullOptions.FetchOptions = fetchOptions;
+                    pullOptions.MergeOptions = mergeOptions;
+                    MergeResult mergeResult = repo.Network.Pull(Signature, pullOptions);
+                }
+
             }
 
             // Init GPG if needed
@@ -322,6 +341,16 @@ namespace Pass4Win
                     repo.Stage(path);
                     // Commit
                     repo.Commit("password changes", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
+                    var remote = repo.Network.Remotes["origin"];
+                    var options = new PushOptions();
+                    options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                    {
+                        Username = GitUsername,
+                        Password = GitPassword
+                    }; 
+                    var pushRefSpec = @"refs/heads/master";
+                    repo.Network.Push(remote, pushRefSpec, options, new Signature("pass4win", "push@pass4win.com", DateTimeOffset.Now),
+                        "pushed changes");
                 }
             }
             else
