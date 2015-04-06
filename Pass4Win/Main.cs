@@ -273,7 +273,15 @@ namespace Pass4Win
         // Search handler
         private void txtPass_TextChanged(object sender, EventArgs e)
         {
-                dt.DefaultView.RowFilter = "colText LIKE '%" + txtPass.Text + "%'";
+            dt.DefaultView.RowFilter = "colText LIKE '%" + txtPass.Text + "%'";
+            if (dt.DefaultView.Count == 0)
+            {
+                txtPassDetail.Clear();
+                // dispose timer thread and clear ui.
+                if (_timer != null) _timer.Dispose();
+                statusPB.Visible = false;
+                statusTxt.Text = "Ready";
+            }
         }
 
         // Decrypt the selected entry when pressing enter in textbox
