@@ -288,7 +288,8 @@ namespace Pass4Win
         private void txtPass_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
-                decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+                if (dt.DefaultView.Count != 0)
+                    decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
         }
 
         private void dataPass_SelectionChanged(object sender, EventArgs e)
