@@ -172,6 +172,11 @@ namespace Pass4Win
                     {
                         w.Write(newKeySelect.gpgkey);
                     }
+                    using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
+                    {
+                        repo.Stage(gpgfile);
+                        repo.Commit("gpgid added", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
+                    }
                 }
                 else
                 {

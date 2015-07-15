@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pass4Win", "Pass4Win\Pass4Win.csproj", "{48BE952A-0765-465D-96CF-35959C2B876A}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Install Pass4Win", "Install Pass4Win\Install Pass4Win.vdproj", "{7A6D30A1-5891-4923-A228-9C88405F15B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{48BE952A-0765-465D-96CF-35959C2B876A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48BE952A-0765-465D-96CF-35959C2B876A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48BE952A-0765-465D-96CF-35959C2B876A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A6D30A1-5891-4923-A228-9C88405F15B1}.Debug|Any CPU.ActiveCfg = Debug
+		{7A6D30A1-5891-4923-A228-9C88405F15B1}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

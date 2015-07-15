@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GpgApi;
+using LibGit2Sharp;
 
 namespace Pass4Win
 {
@@ -124,6 +125,11 @@ namespace Pass4Win
                         {
                             w.WriteLine(line.ToString());
                         }
+                    }
+                    using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
+                    {
+                        repo.Stage(tmpFile);
+                        repo.Commit("gpgid changed", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
                     }
                 }
             DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(Properties.Settings.Default.PassDirectory) + "\\" + treeView1.SelectedNode.FullPath);
