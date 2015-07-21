@@ -412,7 +412,7 @@ namespace Pass4Win
                             Password = GitPassword
                         }; 
                         var pushRefSpec = @"refs/heads/master";
-                        repo.Network.Push(remote, pushRefSpec, options, new Signature("pass4win", "push@pass4win.com", DateTimeOffset.Now), "pushed changes");
+                        repo.Network.Push(remote, pushRefSpec, options);
                     }
                 }
             }
@@ -508,7 +508,7 @@ namespace Pass4Win
                             Password = GitPassword
                         };
                         var pushRefSpec = @"refs/heads/master";
-                        repo.Network.Push(remote, pushRefSpec, options, new Signature("pass4win", "push@pass4win.com", DateTimeOffset.Now), "pushed changes");
+                        repo.Network.Push(remote, pushRefSpec, options);
                     }
                 }
                 ResetDatagrid();
@@ -538,7 +538,7 @@ namespace Pass4Win
                         Password = GitPassword
                     };
                     var pushRefSpec = @"refs/heads/master";
-                    repo.Network.Push(remote, pushRefSpec, options, new Signature("pass4win", "push@pass4win.com", DateTimeOffset.Now), "pushed changes");
+                    repo.Network.Push(remote, pushRefSpec, options);
                 }
             }
             ResetDatagrid();
