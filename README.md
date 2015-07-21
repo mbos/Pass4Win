@@ -5,7 +5,7 @@ I really liked the idea of a password store I could access on my shell, and even
 So I needed a Windows implementation.....
 
 Make sure you have GnuPG for windows installed (http://www.gpg4win.org/) and have at least one secret key.
-The setup can be downloaded from https://github.com/mbos/Pass4Win/releases/tag/version-1.0.0
+The setup can be downloaded from https://github.com/mbos/Pass4Win/releases
 
 I'm using GpgAPI (https://gpgapi.codeplex.com/) for interfacing with GnuPG. And LibGit2Sharp (https://github.com/libgit2/libgit2sharp) for git integration.
 
