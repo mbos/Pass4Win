@@ -45,6 +45,7 @@ namespace Pass4Win
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     Properties.Settings.Default.GPGEXE = openFileDialog1.FileName;
+                    Properties.Settings.Default.Save();
                 }
                 else
                 {
@@ -95,12 +96,16 @@ namespace Pass4Win
                             }
                         }
                     }
+                    else
+                    {
+                        Properties.Settings.Default.GitRemote = "NoRemote";
+                    }
                 }
                 // Checking if the remote is cloned succesfull
                 if (!Repository.IsValid(Properties.Settings.Default.PassDirectory))
                 {
                     // creating new Git
-                    Repository.Init(Properties.Settings.Default.PassDirectory);
+                    var repo = Repository.Init(Properties.Settings.Default.PassDirectory,false);
                     Properties.Settings.Default.GitUser = EncryptConfig("RandomGarbage", "pass4win");
                     Properties.Settings.Default.GitPass = EncryptConfig("RandomGarbage", "pass4win");
                 }
@@ -113,7 +118,7 @@ namespace Pass4Win
                     GitUsername = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win");
                     GitPassword = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win");
                 }
-                else
+                else if (Properties.Settings.Default.GitRemote != "NoRemote")
                 {
                     string value = "";
                     if (InputBox.Show("Username", "Remote Username:", ref value) == DialogResult.OK)
@@ -139,21 +144,24 @@ namespace Pass4Win
                     Properties.Settings.Default.GitPass = EncryptConfig(GitPassword, "pass4win");
                 }
 
-                // Check if we have the latest
-                using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
+                // Check if we have the latest if we have a remote
+                if (Properties.Settings.Default.GitRemote != "NoRemote")
                 {
-                    Signature Signature = new Signature("pass4win","pull@pass4win.com", new DateTimeOffset(2011, 06, 16, 10, 58, 27, TimeSpan.FromHours(2)));
-                    FetchOptions fetchOptions = new FetchOptions();
-                    fetchOptions.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
-                                        {
-                                            Username = GitUsername,
-                                            Password = GitPassword
-                                        };
-                    MergeOptions mergeOptions = new MergeOptions();
-                    PullOptions pullOptions = new PullOptions();
-                    pullOptions.FetchOptions = fetchOptions;
-                    pullOptions.MergeOptions = mergeOptions;
-                    MergeResult mergeResult = repo.Network.Pull(Signature, pullOptions);
+                    using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
+                    {
+                        Signature Signature = new Signature("pass4win", "pull@pass4win.com", new DateTimeOffset(2011, 06, 16, 10, 58, 27, TimeSpan.FromHours(2)));
+                        FetchOptions fetchOptions = new FetchOptions();
+                        fetchOptions.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                                            {
+                                                Username = GitUsername,
+                                                Password = GitPassword
+                                            };
+                        MergeOptions mergeOptions = new MergeOptions();
+                        PullOptions pullOptions = new PullOptions();
+                        pullOptions.FetchOptions = fetchOptions;
+                        pullOptions.MergeOptions = mergeOptions;
+                        MergeResult mergeResult = repo.Network.Pull(Signature, pullOptions);
+                    }
                 }
 
             }
@@ -394,16 +402,18 @@ namespace Pass4Win
                     repo.Stage(path);
                     // Commit
                     repo.Commit("password changes", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
-                    var remote = repo.Network.Remotes["origin"];
-                    var options = new PushOptions();
-                    options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                    if (Properties.Settings.Default.GitRemote != "NoRemote")
                     {
-                        Username = GitUsername,
-                        Password = GitPassword
-                    }; 
-                    var pushRefSpec = @"refs/heads/master";
-                    repo.Network.Push(remote, pushRefSpec, options, new Signature("pass4win", "push@pass4win.com", DateTimeOffset.Now),
-                        "pushed changes");
+                        var remote = repo.Network.Remotes["origin"];
+                        var options = new PushOptions();
+                        options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                        {
+                            Username = GitUsername,
+                            Password = GitPassword
+                        }; 
+                        var pushRefSpec = @"refs/heads/master";
+                        repo.Network.Push(remote, pushRefSpec, options, new Signature("pass4win", "push@pass4win.com", DateTimeOffset.Now), "pushed changes");
+                    }
                 }
             }
             else
@@ -486,17 +496,20 @@ namespace Pass4Win
                     repo.Stage(tmpPath);
                     // Commit
                     repo.Commit("password moved", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
-                    //push
-                    var remote = repo.Network.Remotes["origin"];
-                    var options = new PushOptions();
-                    options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+
+                    if (Properties.Settings.Default.GitRemote != "NoRemote")
                     {
-                        Username = GitUsername,
-                        Password = GitPassword
-                    };
-                    var pushRefSpec = @"refs/heads/master";
-                    repo.Network.Push(remote, pushRefSpec, options, new Signature("pass4win", "push@pass4win.com", DateTimeOffset.Now),
-                        "pushed changes");
+                        //push
+                        var remote = repo.Network.Remotes["origin"];
+                        var options = new PushOptions();
+                        options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                        {
+                            Username = GitUsername,
+                            Password = GitPassword
+                        };
+                        var pushRefSpec = @"refs/heads/master";
+                        repo.Network.Push(remote, pushRefSpec, options, new Signature("pass4win", "push@pass4win.com", DateTimeOffset.Now), "pushed changes");
+                    }
                 }
                 ResetDatagrid();
 
@@ -513,17 +526,20 @@ namespace Pass4Win
                 repo.Remove(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
                 // Commit
                 repo.Commit("password removed", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
-                // push
-                var remote = repo.Network.Remotes["origin"];
-                var options = new PushOptions();
-                options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+
+                if (Properties.Settings.Default.GitRemote != "NoRemote")
                 {
-                    Username = GitUsername,
-                    Password = GitPassword
-                };
-                var pushRefSpec = @"refs/heads/master";
-                repo.Network.Push(remote, pushRefSpec, options, new Signature("pass4win", "push@pass4win.com", DateTimeOffset.Now),
-                    "pushed changes");
+                    // push
+                    var remote = repo.Network.Remotes["origin"];
+                    var options = new PushOptions();
+                    options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                    {
+                        Username = GitUsername,
+                        Password = GitPassword
+                    };
+                    var pushRefSpec = @"refs/heads/master";
+                    repo.Network.Push(remote, pushRefSpec, options, new Signature("pass4win", "push@pass4win.com", DateTimeOffset.Now), "pushed changes");
+                }
             }
             ResetDatagrid();
         }
