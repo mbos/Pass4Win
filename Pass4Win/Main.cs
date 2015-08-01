@@ -573,10 +573,10 @@ namespace Pass4Win
         {
             if (statusPB.Value == 45)
             {
-                if (_timer != null) _timer.Dispose();
                 this.BeginInvoke((Action)(() => Clipboard.Clear()));
                 this.BeginInvoke((Action)(() => statusPB.Visible = false));
                 this.BeginInvoke((Action)(() => statusTxt.Text = "Ready"));
+                this.BeginInvoke((Action)(() => statusPB.Value = 0));
             }
             else
             {
