@@ -578,7 +578,7 @@ namespace Pass4Win
                 this.BeginInvoke((Action)(() => statusTxt.Text = "Ready"));
                 this.BeginInvoke((Action)(() => statusPB.Value = 0));
             }
-            else
+            else if (statusTxt.Text != "Ready")
             {
                 this.BeginInvoke((Action)(() => statusPB.PerformStep()));
             }

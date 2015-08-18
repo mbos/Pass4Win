@@ -55,7 +55,7 @@
     <StartupObject>Pass4Win.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>lock.ico</ApplicationIcon>
