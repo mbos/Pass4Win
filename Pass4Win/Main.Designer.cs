@@ -45,6 +45,7 @@
             this.btnKeyManager = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.btnMakeVisible = new System.Windows.Forms.Button();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.statusPass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
@@ -196,6 +197,14 @@
             this.btnMakeVisible.UseVisualStyleBackColor = true;
             this.btnMakeVisible.Click += new System.EventHandler(this.btnMakeVisible_Click);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.BalloonTipText = "Pass4Win";
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseClick);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,6 +222,7 @@
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.Text = "Pass4Win";
+            this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.statusPass.ResumeLayout(false);
             this.statusPass.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).EndInit();
@@ -239,6 +249,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.Button btnMakeVisible;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 
