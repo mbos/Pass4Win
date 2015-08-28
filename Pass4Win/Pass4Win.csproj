@@ -24,9 +24,14 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>3</ApplicationRevision>
+    <SupportUrl>https://github.com/mbos/Pass4Win</SupportUrl>
+    <ErrorReportUrl>https://github.com/mbos/Pass4Win</ErrorReportUrl>
+    <ProductName>Pass4Win</ProductName>
+    <PublisherName>Mike Bos</PublisherName>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -145,6 +150,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="git2-e0902fb.dll" />
     <Content Include="lock.ico" />
   </ItemGroup>
   <ItemGroup>

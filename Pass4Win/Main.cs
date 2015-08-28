@@ -24,6 +24,7 @@ namespace Pass4Win
         {
             InitializeComponent();
             // Checking for appsettings
+            EnableTray = false;
 
             // Do we have a valid password store
             if (Properties.Settings.Default.PassDirectory == "firstrun")
@@ -206,6 +207,8 @@ namespace Pass4Win
 
             dataPass.DataSource = dt.DefaultView;
             dataPass.Columns[0].Visible=false;
+
+            EnableTray = true;
         }
 
         // Used for class access to the data
@@ -217,6 +220,8 @@ namespace Pass4Win
         // Git vars
         private string GitUsername;
         private string GitPassword;
+        // UI Trayicon toggle
+        private bool EnableTray;
 
 
 
@@ -656,7 +661,7 @@ namespace Pass4Win
 
         private void frmMain_Resize(object sender, EventArgs e)
         {
-            if (FormWindowState.Minimized == this.WindowState)
+            if (FormWindowState.Minimized == this.WindowState && EnableTray == true)
             {
                 notifyIcon1.Visible = true;
                 notifyIcon1.ShowBalloonTip(500);
