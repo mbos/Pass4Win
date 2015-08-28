@@ -59,7 +59,7 @@ namespace Pass4Win
             {
                 string value = "";
                 // Do we have a remote
-                if (InputBox.Show("Enter the remote git repo or blank for no remote", "Remote Git (HTTPS):", ref value) == DialogResult.OK)
+                if (InputBox.Show("Enter the remote git repo or blank for no remote", "Remote Git (HTTPS or GIT):", ref value) == DialogResult.OK)
                 {
                     Properties.Settings.Default.GitRemote = value;
                     if (Properties.Settings.Default.GitRemote != "")
