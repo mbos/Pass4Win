@@ -309,6 +309,9 @@ namespace Pass4Win
         {
             if (dataPass.CurrentCell != null)
                 decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+
+            btnMakeVisible.Visible = true;
+            txtPassDetail.Visible = false;
         }
 
 
@@ -568,7 +571,7 @@ namespace Pass4Win
             return Encoding.Unicode.GetString(passwordBytes);
         }
         
-        // clear the clipboard
+        // clear the clipboard and make txt invisible
         void ClearClipboard(object o)
         {
             if (statusPB.Value == 45)
@@ -577,6 +580,8 @@ namespace Pass4Win
                 this.BeginInvoke((Action)(() => statusPB.Visible = false));
                 this.BeginInvoke((Action)(() => statusTxt.Text = "Ready"));
                 this.BeginInvoke((Action)(() => statusPB.Value = 0));
+                this.BeginInvoke((Action)(() => btnMakeVisible.Visible = true));
+                this.BeginInvoke((Action)(() => txtPassDetail.Visible = false));
             }
             else if (statusTxt.Text != "Ready")
             {
@@ -641,6 +646,12 @@ namespace Pass4Win
                     Directory.Delete(directory, false);
                 }
             }
+        }
+
+        private void btnMakeVisible_Click(object sender, EventArgs e)
+        {
+            btnMakeVisible.Visible = false;
+            txtPassDetail.Visible = true;
         }
     }
 

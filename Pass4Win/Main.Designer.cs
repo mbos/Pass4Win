@@ -44,6 +44,7 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnKeyManager = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.btnMakeVisible = new System.Windows.Forms.Button();
             this.statusPass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
@@ -98,6 +99,7 @@
             this.txtPassDetail.Size = new System.Drawing.Size(283, 255);
             this.txtPassDetail.TabIndex = 5;
             this.txtPassDetail.Text = "";
+            this.txtPassDetail.Visible = false;
             this.txtPassDetail.Leave += new System.EventHandler(this.txtPassDetail_Leave);
             // 
             // txtPass
@@ -183,11 +185,23 @@
             this.openFileDialog1.FileName = "gpg2.exe";
             this.openFileDialog1.Filter = "gpg2.exe|gpg2.exe";
             // 
+            // btnMakeVisible
+            // 
+            this.btnMakeVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMakeVisible.Location = new System.Drawing.Point(438, 138);
+            this.btnMakeVisible.Name = "btnMakeVisible";
+            this.btnMakeVisible.Size = new System.Drawing.Size(158, 38);
+            this.btnMakeVisible.TabIndex = 6;
+            this.btnMakeVisible.Text = "Make visible";
+            this.btnMakeVisible.UseVisualStyleBackColor = true;
+            this.btnMakeVisible.Click += new System.EventHandler(this.btnMakeVisible_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(659, 312);
+            this.Controls.Add(this.btnMakeVisible);
             this.Controls.Add(this.btnKeyManager);
             this.Controls.Add(this.dataPass);
             this.Controls.Add(this.txtPass);
@@ -224,6 +238,7 @@
         private System.Windows.Forms.Button btnKeyManager;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
+        private System.Windows.Forms.Button btnMakeVisible;
     }
 }
 
