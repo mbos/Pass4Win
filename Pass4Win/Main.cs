@@ -14,7 +14,7 @@ using System.IO;
 using System.Security.Cryptography;
 using GpgApi;
 using LibGit2Sharp;
-
+using System.Net.Sockets;
 
 namespace Pass4Win
 {
@@ -29,124 +29,54 @@ namespace Pass4Win
             // Do we have a valid password store
             if (Properties.Settings.Default.PassDirectory == "firstrun")
             {
-                if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    Properties.Settings.Default.PassDirectory = folderBrowserDialog1.SelectedPath;
-                }
-                else
-                {
-                    MessageBox.Show("We need a place to store stuff. Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    System.Environment.Exit(1);
-                }
+                frmConfig Config = new frmConfig();
+                var dialogResult = Config.ShowDialog();
             }
-
-            // GPG exe location
-            if (Properties.Settings.Default.GPGEXE == "firstrun")
-            {
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    Properties.Settings.Default.GPGEXE = openFileDialog1.FileName;
-                    Properties.Settings.Default.Save();
-                }
-                else
-                {
-                    MessageBox.Show("We really need GPG2.exe. Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    System.Environment.Exit(1);
-                }
-            }
-
+                
             //checking git status
             if (!Repository.IsValid(Properties.Settings.Default.PassDirectory))
             {
-                string value = "";
-                // Do we have a remote
-                if (InputBox.Show("Enter the remote git repo or blank for no remote", "Remote Git (HTTPS or GIT):", ref value) == DialogResult.OK)
+                // Remote or generate a new one
+                if (Properties.Settings.Default.UserGitRemote == true)
                 {
-                    Properties.Settings.Default.GitRemote = value;
-                    if (Properties.Settings.Default.GitRemote != "")
-                    {
-                        // Get username and password
-                        value = "";
-                        if (InputBox.Show("Username", "Remote Username:", ref value) == DialogResult.OK)
+                    // check if server is alive
+                    if (IsGITAlive(Properties.Settings.Default.GitRemote) || IsHTTPSAlive(Properties.Settings.Default.GitRemote))
+                    { 
+                        try
                         {
-                            GitUsername = value;
-                            value = "";
-                            if (InputBox.Show("Password", "Remote Password:", ref value) == DialogResult.OK)
+                            string clonedRepoPath = Repository.Clone(Properties.Settings.Default.GitRemote, Properties.Settings.Default.PassDirectory, new CloneOptions()
                             {
-                                GitPassword = value;
-                                // We have all the info clone it
-                                try
+                                CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                                 {
-                                    string clonedRepoPath = Repository.Clone(Properties.Settings.Default.GitRemote, Properties.Settings.Default.PassDirectory, new CloneOptions()
-                                    {
-                                        CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
-                                        {
-                                            Username = GitUsername,
-                                            Password = GitPassword
-                                        }
-                                    });
+                                    Username = Properties.Settings.Default.GitUser,
+                                    Password = Properties.Settings.Default.GitPass
                                 }
-                                catch
-                                {
-                                    MessageBox.Show("Couldn't connect to remote git repository. Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    System.Environment.Exit(1);
-                                }
-                                // save encrypted version of user and pass for git
-                                Properties.Settings.Default.GitUser = EncryptConfig(GitUsername, "pass4win");
-                                Properties.Settings.Default.GitPass = EncryptConfig(GitPassword, "pass4win");
-                            }
+                            });
                         }
-                    }
-                    else
+                        catch
+                        {
+                            MessageBox.Show("Couldn't connect to remote git repository. Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            System.Environment.Exit(1);
+                        }
+                    } else
                     {
-                        Properties.Settings.Default.GitRemote = "NoRemote";
+                        MessageBox.Show("Can't reach your GIT host", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Environment.Exit(1);
                     }
                 }
-                // Checking if the remote is cloned succesfull
-                if (!Repository.IsValid(Properties.Settings.Default.PassDirectory))
+                else
                 {
                     // creating new Git
-                    var repo = Repository.Init(Properties.Settings.Default.PassDirectory,false);
-                    Properties.Settings.Default.GitUser = EncryptConfig("RandomGarbage", "pass4win");
-                    Properties.Settings.Default.GitPass = EncryptConfig("RandomGarbage", "pass4win");
+                    var repo = Repository.Init(Properties.Settings.Default.PassDirectory, false);
                 }
             }
             else
             {
-                // so we have a repository let's load the user/pass
-                if (Properties.Settings.Default.GitUser != "")
-                {
-                    GitUsername = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win");
-                    GitPassword = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win");
-                }
-                else if (Properties.Settings.Default.GitRemote != "NoRemote")
-                {
-                    string value = "";
-                    if (InputBox.Show("Username", "Remote Username:", ref value) == DialogResult.OK)
-                    {
-                        GitUsername = value;
-                        value = "";
-                        if (InputBox.Show("Password", "Remote Password:", ref value) == DialogResult.OK)
-                        {
-                            GitPassword = value;
-                        }
-                    }
-                    if (GitUsername == null)
-                    {
-                        MessageBox.Show("We really need a username. Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        System.Environment.Exit(1);
-                    }
-                    if (GitPassword == null)
-                    {
-                        MessageBox.Show("We really need a password. Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        System.Environment.Exit(1);
-                    }
-                    Properties.Settings.Default.GitUser = EncryptConfig(GitUsername, "pass4win");
-                    Properties.Settings.Default.GitPass = EncryptConfig(GitPassword, "pass4win");
-                }
+                // Check if the remote is there
+                if (IsGITAlive(Properties.Settings.Default.GitRemote) || IsHTTPSAlive(Properties.Settings.Default.GitRemote)) GITRemoveOffline = true;
 
                 // Check if we have the latest if we have a remote
-                if (Properties.Settings.Default.GitRemote != "NoRemote")
+                if (Properties.Settings.Default.UserGitRemote == true && GITRemoveOffline == false)
                 {
                     using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
                     {
@@ -154,8 +84,8 @@ namespace Pass4Win
                         FetchOptions fetchOptions = new FetchOptions();
                         fetchOptions.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                                             {
-                                                Username = GitUsername,
-                                                Password = GitPassword
+                                                Username = Properties.Settings.Default.GitUser,
+                                                Password = Properties.Settings.Default.GitPass
                                             };
                         MergeOptions mergeOptions = new MergeOptions();
                         PullOptions pullOptions = new PullOptions();
@@ -196,9 +126,6 @@ namespace Pass4Win
             // Setting the exe location for the GPG Dll
             GpgInterface.ExePath = Properties.Settings.Default.GPGEXE;
 
-            // saving settings
-            Properties.Settings.Default.Save();
-
             // Setting up datagrid
             dt.Columns.Add("colPath", typeof(string));
             dt.Columns.Add("colText", typeof(string));
@@ -217,11 +144,10 @@ namespace Pass4Win
         private string tmpfile;
         // timer for clearing clipboard
         static System.Threading.Timer _timer;
-        // Git vars
-        private string GitUsername;
-        private string GitPassword;
         // UI Trayicon toggle
         private bool EnableTray;
+        // Remote status of GIT
+        private bool GITRemoveOffline;
 
 
 
@@ -325,6 +251,8 @@ namespace Pass4Win
             if (txtPassDetail.ReadOnly == false)
             {
                 txtPassDetail.ReadOnly = false;
+                txtPassDetail.Visible = false;
+                btnMakeVisible.Visible = true;
                 txtPassDetail.BackColor = Color.LightGray;
                 // read .gpg-id
                 string gpgfile = Path.GetDirectoryName(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
@@ -410,14 +338,14 @@ namespace Pass4Win
                     repo.Stage(path);
                     // Commit
                     repo.Commit("password changes", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
-                    if (Properties.Settings.Default.GitRemote != "NoRemote")
+                    if (Properties.Settings.Default.UserGitRemote == true && GITRemoveOffline == false)
                     {
                         var remote = repo.Network.Remotes["origin"];
                         var options = new PushOptions();
                         options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                         {
-                            Username = GitUsername,
-                            Password = GitPassword
+                            Username = Properties.Settings.Default.GitUser,
+                            Password = Properties.Settings.Default.GitPass
                         }; 
                         var pushRefSpec = @"refs/heads/master";
                         repo.Network.Push(remote, pushRefSpec, options);
@@ -472,6 +400,8 @@ namespace Pass4Win
             // make control editable, give focus and content
             decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(),false);
             txtPassDetail.ReadOnly = false;
+            txtPassDetail.Visible = true;
+            btnMakeVisible.Visible = false;
             txtPassDetail.BackColor = Color.White;
             txtPassDetail.Focus();
         }
@@ -505,15 +435,15 @@ namespace Pass4Win
                     // Commit
                     repo.Commit("password moved", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
 
-                    if (Properties.Settings.Default.GitRemote != "NoRemote")
+                    if (Properties.Settings.Default.UserGitRemote == true && GITRemoveOffline == false)
                     {
                         //push
                         var remote = repo.Network.Remotes["origin"];
                         var options = new PushOptions();
                         options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                         {
-                            Username = GitUsername,
-                            Password = GitPassword
+                            Username = Properties.Settings.Default.GitUser,
+                            Password = Properties.Settings.Default.GitPass
                         };
                         var pushRefSpec = @"refs/heads/master";
                         repo.Network.Push(remote, pushRefSpec, options);
@@ -535,15 +465,15 @@ namespace Pass4Win
                 // Commit
                 repo.Commit("password removed", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
 
-                if (Properties.Settings.Default.GitRemote != "NoRemote")
+                if (Properties.Settings.Default.UserGitRemote == true && GITRemoveOffline == false)
                 {
                     // push
                     var remote = repo.Network.Remotes["origin"];
                     var options = new PushOptions();
                     options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                     {
-                        Username = GitUsername,
-                        Password = GitPassword
+                        Username = Properties.Settings.Default.GitUser,
+                        Password = Properties.Settings.Default.GitPass
                     };
                     var pushRefSpec = @"refs/heads/master";
                     repo.Network.Push(remote, pushRefSpec, options);
@@ -556,26 +486,6 @@ namespace Pass4Win
         // Generic / Util functions
         //
 
-        static public string EncryptConfig(string password, string salt)
-        {
-            byte[] passwordBytes = Encoding.Unicode.GetBytes(password);
-            byte[] saltBytes = Encoding.Unicode.GetBytes(salt);
-
-            byte[] cipherBytes = ProtectedData.Protect(passwordBytes, saltBytes, DataProtectionScope.CurrentUser);
-
-            return Convert.ToBase64String(cipherBytes);
-        }
-
-        static public string DecryptConfig(string cipher, string salt)
-        {
-            byte[] cipherBytes = Convert.FromBase64String(cipher);
-            byte[] saltBytes = Encoding.Unicode.GetBytes(salt);
-
-            byte[] passwordBytes = ProtectedData.Unprotect(cipherBytes, saltBytes, DataProtectionScope.CurrentUser);
-
-            return Encoding.Unicode.GetString(passwordBytes);
-        }
-        
         // clear the clipboard and make txt invisible
         void ClearClipboard(object o)
         {
@@ -678,6 +588,46 @@ namespace Pass4Win
         {
             this.Show();
             this.WindowState = FormWindowState.Normal;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            frmConfig Config = new frmConfig();
+            Config.Show();
+        }
+
+        public static bool IsGITAlive(String hostName)
+        {
+            try
+            {
+                using (TcpClient tcpClient = new TcpClient())
+                {
+                    tcpClient.Connect(hostName, 9418);
+                    return true;
+                }
+            }
+            catch (SocketException)
+            {
+
+                return false;
+            }
+        }
+
+        public static bool IsHTTPSAlive(String hostName)
+        {
+            try
+            {
+                using (TcpClient tcpClient = new TcpClient())
+                {
+                    tcpClient.Connect(hostName, 443);
+                    return true;
+                }
+            }
+            catch (SocketException)
+            {
+
+                return false;
+            }
         }
     }
 

@@ -34,7 +34,6 @@
             this.statusPass = new System.Windows.Forms.StatusStrip();
             this.statusTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusPB = new System.Windows.Forms.ToolStripProgressBar();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.txtPassDetail = new System.Windows.Forms.RichTextBox();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.dataPass = new System.Windows.Forms.DataGridView();
@@ -43,9 +42,9 @@
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnKeyManager = new System.Windows.Forms.Button();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.btnMakeVisible = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.btnConfig = new System.Windows.Forms.Button();
             this.statusPass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
@@ -54,7 +53,7 @@
             // btnAdd
             // 
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAdd.Location = new System.Drawing.Point(500, 5);
+            this.btnAdd.Location = new System.Drawing.Point(372, 5);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 2;
@@ -88,10 +87,6 @@
             this.statusPB.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.statusPB.Visible = false;
             // 
-            // folderBrowserDialog1
-            // 
-            this.folderBrowserDialog1.Description = "Select the directory where you want to store your passwords";
-            // 
             // txtPassDetail
             // 
             this.txtPassDetail.Location = new System.Drawing.Point(370, 32);
@@ -107,7 +102,7 @@
             // 
             this.txtPass.Location = new System.Drawing.Point(3, 5);
             this.txtPass.Name = "txtPass";
-            this.txtPass.Size = new System.Drawing.Size(491, 20);
+            this.txtPass.Size = new System.Drawing.Size(361, 20);
             this.txtPass.TabIndex = 1;
             this.txtPass.TextChanged += new System.EventHandler(this.txtPass_TextChanged);
             this.txtPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPass_KeyDown);
@@ -172,19 +167,13 @@
             // btnKeyManager
             // 
             this.btnKeyManager.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnKeyManager.Location = new System.Drawing.Point(578, 5);
+            this.btnKeyManager.Location = new System.Drawing.Point(475, 5);
             this.btnKeyManager.Name = "btnKeyManager";
             this.btnKeyManager.Size = new System.Drawing.Size(75, 23);
             this.btnKeyManager.TabIndex = 3;
             this.btnKeyManager.Text = "Keys";
             this.btnKeyManager.UseVisualStyleBackColor = true;
             this.btnKeyManager.Click += new System.EventHandler(this.btnKeyManager_Click);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.DefaultExt = "exe";
-            this.openFileDialog1.FileName = "gpg2.exe";
-            this.openFileDialog1.Filter = "gpg2.exe|gpg2.exe";
             // 
             // btnMakeVisible
             // 
@@ -205,11 +194,23 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseClick);
             // 
+            // btnConfig
+            // 
+            this.btnConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConfig.Location = new System.Drawing.Point(578, 5);
+            this.btnConfig.Name = "btnConfig";
+            this.btnConfig.Size = new System.Drawing.Size(75, 23);
+            this.btnConfig.TabIndex = 7;
+            this.btnConfig.Text = "Config";
+            this.btnConfig.UseVisualStyleBackColor = true;
+            this.btnConfig.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(659, 312);
+            this.Controls.Add(this.btnConfig);
             this.Controls.Add(this.btnMakeVisible);
             this.Controls.Add(this.btnKeyManager);
             this.Controls.Add(this.dataPass);
@@ -238,7 +239,6 @@
         private System.Windows.Forms.StatusStrip statusPass;
         private System.Windows.Forms.ToolStripStatusLabel statusTxt;
         private System.Windows.Forms.ToolStripProgressBar statusPB;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.RichTextBox txtPassDetail;
         private System.Windows.Forms.TextBox txtPass;
         private System.Windows.Forms.DataGridView dataPass;
@@ -246,10 +246,10 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.Button btnKeyManager;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.Button btnMakeVisible;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.Button btnConfig;
     }
 }
 
