@@ -34,6 +34,7 @@
             this.statusPass = new System.Windows.Forms.StatusStrip();
             this.statusTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusPB = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripOffline = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtPassDetail = new System.Windows.Forms.RichTextBox();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.dataPass = new System.Windows.Forms.DataGridView();
@@ -46,7 +47,6 @@
             this.btnMakeVisible = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.btnConfig = new System.Windows.Forms.Button();
-            this.toolStripOffline = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusPass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
@@ -89,6 +89,17 @@
             this.statusPB.Size = new System.Drawing.Size(100, 16);
             this.statusPB.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.statusPB.Visible = false;
+            // 
+            // toolStripOffline
+            // 
+            this.toolStripOffline.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripOffline.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripOffline.ForeColor = System.Drawing.Color.IndianRed;
+            this.toolStripOffline.Name = "toolStripOffline";
+            this.toolStripOffline.Size = new System.Drawing.Size(472, 17);
+            this.toolStripOffline.Spring = true;
+            this.toolStripOffline.Text = "OFFLINE";
+            this.toolStripOffline.Visible = false;
             // 
             // txtPassDetail
             // 
@@ -215,17 +226,6 @@
             this.btnConfig.Text = "Config";
             this.btnConfig.UseVisualStyleBackColor = true;
             this.btnConfig.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // toolStripOffline
-            // 
-            this.toolStripOffline.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripOffline.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripOffline.ForeColor = System.Drawing.Color.IndianRed;
-            this.toolStripOffline.Name = "toolStripOffline";
-            this.toolStripOffline.Size = new System.Drawing.Size(472, 17);
-            this.toolStripOffline.Spring = true;
-            this.toolStripOffline.Text = "OFFLINE";
-            this.toolStripOffline.Visible = false;
             // 
             // frmMain
             // 

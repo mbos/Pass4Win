@@ -44,7 +44,7 @@ namespace Pass4Win
                             {
                                 CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                                 {
-                                    Username = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win"),
+                                    Username = Properties.Settings.Default.GitUser,
                                     Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
                                 }
                             });
@@ -335,11 +335,12 @@ namespace Pass4Win
                     repo.Commit("password changes", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
                     if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
                     {
+                        toolStripOffline.Visible = false;
                         var remote = repo.Network.Remotes["origin"];
                         var options = new PushOptions();
                         options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                         {
-                            Username = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win"),
+                            Username = Properties.Settings.Default.GitUser,
                             Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
                         };
                         var pushRefSpec = @"refs/heads/master";
@@ -450,11 +451,12 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
                     if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
                     {
                         //push
+                        toolStripOffline.Visible = false;
                         var remote = repo.Network.Remotes["origin"];
                         var options = new PushOptions();
                         options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                         {
-                            Username = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win"),
+                            Username = Properties.Settings.Default.GitUser,
                             Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
                         };
                         var pushRefSpec = @"refs/heads/master";
@@ -480,11 +482,12 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
                 if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
                 {
                     // push
+                    toolStripOffline.Visible = false;
                     var remote = repo.Network.Remotes["origin"];
                     var options = new PushOptions();
                     options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                     {
-                        Username = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win"),
+                        Username = Properties.Settings.Default.GitUser,
                         Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
                     };
                     var pushRefSpec = @"refs/heads/master";
@@ -647,13 +650,14 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
             {
+                toolStripOffline.Visible = false;
                 using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
                 {
                     Signature Signature = new Signature("pass4win", "pull@pass4win.com", new DateTimeOffset(2011, 06, 16, 10, 58, 27, TimeSpan.FromHours(2)));
                     FetchOptions fetchOptions = new FetchOptions();
                     fetchOptions.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                     {
-                        Username = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win"),
+                        Username = Properties.Settings.Default.GitUser,
                         Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
                     };
                     MergeOptions mergeOptions = new MergeOptions();
