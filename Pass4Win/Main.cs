@@ -245,6 +245,11 @@ namespace Pass4Win
             txtPassDetail.Visible = false;
         }
 
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataPass.CurrentCell != null)
+                decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+        }
 
         private void txtPassDetail_Leave(object sender, EventArgs e)
         {
@@ -629,6 +634,8 @@ namespace Pass4Win
                 return false;
             }
         }
+
+
     }
 
     public class InputBox
