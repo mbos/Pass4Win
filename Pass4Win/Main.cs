@@ -1,20 +1,16 @@
-﻿using System;
+﻿using GpgApi;
+using LibGit2Sharp;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Security;
+using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
-using System.IO;
-using System.Security.Cryptography;
-using GpgApi;
-using LibGit2Sharp;
-using System.Net.Sockets;
 
 namespace Pass4Win
 {
@@ -23,76 +19,71 @@ namespace Pass4Win
         public frmMain()
         {
             InitializeComponent();
-            // Checking for appsettings
             EnableTray = false;
 
-            // Do we have a valid password store
+            // Do we have a valid password store and settings
             if (Properties.Settings.Default.PassDirectory == "firstrun")
             {
                 frmConfig Config = new frmConfig();
                 var dialogResult = Config.ShowDialog();
             }
-                
+
             //checking git status
             if (!Repository.IsValid(Properties.Settings.Default.PassDirectory))
             {
                 // Remote or generate a new one
-                if (Properties.Settings.Default.UserGitRemote == true)
+                if (Properties.Settings.Default.UseGitRemote == true)
                 {
                     // check if server is alive
                     if (IsGITAlive(Properties.Settings.Default.GitRemote) || IsHTTPSAlive(Properties.Settings.Default.GitRemote))
-                    { 
+                    {
+                        // clone the repo and catch any error
                         try
                         {
                             string clonedRepoPath = Repository.Clone(Properties.Settings.Default.GitRemote, Properties.Settings.Default.PassDirectory, new CloneOptions()
                             {
                                 CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                                 {
-                                    Username = Properties.Settings.Default.GitUser,
-                                    Password = Properties.Settings.Default.GitPass
+                                    Username = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win"),
+                                    Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
                                 }
                             });
                         }
                         catch
                         {
-                            MessageBox.Show("Couldn't connect to remote git repository. Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            System.Environment.Exit(1);
+                            MessageBox.Show("Couldn't connect to remote git repository. Pass4Win set to offline mode.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Properties.Settings.Default.UseGitRemote = false;
+                            toolStripOffline.Visible = true;
                         }
-                    } else
+                    }
+                    else
                     {
-                        MessageBox.Show("Can't reach your GIT host", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        System.Environment.Exit(1);
+                        MessageBox.Show("Can't reach your GIT host. Pass4Win set to offline mode.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Properties.Settings.Default.UseGitRemote = false;
+                        toolStripOffline.Visible = true;
                     }
                 }
                 else
                 {
                     // creating new Git
                     var repo = Repository.Init(Properties.Settings.Default.PassDirectory, false);
+                    toolStripOffline.Visible = true;
                 }
             }
             else
             {
                 // Check if the remote is there
-                if (IsGITAlive(Properties.Settings.Default.GitRemote) || IsHTTPSAlive(Properties.Settings.Default.GitRemote)) GITRemoveOffline = true;
-
-                // Check if we have the latest if we have a remote
-                if (Properties.Settings.Default.UserGitRemote == true && GITRemoveOffline == false)
+                if (IsGITAlive(Properties.Settings.Default.GitRemote) || IsHTTPSAlive(Properties.Settings.Default.GitRemote))
                 {
-                    using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
-                    {
-                        Signature Signature = new Signature("pass4win", "pull@pass4win.com", new DateTimeOffset(2011, 06, 16, 10, 58, 27, TimeSpan.FromHours(2)));
-                        FetchOptions fetchOptions = new FetchOptions();
-                        fetchOptions.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
-                                            {
-                                                Username = Properties.Settings.Default.GitUser,
-                                                Password = Properties.Settings.Default.GitPass
-                                            };
-                        MergeOptions mergeOptions = new MergeOptions();
-                        PullOptions pullOptions = new PullOptions();
-                        pullOptions.FetchOptions = fetchOptions;
-                        pullOptions.MergeOptions = mergeOptions;
-                        MergeResult mergeResult = repo.Network.Pull(Signature, pullOptions);
-                    }
+                    GITRepoOffline = false;
+                }
+
+                // Do a fetch to get the latest repo.
+                if (!GitFetch())
+                {
+                    MessageBox.Show("Couldn't connect to remote git repository. Pass4Win set to offline mode.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Properties.Settings.Default.UseGitRemote = false;
+                    toolStripOffline.Visible = true;
                 }
 
             }
@@ -133,7 +124,7 @@ namespace Pass4Win
             ListDirectory(new DirectoryInfo(Properties.Settings.Default.PassDirectory), "");
 
             dataPass.DataSource = dt.DefaultView;
-            dataPass.Columns[0].Visible=false;
+            dataPass.Columns[0].Visible = false;
 
             EnableTray = true;
         }
@@ -147,8 +138,7 @@ namespace Pass4Win
         // UI Trayicon toggle
         private bool EnableTray;
         // Remote status of GIT
-        private bool GITRemoveOffline;
-
+        private bool GITRepoOffline = true;
 
 
         //
@@ -164,14 +154,14 @@ namespace Pass4Win
         private void btnAdd_Click(object sender, EventArgs e)
         {
             // get the new entryname
-            InputBoxValidation validation = delegate(string val)
+            InputBoxValidation validation = delegate (string val)
             {
                 if (val == "")
                     return "Value cannot be empty.";
                 if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
                     return "Not a valid name, can only use characters or numbers and - \\.";
                 if (File.Exists(Properties.Settings.Default.PassDirectory + "\\" + @val + ".gpg"))
-                     return "Entry already exists.";
+                    return "Entry already exists.";
                 return "";
             };
 
@@ -179,10 +169,10 @@ namespace Pass4Win
             if (InputBox.Show("Enter a new name", "Name:", ref value, validation) == DialogResult.OK)
             {
                 // parse path
-                string tmpPath = Properties.Settings.Default.PassDirectory + "\\" + @value + ".gpg";;
+                string tmpPath = Properties.Settings.Default.PassDirectory + "\\" + @value + ".gpg"; ;
                 Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
                 using (File.Create(tmpPath)) { }
-                
+
                 ResetDatagrid();
                 // set the selected item.
                 foreach (DataGridViewRow row in dataPass.Rows)
@@ -201,7 +191,7 @@ namespace Pass4Win
                     repo.Stage(tmpPath);
                 }
                 // dispose timer thread and clear ui.
-                
+
                 if (_timer != null) _timer.Dispose();
                 statusPB.Visible = false;
                 statusTxt.Text = "Ready";
@@ -304,7 +294,7 @@ namespace Pass4Win
                 GpgInterfaceResult enc_result = encrypt.Execute();
                 Encrypt_Callback(enc_result, tmpFile, tmpFile2, dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
             }
-            
+
             dataPass.Enabled = true;
         }
 
@@ -343,15 +333,15 @@ namespace Pass4Win
                     repo.Stage(path);
                     // Commit
                     repo.Commit("password changes", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
-                    if (Properties.Settings.Default.UserGitRemote == true && GITRemoveOffline == false)
+                    if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
                     {
                         var remote = repo.Network.Remotes["origin"];
                         var options = new PushOptions();
                         options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                         {
-                            Username = Properties.Settings.Default.GitUser,
-                            Password = Properties.Settings.Default.GitPass
-                        }; 
+                            Username = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win"),
+                            Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
+                        };
                         var pushRefSpec = @"refs/heads/master";
                         repo.Network.Push(remote, pushRefSpec, options);
                     }
@@ -363,7 +353,7 @@ namespace Pass4Win
             }
         }
 
-         // Callback for the decrypt thread
+        // Callback for the decrypt thread
         private void Decrypt_Callback(GpgInterfaceResult result, bool clear)
         {
             if (result.Status == GpgInterfaceStatus.Success)
@@ -372,7 +362,7 @@ namespace Pass4Win
                 File.Delete(tmpfile);
                 // copy to clipboard
                 if (txtPassDetail.Text != "")
-                { 
+                {
                     Clipboard.SetText(new string(txtPassDetail.Text.TakeWhile(c => c != '\n').ToArray()));
                     if (clear)
                     {
@@ -393,17 +383,34 @@ namespace Pass4Win
             }
         }
 
-        //
-        // All the menu options for the datagrid
-        //
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+static public string EncryptConfig(string password, string salt)
+    {
+        byte[] passwordBytes = Encoding.Unicode.GetBytes(password);
+        byte[] saltBytes = Encoding.Unicode.GetBytes(salt);
+        byte[] cipherBytes = ProtectedData.Protect(passwordBytes, saltBytes, DataProtectionScope.CurrentUser);
+        return Convert.ToBase64String(cipherBytes);
+    }
+
+static public string DecryptConfig(string cipher, string salt)
+    {
+        byte[] cipherBytes = Convert.FromBase64String(cipher);
+        byte[] saltBytes = Encoding.Unicode.GetBytes(salt);
+        byte[] passwordBytes = ProtectedData.Unprotect(cipherBytes, saltBytes, DataProtectionScope.CurrentUser);
+
+        return Encoding.Unicode.GetString(passwordBytes);
+    }
+
+//
+// All the menu options for the datagrid
+//
+private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // dispose timer thread and clear ui.
             if (_timer != null) _timer.Dispose();
             statusPB.Visible = false;
             statusTxt.Text = "Ready";
             // make control editable, give focus and content
-            decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(),false);
+            decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(), false);
             txtPassDetail.ReadOnly = false;
             txtPassDetail.Visible = true;
             btnMakeVisible.Visible = false;
@@ -414,7 +421,7 @@ namespace Pass4Win
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // rename the entry
-            InputBoxValidation validation = delegate(string val)
+            InputBoxValidation validation = delegate (string val)
             {
                 if (val == "")
                     return "Value cannot be empty.";
@@ -440,15 +447,15 @@ namespace Pass4Win
                     // Commit
                     repo.Commit("password moved", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
 
-                    if (Properties.Settings.Default.UserGitRemote == true && GITRemoveOffline == false)
+                    if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
                     {
                         //push
                         var remote = repo.Network.Remotes["origin"];
                         var options = new PushOptions();
                         options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                         {
-                            Username = Properties.Settings.Default.GitUser,
-                            Password = Properties.Settings.Default.GitPass
+                            Username = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win"),
+                            Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
                         };
                         var pushRefSpec = @"refs/heads/master";
                         repo.Network.Push(remote, pushRefSpec, options);
@@ -470,15 +477,15 @@ namespace Pass4Win
                 // Commit
                 repo.Commit("password removed", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
 
-                if (Properties.Settings.Default.UserGitRemote == true && GITRemoveOffline == false)
+                if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
                 {
                     // push
                     var remote = repo.Network.Remotes["origin"];
                     var options = new PushOptions();
                     options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                     {
-                        Username = Properties.Settings.Default.GitUser,
-                        Password = Properties.Settings.Default.GitPass
+                        Username = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win"),
+                        Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
                     };
                     var pushRefSpec = @"refs/heads/master";
                     repo.Network.Push(remote, pushRefSpec, options);
@@ -507,11 +514,12 @@ namespace Pass4Win
             {
                 this.BeginInvoke((Action)(() => statusPB.PerformStep()));
             }
-            
+
         }
 
         // reset the datagrid (clear & Fill)
-        private void ResetDatagrid(){
+        private void ResetDatagrid()
+        {
             dt.Clear();
             processDirectory(Properties.Settings.Default.PassDirectory);
             ListDirectory(new DirectoryInfo(Properties.Settings.Default.PassDirectory), "");
@@ -603,39 +611,67 @@ namespace Pass4Win
 
         public static bool IsGITAlive(String hostName)
         {
-            try
-            {
-                using (TcpClient tcpClient = new TcpClient())
-                {
-                    tcpClient.Connect(hostName, 9418);
-                    return true;
-                }
-            }
-            catch (SocketException)
-            {
+            Uri HostTest = new Uri(hostName);
+            var client = new TcpClient();
+            var result = client.BeginConnect(HostTest.Host, 9418, null, null);
 
+            result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
+            if (!client.Connected)
+            {
                 return false;
             }
+
+            // we have connected
+            client.EndConnect(result);
+            return true;
         }
 
         public static bool IsHTTPSAlive(String hostName)
         {
-            try
-            {
-                using (TcpClient tcpClient = new TcpClient())
-                {
-                    tcpClient.Connect(hostName, 443);
-                    return true;
-                }
-            }
-            catch (SocketException)
-            {
+            Uri HostTest = new Uri(hostName);
+            var client = new TcpClient();
+            var result = client.BeginConnect(HostTest.Host, 443, null, null);
 
+            result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
+            if (!client.Connected)
+            {
                 return false;
             }
+
+            // we have connected
+            client.EndConnect(result);
+            return true;
         }
 
-
+        public bool GitFetch()
+        {
+            if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
+            {
+                using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
+                {
+                    Signature Signature = new Signature("pass4win", "pull@pass4win.com", new DateTimeOffset(2011, 06, 16, 10, 58, 27, TimeSpan.FromHours(2)));
+                    FetchOptions fetchOptions = new FetchOptions();
+                    fetchOptions.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                    {
+                        Username = DecryptConfig(Properties.Settings.Default.GitUser, "pass4win"),
+                        Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
+                    };
+                    MergeOptions mergeOptions = new MergeOptions();
+                    PullOptions pullOptions = new PullOptions();
+                    pullOptions.FetchOptions = fetchOptions;
+                    pullOptions.MergeOptions = mergeOptions;
+                    try
+                    {
+                        MergeResult mergeResult = repo.Network.Pull(Signature, pullOptions);
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
     }
 
     public class InputBox
@@ -684,7 +720,7 @@ namespace Pass4Win
             form.CancelButton = buttonCancel;
             if (validation != null)
             {
-                form.FormClosing += delegate(object sender, FormClosingEventArgs e)
+                form.FormClosing += delegate (object sender, FormClosingEventArgs e)
                 {
                     if (form.DialogResult == DialogResult.OK)
                     {
@@ -699,7 +735,7 @@ namespace Pass4Win
                 };
             }
 
-            form.Shown += delegate(object sender, EventArgs e)
+            form.Shown += delegate (object sender, EventArgs e)
             {
                 form.TopMost = true;
                 form.Activate();

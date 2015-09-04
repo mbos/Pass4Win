@@ -86,12 +86,12 @@ namespace Pass4Win.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UserGitRemote {
+        public bool UseGitRemote {
             get {
-                return ((bool)(this["UserGitRemote"]));
+                return ((bool)(this["UseGitRemote"]));
             }
             set {
-                this["UserGitRemote"] = value;
+                this["UseGitRemote"] = value;
             }
         }
     }

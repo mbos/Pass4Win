@@ -129,6 +129,7 @@
             // 
             this.txtGitUser.Location = new System.Drawing.Point(294, 95);
             this.txtGitUser.Name = "txtGitUser";
+            this.txtGitUser.ReadOnly = true;
             this.txtGitUser.Size = new System.Drawing.Size(306, 20);
             this.txtGitUser.TabIndex = 7;
             this.txtGitUser.Leave += new System.EventHandler(this.txtGitUser_Leave);
@@ -139,6 +140,7 @@
             this.txtGitPass.Location = new System.Drawing.Point(294, 121);
             this.txtGitPass.Name = "txtGitPass";
             this.txtGitPass.PasswordChar = '*';
+            this.txtGitPass.ReadOnly = true;
             this.txtGitPass.Size = new System.Drawing.Size(306, 20);
             this.txtGitPass.TabIndex = 9;
             this.txtGitPass.Leave += new System.EventHandler(this.txtGitPass_Leave);
@@ -157,7 +159,7 @@
             // 
             this.txtGitHost.Location = new System.Drawing.Point(294, 147);
             this.txtGitHost.Name = "txtGitHost";
-            this.txtGitHost.PasswordChar = '*';
+            this.txtGitHost.ReadOnly = true;
             this.txtGitHost.Size = new System.Drawing.Size(306, 20);
             this.txtGitHost.TabIndex = 11;
             this.txtGitHost.Leave += new System.EventHandler(this.txtGitHost_Leave);

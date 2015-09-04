@@ -21,7 +21,7 @@ namespace Pass4Win
             {
                 txtPassFolder.Text = Properties.Settings.Default.PassDirectory;
                 txtGPG.Text = Properties.Settings.Default.GPGEXE;
-                chkboxRemoteRepo.Checked = Properties.Settings.Default.UserGitRemote;
+                chkboxRemoteRepo.Checked = Properties.Settings.Default.UseGitRemote;
                 txtGitUser.Text = Properties.Settings.Default.GitUser;
                 txtGitPass.Text = Properties.Settings.Default.GitPass;
                 txtGitHost.Text = Properties.Settings.Default.GitRemote;
@@ -50,12 +50,12 @@ namespace Pass4Win
 
         private void chkboxRemoteRepo_CheckedChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.UserGitRemote = chkboxRemoteRepo.Checked;
+            Properties.Settings.Default.UseGitRemote = chkboxRemoteRepo.Checked;
             Properties.Settings.Default.Save();
             // Enabling and disabling based on checkbox state
-            txtGitUser.ReadOnly = chkboxRemoteRepo.Checked;
-            txtGitPass.ReadOnly = chkboxRemoteRepo.Checked;
-            txtGitHost.ReadOnly = chkboxRemoteRepo.Checked;
+            txtGitUser.ReadOnly = !chkboxRemoteRepo.Checked;
+            txtGitPass.ReadOnly = !chkboxRemoteRepo.Checked;
+            txtGitHost.ReadOnly = !chkboxRemoteRepo.Checked;
         }
 
         private void txtGitUser_Leave(object sender, EventArgs e)
@@ -66,7 +66,7 @@ namespace Pass4Win
 
         private void txtGitPass_Leave(object sender, EventArgs e)
         {
-            Properties.Settings.Default.GitPass = txtGitPass.Text;
+            Properties.Settings.Default.GitPass = frmMain.EncryptConfig(txtGitPass.Text,"pass4win");
             Properties.Settings.Default.Save();
         }
 
@@ -118,6 +118,17 @@ namespace Pass4Win
             {
                 errorProvider1.SetError(txtGitHost, "This is a required field!");
                 e.Cancel = true;
+            }
+            else
+            {
+                if (chkboxRemoteRepo.Checked == true)
+                {
+                    if (!frmMain.IsGITAlive(txtGitHost.Text) && !frmMain.IsHTTPSAlive(txtGitHost.Text))
+                    {
+                        errorProvider1.SetError(txtGitHost, "Host unreachable!");
+                        e.Cancel = true;
+                    }
+                }
             }
         }
 
