@@ -616,7 +616,7 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Uri HostTest = new Uri(hostName);
             var client = new TcpClient();
-            var result = client.BeginConnect(HostTest.Host, 9418, null, null);
+            var result = client.BeginConnect(HostTest.Authority, 9418, null, null);
 
             result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
             if (!client.Connected)
@@ -633,7 +633,7 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Uri HostTest = new Uri(hostName);
             var client = new TcpClient();
-            var result = client.BeginConnect(HostTest.Host, 443, null, null);
+            var result = client.BeginConnect(HostTest.Authority, 443, null, null);
 
             result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
             if (!client.Connected)

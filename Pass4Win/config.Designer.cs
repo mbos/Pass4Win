@@ -44,6 +44,7 @@
             this.txtGitHost = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -178,11 +179,22 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(523, 188);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(77, 27);
+            this.btnSave.TabIndex = 12;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // frmConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(621, 188);
+            this.ClientSize = new System.Drawing.Size(630, 227);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtGitHost);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtGitPass);
@@ -227,5 +239,6 @@
         private System.Windows.Forms.TextBox txtGitHost;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Button btnSave;
     }
 }

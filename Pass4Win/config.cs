@@ -136,5 +136,10 @@ namespace Pass4Win
         {
             if (!ValidateChildren()) e.Cancel = true;
         }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
