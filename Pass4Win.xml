@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<iasettings>
+  <projectproperties>
+    <manufacturer>Mike Bos</manufacturer>
+    <productname>Pass4Win</productname>
+    <productversion>1.0.0.6</productversion>
+    <productcode>{aa4e2dd4-d7c8-4fab-865d-5d9b4dbc3f9e}</productcode>
+    <upgradecode>{2dc5e3bf-e24a-47a3-b896-5436cb87e287}</upgradecode>
+    <language>0</language>
+    <languagename>English</languagename>
+  </projectproperties>
+  <summary>
+    <title>Pass4Win</title>
+    <subject>Pass4Win</subject>
+    <author>Mike Bos</author>
+    <summarycomments />
+    <revisioncode>{403eaf30-ef95-436b-bbf5-c4661573cb57}</revisioncode>
+    <uacelevation>highestAvailable</uacelevation>
+  </summary>
+  <addremove>
+    <publishername>Mike Bos</publishername>
+    <contactname>Mike Bos</contactname>
+    <helplink>http://www.mywebsite.com</helplink>
+    <productupdatelink>https://github.com/mbos/Pass4Win</productupdatelink>
+    <addremovecomments />
+    <iconfile />
+  </addremove>
+  <codegen>
+    <generateincludefiles>1</generateincludefiles>
+    <generatefeatures>1</generatefeatures>
+    <refreshscript>0</refreshscript>
+  </codegen>
+  <compilervariables>
+    <variables />
+  </compilervariables>
+  <build>
+    <buildtype>0</buildtype>
+  </build>
+  <files>
+    <filedetails filename="C:\Users\mikeb\Documents\Pass4Win\Pass4Win\bin\Debug\Pass4Win.exe" targetlocation="$TARGETDIR$" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="1" runprogram="1" installfilecommand="1" />
+  </files>
+  <dependencies>
+    <dependencydetails filename="C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll" targetlocation="$TARGETDIR$" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="0" runprogram="0" installfilecommand="0" />
+    <dependencydetails filename="C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll" targetlocation="$TARGETDIR$" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="0" runprogram="0" installfilecommand="0" />
+  </dependencies>
+  <dialogtheme>
+    <themename>Official</themename>
+  </dialogtheme>
+  <authenticode>
+    <sign>0</sign>
+    <certificatefile />
+    <keyfile />
+    <productinfourl />
+    <authpassword />
+    <timestampurl />
+  </authenticode>
+  <compression>
+    <compressiontype>4</compressiontype>
+    <encrypt>0</encrypt>
+    <compressionpassword />
+  </compression>
+  <output>
+    <outputtype>0</outputtype>
+    <location />
+    <filename />
+    <calculatefilehash>0</calculatefilehash>
+    <refreshrevisioncode>1</refreshrevisioncode>
+  </output>
+</iasettings>

@@ -17,7 +17,8 @@
 !define ABOUTURL "https://github.com/mbos/Pass4Win" # "Publisher" link
 # This is the size (in kB) of all the files copied into "Program Files"
 !define INSTALLSIZE 3003
- 
+
+SilentInstall silent
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
  
 InstallDir "$PROGRAMFILES\${APPNAME}"
@@ -43,10 +44,10 @@ ${If} $0 != "admin" ;Require admin rights on NT4+
 ${EndIf}
 !macroend
  
-function .onInit
+ Function .onInit
   setShellVarContext all
   !insertmacro VerifyUserIsAdmin
-functionEnd
+FunctionEnd
  
 section "install"
   # Files for the install directory - to build the installer, these should be in the same directory as the install script (this file)
@@ -97,11 +98,7 @@ sectionEnd
  
 function un.onInit
   SetShellVarContext all
- 
   #Verify the uninstaller - last chance to back out
-  MessageBox MB_OKCANCEL "Permanantly remove ${APPNAME}?" IDOK next
-    Abort
-  next:
   !insertmacro VerifyUserIsAdmin
 functionEnd
  
@@ -139,3 +136,4 @@ section "uninstall"
   # Remove uninstaller information from the registry
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
 sectionEnd
+
