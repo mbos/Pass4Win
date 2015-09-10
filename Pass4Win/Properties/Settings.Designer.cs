@@ -49,7 +49,7 @@ namespace Pass4Win.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("firstrun")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string GitRemote {
             get {
                 return ((string)(this["GitRemote"]));
@@ -61,7 +61,7 @@ namespace Pass4Win.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("firstrun")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string GitUser {
             get {
                 return ((string)(this["GitUser"]));
@@ -73,7 +73,7 @@ namespace Pass4Win.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("firstrun")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string GitPass {
             get {
                 return ((string)(this["GitPass"]));

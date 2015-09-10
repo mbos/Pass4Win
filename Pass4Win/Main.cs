@@ -31,6 +31,17 @@ namespace Pass4Win
 {
     public partial class frmMain : Form
     {
+        // Used for class access to the data
+        private DataTable dt = new DataTable();
+        // Class access to the tempfile
+        private string tmpfile;
+        // timer for clearing clipboard
+        static System.Threading.Timer _timer;
+        // UI Trayicon toggle
+        private bool EnableTray;
+        // Remote status of GIT
+        private bool GITRepoOffline = true;
+
         public frmMain()
         {
             InitializeComponent();
@@ -94,7 +105,7 @@ namespace Pass4Win
             else
             {
                 // Do we do remote or not
-                if (!GITRepoOffline)
+                if (Properties.Settings.Default.UseGitRemote)
                 {
                     // Check if the remote is there
                     if (IsGITAlive(Properties.Settings.Default.GitRemote) || IsHTTPSAlive(Properties.Settings.Default.GitRemote))
@@ -108,7 +119,8 @@ namespace Pass4Win
                         // if we had an failure, display offline
                         toolStripOffline.Visible = true;
                     }
-                } else
+                }
+                else
                 {
                     // no remote checkbox so we're offline
                     toolStripOffline.Visible = true;
@@ -156,18 +168,6 @@ namespace Pass4Win
 
             EnableTray = true;
         }
-
-        // Used for class access to the data
-        private DataTable dt = new DataTable();
-        // Class access to the tempfile
-        private string tmpfile;
-        // timer for clearing clipboard
-        static System.Threading.Timer _timer;
-        // UI Trayicon toggle
-        private bool EnableTray;
-        // Remote status of GIT
-        private bool GITRepoOffline = true;
-
 
         //
         // UI stuff
