@@ -97,10 +97,11 @@
             this.toolStripOffline.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripOffline.ForeColor = System.Drawing.Color.IndianRed;
             this.toolStripOffline.Name = "toolStripOffline";
-            this.toolStripOffline.Size = new System.Drawing.Size(605, 17);
+            this.toolStripOffline.Size = new System.Drawing.Size(472, 17);
             this.toolStripOffline.Spring = true;
-            this.toolStripOffline.Text = "OFFLINE";
+            this.toolStripOffline.Text = "OFFLINE (click to sync)";
             this.toolStripOffline.Visible = false;
+            this.toolStripOffline.Click += new System.EventHandler(this.toolStripOffline_Click);
             // 
             // txtPassDetail
             // 

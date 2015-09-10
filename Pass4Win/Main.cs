@@ -75,14 +75,12 @@ namespace Pass4Win
                         catch
                         {
                             MessageBox.Show("Couldn't connect to remote git repository. Pass4Win set to offline mode.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Properties.Settings.Default.UseGitRemote = false;
                             toolStripOffline.Visible = true;
                         }
                     }
                     else
                     {
                         MessageBox.Show("Can't reach your GIT host. Pass4Win set to offline mode.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Properties.Settings.Default.UseGitRemote = false;
                         toolStripOffline.Visible = true;
                     }
                 }
@@ -107,10 +105,13 @@ namespace Pass4Win
                     // Do a fetch to get the latest repo.
                     if (!GitFetch())
                     {
-                        MessageBox.Show("Couldn't connect to remote git repository. Pass4Win set to offline mode.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Properties.Settings.Default.UseGitRemote = false;
+                        // if we had an failure, display offline
                         toolStripOffline.Visible = true;
                     }
+                } else
+                {
+                    // no remote checkbox so we're offline
+                    toolStripOffline.Visible = true;
                 }
 
             }
@@ -636,13 +637,66 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
         private void btnConfig_Click(object sender, EventArgs e)
         {
             frmConfig Config = new frmConfig();
+            Config.SendOffline += new EventHandler(Config_SendOffline);
             Config.Show();
+        }
+
+        void Config_SendOffline(object sender, EventArgs e)
+        {
+            frmConfig child = sender as frmConfig;
+            if (child != null)
+            {
+                toolStripOffline.Visible = child.IsOffline;
+                if (!child.IsOffline)
+                {
+                    GITRepoOffline = false;
+                    if (!GitFetch())
+                    {
+                        // nope not online
+                        GITRepoOffline = true;
+                        MessageBox.Show("Couldn't connect to remote git repository. Please check the config or the remote host.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        toolStripOffline.Visible = true;
+                    }
+                }
+            }
         }
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
             frmAbout About = new frmAbout();
             About.Show();
+        }
+
+        private void toolStripOffline_Click(object sender, EventArgs e)
+        {
+            // Is remote on in the config
+            if (Properties.Settings.Default.UseGitRemote)
+            {
+                // Check if the remote is there
+                if (IsGITAlive(Properties.Settings.Default.GitRemote) || IsHTTPSAlive(Properties.Settings.Default.GitRemote))
+                {
+                    // looks good, let's try
+                    GITRepoOffline = false;
+                }
+
+                // Do a fetch to get the latest repo.
+                if (!GitFetch())
+                {
+                    // nope not online
+                    GITRepoOffline = true;
+                    MessageBox.Show("Couldn't connect to remote git repository. Please check the config or the remote host.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    // We're online
+                    toolStripOffline.Visible = false;
+                }
+            }
+            else
+            {
+                // no remote checkbox so we're staying offline
+                MessageBox.Show("In the config remote is disabled.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public static bool IsGITAlive(String hostName)

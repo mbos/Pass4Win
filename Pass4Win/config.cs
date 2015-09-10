@@ -47,6 +47,25 @@ namespace Pass4Win
         }
 
         private bool ValCancel = false;
+        private bool Offline = false;
+
+        // handling communication with the main form
+        public bool IsOffline
+        {
+            get { return Offline; }
+            set { Offline = value; }
+        }
+
+        public event EventHandler SendOffline;
+
+        protected virtual void OnSendOffline(EventArgs e)
+        {
+            EventHandler eh = SendOffline;
+            if (eh != null)
+            {
+                eh(this, e);
+            }
+        }
 
         private void txtPassFolder_Click(object sender, EventArgs e)
         {
@@ -145,8 +164,23 @@ namespace Pass4Win
                 {
                     if (!frmMain.IsGITAlive(txtGitHost.Text) && !frmMain.IsHTTPSAlive(txtGitHost.Text))
                     {
-                        errorProvider1.SetError(txtGitHost, "Host unreachable!");
-                        if (ValCancel) e.Cancel = true;
+                        if (ValCancel)
+                        {
+                            Uri HostTest;
+                            if (!Uri.TryCreate(txtGitHost.Text, UriKind.Absolute, out HostTest))
+                            {
+                                errorProvider1.SetError(txtGitHost, "Not a valid URL!");
+                                e.Cancel = true;
+                            }
+                        }
+                        else
+                        {
+                            errorProvider1.SetError(txtGitHost, "Host unreachable!");
+                            Offline = true;
+                        }
+                    } else
+                    {
+                        Offline = false;
                     }
                 }
             }
@@ -156,6 +190,7 @@ namespace Pass4Win
         {
             ValCancel = true;
             if (!ValidateChildren()) e.Cancel = true;
+            OnSendOffline(null);
             ValCancel = false;
         }
 
