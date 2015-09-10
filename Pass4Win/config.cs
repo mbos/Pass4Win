@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*
+ * Copyright (C) 2105 by Mike Bos
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation;
+ * either version 3 of the License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE. See the GNU General Public License for more details.
+ *
+ * A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content
+*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,19 +26,27 @@ namespace Pass4Win
     {
         public frmConfig()
         {
-            InitializeComponent();
+            InitializeComponent();     
 
             // fill in the blanks
             if (Properties.Settings.Default.PassDirectory != "firstrun")
             {
+                // set config values
                 txtPassFolder.Text = Properties.Settings.Default.PassDirectory;
                 txtGPG.Text = Properties.Settings.Default.GPGEXE;
                 chkboxRemoteRepo.Checked = Properties.Settings.Default.UseGitRemote;
                 txtGitUser.Text = Properties.Settings.Default.GitUser;
                 txtGitPass.Text = Properties.Settings.Default.GitPass;
                 txtGitHost.Text = Properties.Settings.Default.GitRemote;
+
+                // set access
+                txtGitUser.ReadOnly = !chkboxRemoteRepo.Checked;
+                txtGitPass.ReadOnly = !chkboxRemoteRepo.Checked;
+                txtGitHost.ReadOnly = !chkboxRemoteRepo.Checked;
             }
         }
+
+        private bool ValCancel = false;
 
         private void txtPassFolder_Click(object sender, EventArgs e)
         {
@@ -81,7 +101,7 @@ namespace Pass4Win
             if (txtPassFolder.Text == "")
             {
                 errorProvider1.SetError(txtPassFolder, "This is a required field!");
-                e.Cancel = true;
+                if (ValCancel) e.Cancel = true;
             }
         }
 
@@ -90,7 +110,7 @@ namespace Pass4Win
             if (txtGPG.Text == "")
             {
                 errorProvider1.SetError(txtGPG, "This is a required field!");
-                e.Cancel = true;
+                if (ValCancel) e.Cancel = true;
             }
         }
 
@@ -99,7 +119,7 @@ namespace Pass4Win
             if (chkboxRemoteRepo.Checked == true && txtGitUser.Text == "")
             {
                 errorProvider1.SetError(txtGitUser, "This is a required field!");
-                e.Cancel = true;
+                if (ValCancel) e.Cancel = true;
             }
         }
 
@@ -108,7 +128,7 @@ namespace Pass4Win
             if (chkboxRemoteRepo.Checked == true && txtGitPass.Text == "")
             {
                 errorProvider1.SetError(txtGitPass, "This is a required field!");
-                e.Cancel = true;
+                if (ValCancel) e.Cancel = true;
             }
         }
 
@@ -117,7 +137,7 @@ namespace Pass4Win
             if (chkboxRemoteRepo.Checked == true && txtGitHost.Text == "")
             {
                 errorProvider1.SetError(txtGitHost, "This is a required field!");
-                e.Cancel = true;
+                if (ValCancel) e.Cancel = true;
             }
             else
             {
@@ -126,7 +146,7 @@ namespace Pass4Win
                     if (!frmMain.IsGITAlive(txtGitHost.Text) && !frmMain.IsHTTPSAlive(txtGitHost.Text))
                     {
                         errorProvider1.SetError(txtGitHost, "Host unreachable!");
-                        e.Cancel = true;
+                        if (ValCancel) e.Cancel = true;
                     }
                 }
             }
@@ -134,7 +154,9 @@ namespace Pass4Win
 
         private void frmConfig_FormClosing(object sender, FormClosingEventArgs e)
         {
+            ValCancel = true;
             if (!ValidateChildren()) e.Cancel = true;
+            ValCancel = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)

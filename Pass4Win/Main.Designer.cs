@@ -47,6 +47,7 @@
             this.btnMakeVisible = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.btnConfig = new System.Windows.Forms.Button();
+            this.btnAbout = new System.Windows.Forms.Button();
             this.statusPass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
@@ -57,7 +58,7 @@
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdd.Location = new System.Drawing.Point(372, 5);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.Size = new System.Drawing.Size(61, 23);
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -96,7 +97,7 @@
             this.toolStripOffline.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripOffline.ForeColor = System.Drawing.Color.IndianRed;
             this.toolStripOffline.Name = "toolStripOffline";
-            this.toolStripOffline.Size = new System.Drawing.Size(472, 17);
+            this.toolStripOffline.Size = new System.Drawing.Size(605, 17);
             this.toolStripOffline.Spring = true;
             this.toolStripOffline.Text = "OFFLINE";
             this.toolStripOffline.Visible = false;
@@ -189,9 +190,9 @@
             // btnKeyManager
             // 
             this.btnKeyManager.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnKeyManager.Location = new System.Drawing.Point(475, 5);
+            this.btnKeyManager.Location = new System.Drawing.Point(445, 5);
             this.btnKeyManager.Name = "btnKeyManager";
-            this.btnKeyManager.Size = new System.Drawing.Size(75, 23);
+            this.btnKeyManager.Size = new System.Drawing.Size(61, 23);
             this.btnKeyManager.TabIndex = 3;
             this.btnKeyManager.Text = "Keys";
             this.btnKeyManager.UseVisualStyleBackColor = true;
@@ -219,19 +220,31 @@
             // btnConfig
             // 
             this.btnConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnConfig.Location = new System.Drawing.Point(578, 5);
+            this.btnConfig.Location = new System.Drawing.Point(516, 5);
             this.btnConfig.Name = "btnConfig";
-            this.btnConfig.Size = new System.Drawing.Size(75, 23);
+            this.btnConfig.Size = new System.Drawing.Size(61, 23);
             this.btnConfig.TabIndex = 7;
             this.btnConfig.Text = "Config";
             this.btnConfig.UseVisualStyleBackColor = true;
-            this.btnConfig.Click += new System.EventHandler(this.button1_Click);
+            this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
+            // 
+            // btnAbout
+            // 
+            this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAbout.Location = new System.Drawing.Point(590, 5);
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(61, 23);
+            this.btnAbout.TabIndex = 8;
+            this.btnAbout.Text = "About";
+            this.btnAbout.UseVisualStyleBackColor = true;
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(659, 312);
+            this.Controls.Add(this.btnAbout);
             this.Controls.Add(this.btnConfig);
             this.Controls.Add(this.btnMakeVisible);
             this.Controls.Add(this.btnKeyManager);
@@ -274,6 +287,7 @@
         private System.Windows.Forms.Button btnConfig;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripOffline;
+        private System.Windows.Forms.Button btnAbout;
     }
 }
 

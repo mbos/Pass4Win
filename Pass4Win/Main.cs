@@ -1,8 +1,23 @@
-﻿using GpgApi;
+﻿/*
+ * Copyright (C) 2105 by Mike Bos
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation;
+ * either version 3 of the License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE. See the GNU General Public License for more details.
+ *
+ * A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content
+*/
+
+
+
+using GpgApi;
 using LibGit2Sharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -20,6 +35,14 @@ namespace Pass4Win
         {
             InitializeComponent();
             EnableTray = false;
+            
+            // Getting actual version
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+            version = version.Remove(5, 2);
+
+            this.Text = "Pass4Win version " + version; 
 
             // Do we have a valid password store and settings
             if (Properties.Settings.Default.PassDirectory == "firstrun")
@@ -72,18 +95,22 @@ namespace Pass4Win
             }
             else
             {
-                // Check if the remote is there
-                if (IsGITAlive(Properties.Settings.Default.GitRemote) || IsHTTPSAlive(Properties.Settings.Default.GitRemote))
+                // Do we do remote or not
+                if (!GITRepoOffline)
                 {
-                    GITRepoOffline = false;
-                }
+                    // Check if the remote is there
+                    if (IsGITAlive(Properties.Settings.Default.GitRemote) || IsHTTPSAlive(Properties.Settings.Default.GitRemote))
+                    {
+                        GITRepoOffline = false;
+                    }
 
-                // Do a fetch to get the latest repo.
-                if (!GitFetch())
-                {
-                    MessageBox.Show("Couldn't connect to remote git repository. Pass4Win set to offline mode.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Properties.Settings.Default.UseGitRemote = false;
-                    toolStripOffline.Visible = true;
+                    // Do a fetch to get the latest repo.
+                    if (!GitFetch())
+                    {
+                        MessageBox.Show("Couldn't connect to remote git repository. Pass4Win set to offline mode.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Properties.Settings.Default.UseGitRemote = false;
+                        toolStripOffline.Visible = true;
+                    }
                 }
 
             }
@@ -606,44 +633,60 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
             this.WindowState = FormWindowState.Normal;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnConfig_Click(object sender, EventArgs e)
         {
             frmConfig Config = new frmConfig();
             Config.Show();
         }
 
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            frmAbout About = new frmAbout();
+            About.Show();
+        }
+
         public static bool IsGITAlive(String hostName)
         {
-            Uri HostTest = new Uri(hostName);
-            var client = new TcpClient();
-            var result = client.BeginConnect(HostTest.Authority, 9418, null, null);
-
-            result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
-            if (!client.Connected)
+            Uri HostTest;
+            if (Uri.TryCreate(hostName, UriKind.Absolute, out HostTest))
             {
-                return false;
-            }
+                var client = new TcpClient();
+                var result = client.BeginConnect(HostTest.Authority, 9418, null, null);
 
-            // we have connected
-            client.EndConnect(result);
-            return true;
+                result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
+                if (!client.Connected)
+                {
+                    return false;
+                }
+                // we have connected
+                client.EndConnect(result);
+                return true;
+            }
+            //fail
+            return false;
         }
 
         public static bool IsHTTPSAlive(String hostName)
         {
-            Uri HostTest = new Uri(hostName);
-            var client = new TcpClient();
-            var result = client.BeginConnect(HostTest.Authority, 443, null, null);
-
-            result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
-            if (!client.Connected)
             {
+                Uri HostTest;
+                if (Uri.TryCreate(hostName, UriKind.Absolute, out HostTest))
+                {
+                    var client = new TcpClient();
+                    var result = client.BeginConnect(HostTest.Authority, 443, null, null);
+
+                    result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
+                    if (!client.Connected)
+                    {
+                        return false;
+                    }
+                    // we have connected
+                    client.EndConnect(result);
+                    return true;
+                }
+                //fail
                 return false;
             }
-
-            // we have connected
-            client.EndConnect(result);
-            return true;
         }
 
         public bool GitFetch()
