@@ -46,18 +46,33 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Toggle to cancel on validate or not
+        /// </summary>
         private bool ValCancel = false;
+        /// <summary>
+        /// Toggle to get/set online state
+        /// </summary>
         private bool Offline = false;
 
-        // handling communication with the main form
+        /// <summary>
+        /// Var to communicate the online status with the main form
+        /// </summary>
         public bool IsOffline
         {
             get { return Offline; }
             set { Offline = value; }
         }
 
+        /// <summary>
+        /// Event handler to give a signal to the mainform when there is a change
+        /// </summary>
         public event EventHandler SendOffline;
 
+        /// <summary>
+        /// function to send the signal
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnSendOffline(EventArgs e)
         {
             EventHandler eh = SendOffline;
@@ -67,6 +82,11 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Open a folder dialog for selecting pass directory
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtPassFolder_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
@@ -77,6 +97,11 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Open a file open dialog for selecting gpg.exe
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtGPG_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -87,6 +112,11 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Do we want git sync or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkboxRemoteRepo_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.UseGitRemote = chkboxRemoteRepo.Checked;
@@ -97,24 +127,44 @@ namespace Pass4Win
             txtGitHost.ReadOnly = !chkboxRemoteRepo.Checked;
         }
 
+        /// <summary>
+        /// Saves Git user data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtGitUser_Leave(object sender, EventArgs e)
         {
             Properties.Settings.Default.GitUser = txtGitUser.Text;
             Properties.Settings.Default.Save();
         }
 
+        /// <summary>
+        /// Save Git password data (encrypted)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtGitPass_Leave(object sender, EventArgs e)
         {
             Properties.Settings.Default.GitPass = frmMain.EncryptConfig(txtGitPass.Text,"pass4win");
             Properties.Settings.Default.Save();
         }
 
+        /// <summary>
+        /// Save git host data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtGitHost_Leave(object sender, EventArgs e)
         {
             Properties.Settings.Default.GitRemote = txtGitHost.Text;
             Properties.Settings.Default.Save();
         }
 
+        /// <summary>
+        /// Validate pass folder on a folder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtPassFolder_Validating(object sender, CancelEventArgs e)
         {
             if (txtPassFolder.Text == "")
@@ -124,6 +174,11 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Validate if there is a GPG location 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtGPG_Validating(object sender, CancelEventArgs e)
         {
             if (txtGPG.Text == "")
@@ -133,6 +188,11 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Validate if there's a username when the remote repo is checked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtGitUser_Validating(object sender, CancelEventArgs e)
         {
             if (chkboxRemoteRepo.Checked == true && txtGitUser.Text == "")
@@ -142,6 +202,11 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Validates the Git pass is there when remote repo is checked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtGitPass_Validating(object sender, CancelEventArgs e)
         {
             if (chkboxRemoteRepo.Checked == true && txtGitPass.Text == "")
@@ -151,6 +216,12 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Validates if the host is filled when the remote repo is checked
+        /// Also checkes on alive (with a connect) and when that fails if it's a valid formed URL
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtGitHost_Validating(object sender, CancelEventArgs e)
         {
             if (chkboxRemoteRepo.Checked == true && txtGitHost.Text == "")
@@ -186,6 +257,11 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Ensures validating when the form is closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmConfig_FormClosing(object sender, FormClosingEventArgs e)
         {
             ValCancel = true;
@@ -194,6 +270,11 @@ namespace Pass4Win
             ValCancel = false;
         }
 
+        /// <summary>
+        /// A button just for the show
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
             this.Close();

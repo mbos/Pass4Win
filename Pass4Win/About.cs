@@ -38,6 +38,11 @@ namespace Pass4Win
             txtPassVersion.Text = "Pass4Win version " + version;
         }
 
+        /// <summary>
+        /// Enable links to be opened by the system default browser
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void richTextBox1_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(e.LinkText);

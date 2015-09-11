@@ -35,13 +35,22 @@ namespace Pass4Win
             ListDirectory(treeView1, new DirectoryInfo(Properties.Settings.Default.PassDirectory));
         }
 
-
+        /// <summary>
+        /// Filles the treenode.
+        /// </summary>
+        /// <param name="treeView">Which treeview to fill</param>
+        /// <param name="rootDirectoryInfo">Which directory</param>
         private void ListDirectory(TreeView treeView, DirectoryInfo rootDirectoryInfo)
         {
             treeView.Nodes.Clear();
             treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
         }
 
+        /// <summary>
+        /// Recursive function used by ListDirectory
+        /// </summary>
+        /// <param name="directoryInfo"></param>
+        /// <returns></returns>
         private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
         {
             var directoryNode = new TreeNode(directoryInfo.Name);
@@ -51,6 +60,11 @@ namespace Pass4Win
             return directoryNode;
         }
 
+        /// <summary>
+        /// Shows the gpg keys for that specific directory
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             string tmpFile = Path.GetDirectoryName(Properties.Settings.Default.PassDirectory) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
@@ -74,6 +88,11 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Adds a key to a selected directory
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
             KeySelect newKeySelect = new KeySelect();
@@ -103,6 +122,10 @@ namespace Pass4Win
              
         }
 
+        /// <summary>
+        /// Ensures the files in a given directory are encrypted with all the current keys.
+        /// </summary>
+        /// <param name="path"></param>
         private void ScanDirectory(DirectoryInfo path)
         {
             foreach (var directory in path.GetDirectories())
@@ -122,6 +145,11 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Remove a GPG key from a directory
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listBox1.Items[0].ToString() != "There are no specific keys set")
@@ -155,6 +183,10 @@ namespace Pass4Win
             ScanDirectory(path);
         }
 
+        /// <summary>
+        /// Fires a decrypt thread with a callback the encrypts it again, used to make the keys current
+        /// </summary>
+        /// <param name="path"></param>
         private void recrypt(string path)
         {
             string tmpFile = Path.GetTempFileName();
@@ -166,6 +198,12 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Callback from recrypt, ensures the file is encrypted again with the current keys
+        /// </summary>
+        /// <param name="result"></param>
+        /// <param name="tmpFile"></param>
+        /// <param name="path"></param>
         private void Decrypt_Callback(GpgInterfaceResult result, string tmpFile, string path)
         {
             if (result.Status == GpgInterfaceStatus.Success)
@@ -196,6 +234,13 @@ namespace Pass4Win
             }
         }
 
+        /// <summary>
+        /// Callback from Decrypt_Callback, ensures the tmp files are deleted and the file get's the correct name
+        /// </summary>
+        /// <param name="result"></param>
+        /// <param name="tmpFile"></param>
+        /// <param name="tmpFile2"></param>
+        /// <param name="path"></param>
         public void Encrypt_Callback(GpgInterfaceResult result, string tmpFile, string tmpFile2, string path)
         {
             if (result.Status == GpgInterfaceStatus.Success)
