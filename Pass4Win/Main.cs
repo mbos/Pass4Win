@@ -242,7 +242,13 @@ namespace Pass4Win
                 // dispose timer thread and clear ui.
                 if (_timer != null) _timer.Dispose();
                 statusPB.Visible = false;
+                // disable right click
+                dataMenu.Enabled = false;
                 statusTxt.Text = "Ready";
+            } else
+            {
+                // making sure the menu works
+                dataMenu.Enabled = true;
             }
         }
 
