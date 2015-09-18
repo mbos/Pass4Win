@@ -43,6 +43,10 @@ namespace Pass4Win
         // Remote status of GIT
         private bool GITRepoOffline = true;
 
+
+        /// <summary>
+        /// Inits the repo, gpg etc
+        /// </summary>
         public frmMain()
         {
             InitializeComponent();
@@ -56,7 +60,7 @@ namespace Pass4Win
 
             this.Text = "Pass4Win version " + version;
 
-            // checking for update
+            // checking for update this an async operation
             LatestPass4WinRelease();
 
             // Do we have a valid password store and settings
@@ -174,7 +178,10 @@ namespace Pass4Win
         }
 
 
-
+        /// <summary>
+        /// Async latest version checker, gives a popup if a different version is detected
+        /// </summary>
+        /// <returns></returns>
         public async Task LatestPass4WinRelease()
         {
             var client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("Pass4Win"));
@@ -202,16 +209,17 @@ namespace Pass4Win
             }
         }
 
-        //
-        // UI stuff
-        //
-
         private void btnKeyManager_Click(object sender, EventArgs e)
         {
             frmKeyManager KeyManager = new frmKeyManager();
             KeyManager.Show();
         }
 
+        /// <summary>
+        /// Adds an entry, validates input, creates the filepath and adds the file to git
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAdd_Click(object sender, EventArgs e)
         {
             // get the new entryname
@@ -268,7 +276,11 @@ namespace Pass4Win
             }
         }
 
-        // Search handler
+        /// <summary>
+        /// Set the sql to adjust the datagrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtPass_TextChanged(object sender, EventArgs e)
         {
             dt.DefaultView.RowFilter = "colText LIKE '%" + txtPass.Text + "%'";
@@ -288,7 +300,11 @@ namespace Pass4Win
             }
         }
 
-        // Decrypt the selected entry when pressing enter in textbox
+        /// <summary>
+        /// Decrypt the selected entry when pressing enter in textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtPass_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
@@ -296,6 +312,11 @@ namespace Pass4Win
                     decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
         }
 
+        /// <summary>
+        /// Decrypts current selection and cleans up the detail view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataPass_SelectionChanged(object sender, EventArgs e)
         {
             if (dataPass.CurrentCell != null)
@@ -311,11 +332,16 @@ namespace Pass4Win
                 decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
         }
 
+        /// <summary>
+        /// Cleans up and reencrypts after an edit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtPassDetail_Leave(object sender, EventArgs e)
         {
             if (txtPassDetail.ReadOnly == false)
             {
-                txtPassDetail.ReadOnly = false;
+                txtPassDetail.ReadOnly = true;
                 txtPassDetail.Visible = false;
                 btnMakeVisible.Visible = true;
                 txtPassDetail.BackColor = Color.LightGray;
@@ -368,11 +394,11 @@ namespace Pass4Win
             dataPass.Enabled = true;
         }
 
-        //
-        // Decrypt functions
-        //
-
-        // Decrypt the file into a tempfile. 
+        /// <summary>
+        /// Decrypt the file into a tempfile
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="clear"></param>
         private void decrypt_pass(string path, bool clear = true)
         {
             FileInfo f = new FileInfo(path);
@@ -388,7 +414,13 @@ namespace Pass4Win
             }
         }
 
-        // Callback for the encrypt thread
+        /// <summary>
+        /// Callback for the encrypt thread
+        /// </summary>
+        /// <param name="result"></param>
+        /// <param name="tmpFile"></param>
+        /// <param name="tmpFile2"></param>
+        /// <param name="path"></param>
         public void Encrypt_Callback(GpgInterfaceResult result, string tmpFile, string tmpFile2, string path)
         {
             if (result.Status == GpgInterfaceStatus.Success)
@@ -424,7 +456,11 @@ namespace Pass4Win
             }
         }
 
-        // Callback for the decrypt thread
+        /// <summary>
+        /// Callback for the decrypt thread
+        /// </summary>
+        /// <param name="result"></param>
+        /// <param name="clear"></param>
         private void Decrypt_Callback(GpgInterfaceResult result, bool clear)
         {
             if (result.Status == GpgInterfaceStatus.Success)
@@ -454,27 +490,42 @@ namespace Pass4Win
             }
         }
 
-static public string EncryptConfig(string password, string salt)
-    {
-        byte[] passwordBytes = Encoding.Unicode.GetBytes(password);
-        byte[] saltBytes = Encoding.Unicode.GetBytes(salt);
-        byte[] cipherBytes = ProtectedData.Protect(passwordBytes, saltBytes, DataProtectionScope.CurrentUser);
-        return Convert.ToBase64String(cipherBytes);
-    }
+        /// <summary>
+        /// Encrypt the git password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="salt"></param>
+        /// <returns></returns>
+        static public string EncryptConfig(string password, string salt)
+        {
+            byte[] passwordBytes = Encoding.Unicode.GetBytes(password);
+            byte[] saltBytes = Encoding.Unicode.GetBytes(salt);
+            byte[] cipherBytes = ProtectedData.Protect(passwordBytes, saltBytes, DataProtectionScope.CurrentUser);
 
-static public string DecryptConfig(string cipher, string salt)
-    {
-        byte[] cipherBytes = Convert.FromBase64String(cipher);
-        byte[] saltBytes = Encoding.Unicode.GetBytes(salt);
-        byte[] passwordBytes = ProtectedData.Unprotect(cipherBytes, saltBytes, DataProtectionScope.CurrentUser);
+            return Convert.ToBase64String(cipherBytes);
+        }
 
-        return Encoding.Unicode.GetString(passwordBytes);
-    }
+        /// <summary>
+        /// decrypts the git password
+        /// </summary>
+        /// <param name="cipher"></param>
+        /// <param name="salt"></param>
+        /// <returns></returns>
+        static public string DecryptConfig(string cipher, string salt)
+        {
+            byte[] cipherBytes = Convert.FromBase64String(cipher);
+            byte[] saltBytes = Encoding.Unicode.GetBytes(salt);
+            byte[] passwordBytes = ProtectedData.Unprotect(cipherBytes, saltBytes, DataProtectionScope.CurrentUser);
 
-//
-// All the menu options for the datagrid
-//
-private void editToolStripMenuItem_Click(object sender, EventArgs e)
+            return Encoding.Unicode.GetString(passwordBytes);
+        }
+
+        /// <summary>
+        /// Start an edit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // dispose timer thread and clear ui.
             if (_timer != null) _timer.Dispose();
@@ -489,6 +540,11 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
             txtPassDetail.Focus();
         }
 
+        /// <summary>
+        /// rename the entry with all the hassle that accompanies it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // rename the entry
@@ -497,7 +553,7 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
                 if (val == "")
                     return "Value cannot be empty.";
                 if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
-                    return "Not a valid name, can only use characters or numbers and - \\.";
+                    return "Not a valid name, can only use characters or numbers and _ - \\.";
                 if (File.Exists(Properties.Settings.Default.PassDirectory + "\\" + @val + ".gpg"))
                     return "Entry already exists.";
                 return "";
@@ -539,6 +595,11 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
 
         }
 
+        /// <summary>
+        /// Delete an entry
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // remove from git
@@ -567,11 +628,10 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
             ResetDatagrid();
         }
 
-        //
-        // Generic / Util functions
-        //
-
-        // clear the clipboard and make txt invisible
+        /// <summary>
+        /// clear the clipboard and make txt invisible
+        /// </summary>
+        /// <param name="o"></param>
         void ClearClipboard(object o)
         {
             if (statusPB.Value == 45)
@@ -590,7 +650,9 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
 
         }
 
-        // reset the datagrid (clear & Fill)
+        /// <summary>
+        /// reset the datagrid (clear & Fill)
+        /// </summary>
         private void ResetDatagrid()
         {
             dt.Clear();
@@ -598,7 +660,11 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
             ListDirectory(new DirectoryInfo(Properties.Settings.Default.PassDirectory), "");
         }
 
-        // Fill the datagrid
+        /// <summary>
+        /// Fill the datagrid
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="prefix"></param>
         private void ListDirectory(DirectoryInfo path, string prefix)
         {
             foreach (var directory in path.GetDirectories())
@@ -636,7 +702,10 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
                 }
         }
 
-        // cleanup script to remove empty directories from the password store
+        /// <summary>
+        /// cleanup script to remove empty directories from the password store
+        /// </summary>
+        /// <param name="startLocation"></param>
         private static void processDirectory(string startLocation)
         {
             foreach (var directory in Directory.GetDirectories(startLocation))
@@ -655,6 +724,11 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
             txtPassDetail.Visible = true;
         }
 
+        /// <summary>
+        /// Helper function for systray
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmMain_Resize(object sender, EventArgs e)
         {
             if (FormWindowState.Minimized == this.WindowState && EnableTray == true)
@@ -670,6 +744,11 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
             }
         }
 
+        /// <summary>
+        /// Show form if systray is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
             this.Show();
@@ -683,6 +762,11 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
             Config.Show();
         }
 
+        /// <summary>
+        /// Callback for the event from config that the git repo is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void Config_SendOffline(object sender, EventArgs e)
         {
             frmConfig child = sender as frmConfig;
@@ -709,6 +793,11 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
             About.Show();
         }
 
+        /// <summary>
+        /// Offline -> Online helper
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripOffline_Click(object sender, EventArgs e)
         {
             // Is remote on in the config
@@ -785,6 +874,10 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
             }
         }
 
+        /// <summary>
+        /// Get's the latest and greatest from remote
+        /// </summary>
+        /// <returns></returns>
         public bool GitFetch()
         {
             if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
@@ -817,6 +910,9 @@ private void editToolStripMenuItem_Click(object sender, EventArgs e)
         }
     }
 
+    /// <summary>
+    /// Generic input box
+    /// </summary>
     public class InputBox
     {
         public static DialogResult Show(string title, string promptText, ref string value)

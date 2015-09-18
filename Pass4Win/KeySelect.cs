@@ -48,5 +48,9 @@ namespace Pass4Win
             get { return comboBox1.Text.Split('(')[0]; }
         }
 
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
