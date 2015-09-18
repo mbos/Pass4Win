@@ -8,8 +8,8 @@
 !define DESCRIPTION "Windows version of Pass (http://www.passwordstore.org/) in the sense that the store (password structure) is and should be exactly the same between the two programs."
 # These three must be integers
 !define VERSIONMAJOR 1
-!define VERSIONMINOR 0
-!define VERSIONBUILD 7
+!define VERSIONMINOR 1
+!define VERSIONBUILD 0
 # These will be displayed by the "Click here for support information" link in "Add/Remove Programs"
 # It is possible to use "mailto:" links in here to open the email client
 !define HELPURL "https://github.com/mbos/Pass4Win" # "Support Information" link
@@ -56,6 +56,7 @@ section "install"
   file "${src_dir}\Pass4Win\bin\Release\Pass4Win.exe"
   file "${src_dir}\Pass4Win\bin\Release\LibGit2Sharp.dll"
   file "${src_dir}\Pass4Win\bin\Release\GpgApi.dll"
+  file "${src_dir}\Pass4Win\bin\Release\Octokit.dll"
   file "${src_dir}\Pass4Win\bin\Release\Pass4Win.exe.config"
 
   SetOutPath "$INSTDIR\NativeBinaries\x86"
@@ -117,6 +118,7 @@ section "uninstall"
   delete $INSTDIR\LibGit2Sharp.dll
   delete $INSTDIR\GpgApi.dll
   delete $INSTDIR\git2-e0902fb.dll
+  delete $INSTDIR\Octokit.dll
   delete $INSTDIR\Pass4Win.exe.config
 
   delete $INSTDIR\NativeBinaries\x86\git2-e0902fb.dll
