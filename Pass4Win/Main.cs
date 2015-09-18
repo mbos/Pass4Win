@@ -367,6 +367,7 @@ namespace Pass4Win
                 List<GpgApi.KeyId> recipients = new List<KeyId>() { };
                 foreach (var line in GPGRec)
                 {
+                    bool GotTheKey = false;
                     GpgListSecretKeys publicKeys = new GpgListSecretKeys();
                     publicKeys.Execute();
                     foreach (Key key in publicKeys.Keys)
@@ -374,9 +375,16 @@ namespace Pass4Win
                         if (key.UserInfos[0].Email == line.ToString())
                         {
                             recipients.Add(key.Id);
+                            GotTheKey = true;
                         }
                     }
+                    if (!GotTheKey)
+                    {
+                        MessageBox.Show("So it seems you have a key defined in .gpg-id that's not in your GPG keystore. Please correct this", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
+
                 // encrypt
                 string tmpFile = Path.GetTempFileName();
                 string tmpFile2 = Path.GetTempFileName();
