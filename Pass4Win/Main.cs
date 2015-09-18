@@ -242,6 +242,7 @@ namespace Pass4Win
                     {
                         dataPass.CurrentCell = row.Cells[1];
                         row.Selected = true;
+                        dataPass.FirstDisplayedScrollingRowIndex = row.Index;
                         break;
                     }
                 }
@@ -260,7 +261,9 @@ namespace Pass4Win
                 txtPassDetail.Text = "";
                 txtPassDetail.ReadOnly = false;
                 txtPassDetail.BackColor = Color.White;
-                // dataPass.Enabled = false;
+                txtPassDetail.Visible = true;
+                btnMakeVisible.Visible = false;
+
                 txtPassDetail.Focus();
             }
         }
