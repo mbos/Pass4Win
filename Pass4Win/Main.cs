@@ -113,27 +113,7 @@ namespace Pass4Win
             else
             {
                 // Do we do remote or not
-                if (Properties.Settings.Default.UseGitRemote)
-                {
-                    // Check if the remote is there
-                    if (IsGITAlive(Properties.Settings.Default.GitRemote) || IsHTTPSAlive(Properties.Settings.Default.GitRemote))
-                    {
-                        GITRepoOffline = false;
-                    }
-
-                    // Do a fetch to get the latest repo.
-                    if (!GitFetch())
-                    {
-                        // if we had an failure, display offline
-                        toolStripOffline.Visible = true;
-                    }
-                }
-                else
-                {
-                    // no remote checkbox so we're offline
-                    toolStripOffline.Visible = true;
-                }
-
+                CheckOnline(true);
             }
 
             // Making sure core.autocrlf = true
@@ -779,14 +759,7 @@ namespace Pass4Win
                 toolStripOffline.Visible = child.IsOffline;
                 if (!child.IsOffline)
                 {
-                    GITRepoOffline = false;
-                    if (!GitFetch())
-                    {
-                        // nope not online
-                        GITRepoOffline = true;
-                        MessageBox.Show("Couldn't connect to remote git repository. Please check the config or the remote host.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        toolStripOffline.Visible = true;
-                    }
+                    CheckOnline(true);
                 }
             }
         }
@@ -803,6 +776,11 @@ namespace Pass4Win
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void toolStripOffline_Click(object sender, EventArgs e)
+        {
+            CheckOnline();
+        }
+        
+        private void CheckOnline(bool silent = false)
         {
             // Is remote on in the config
             if (Properties.Settings.Default.UseGitRemote)
@@ -825,12 +803,30 @@ namespace Pass4Win
                 {
                     // We're online
                     toolStripOffline.Visible = false;
+                    // look if we have changes we should sync
+                    using (var repo = new LibGit2Sharp.Repository(Properties.Settings.Default.PassDirectory))
+                    {
+
+                        TreeChanges tc = repo.Diff.Compare<TreeChanges>(repo.Branches["origin/master"].Tip.Tree, repo.Head.Tip.Tree);
+                        if (tc.Count() > 0)
+                        {
+                            var remote = repo.Network.Remotes["origin"];
+                            var options = new PushOptions();
+                            options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                            {
+                                Username = Properties.Settings.Default.GitUser,
+                                Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
+                            };
+                            var pushRefSpec = @"refs/heads/master";
+                            repo.Network.Push(remote, pushRefSpec, options);
+                        }
+                    }
                 }
             }
             else
             {
                 // no remote checkbox so we're staying offline
-                MessageBox.Show("In the config remote is disabled.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!silent) MessageBox.Show("In the config remote is disabled.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
