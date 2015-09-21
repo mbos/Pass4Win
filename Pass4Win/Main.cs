@@ -136,6 +136,12 @@ namespace Pass4Win
 
             }
 
+            // Making sure core.autocrlf = true
+            using (var repo = new LibGit2Sharp.Repository(Properties.Settings.Default.PassDirectory))
+            {
+                repo.Config.Set("core.autocrlf", true);
+            }
+
             // Init GPG if needed
             string gpgfile = Properties.Settings.Default.PassDirectory;
             gpgfile += "\\.gpg-id";
