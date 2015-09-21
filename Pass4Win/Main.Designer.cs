@@ -48,9 +48,13 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.btnConfig = new System.Windows.Forms.Button();
             this.btnAbout = new System.Windows.Forms.Button();
+            this.SystrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openSystrayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.quitSystrayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusPass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
+            this.SystrayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnAdd
@@ -97,7 +101,7 @@
             this.toolStripOffline.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripOffline.ForeColor = System.Drawing.Color.IndianRed;
             this.toolStripOffline.Name = "toolStripOffline";
-            this.toolStripOffline.Size = new System.Drawing.Size(472, 17);
+            this.toolStripOffline.Size = new System.Drawing.Size(605, 17);
             this.toolStripOffline.Spring = true;
             this.toolStripOffline.Text = "OFFLINE (click to sync)";
             this.toolStripOffline.Visible = false;
@@ -213,10 +217,11 @@
             // notifyIcon1
             // 
             this.notifyIcon1.BalloonTipText = "Pass4Win";
+            this.notifyIcon1.ContextMenuStrip = this.SystrayMenu;
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "Pass4Win";
             this.notifyIcon1.Visible = true;
-            this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseClick);
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
             // btnConfig
             // 
@@ -240,6 +245,28 @@
             this.btnAbout.UseVisualStyleBackColor = true;
             this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
+            // SystrayMenu
+            // 
+            this.SystrayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openSystrayMenuItem,
+            this.quitSystrayMenuItem});
+            this.SystrayMenu.Name = "SystrayMenu";
+            this.SystrayMenu.Size = new System.Drawing.Size(104, 48);
+            // 
+            // openSystrayMenuItem
+            // 
+            this.openSystrayMenuItem.Name = "openSystrayMenuItem";
+            this.openSystrayMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openSystrayMenuItem.Text = "Open";
+            this.openSystrayMenuItem.Click += new System.EventHandler(this.openSystrayMenuItem_Click);
+            // 
+            // quitSystrayMenuItem
+            // 
+            this.quitSystrayMenuItem.Name = "quitSystrayMenuItem";
+            this.quitSystrayMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.quitSystrayMenuItem.Text = "Quit";
+            this.quitSystrayMenuItem.Click += new System.EventHandler(this.quitSystrayMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -259,11 +286,13 @@
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.Text = "Pass4Win";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.statusPass.ResumeLayout(false);
             this.statusPass.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).EndInit();
             this.dataMenu.ResumeLayout(false);
+            this.SystrayMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,6 +318,9 @@
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripOffline;
         private System.Windows.Forms.Button btnAbout;
+        private System.Windows.Forms.ContextMenuStrip SystrayMenu;
+        private System.Windows.Forms.ToolStripMenuItem openSystrayMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem quitSystrayMenuItem;
     }
 }
 
