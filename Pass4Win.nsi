@@ -18,7 +18,7 @@
 # This is the size (in kB) of all the files copied into "Program Files"
 !define INSTALLSIZE 3003
 
-SilentInstall silent
+#SilentInstall silent
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
  
 InstallDir "$PROGRAMFILES\${APPNAME}"
