@@ -354,19 +354,22 @@ namespace Pass4Win
                 foreach (var line in GPGRec)
                 {
                     bool GotTheKey = false;
-                    GpgListSecretKeys publicKeys = new GpgListSecretKeys();
+                    GpgListPublicKeys publicKeys = new GpgListPublicKeys();
                     publicKeys.Execute();
                     foreach (Key key in publicKeys.Keys)
                     {
-                        if (key.UserInfos[0].Email == line.ToString())
+                        for (int i = 0; i < key.UserInfos.Count; i++)
                         {
-                            recipients.Add(key.Id);
-                            GotTheKey = true;
+                            if (key.UserInfos[i].Email == line.ToString())
+                            {
+                                recipients.Add(key.Id);
+                                GotTheKey = true;
+                            }
                         }
                     }
                     if (!GotTheKey)
                     {
-                        MessageBox.Show("So it seems you have a key defined in .gpg-id that's not in your GPG keystore. Please correct this", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("So it seems you have a key defined in .gpg-id that's not in your GPG keystore as public key. Please correct this", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
