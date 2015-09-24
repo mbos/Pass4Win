@@ -32,7 +32,7 @@ namespace Pass4Win
 
         private void KeySelect_Load(object sender, EventArgs e)
         {
-            GpgInterface.ExePath = Properties.Settings.Default.GPGEXE;
+            GpgInterface.ExePath = frmMain.cfg["GPGEXE"];
             GpgListPublicKeys publicKeys = new GpgListPublicKeys();
             publicKeys.Execute();
             foreach (Key key in publicKeys.Keys)

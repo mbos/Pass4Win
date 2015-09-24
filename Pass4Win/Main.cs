@@ -27,6 +27,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using SharpConfig;
 
 namespace Pass4Win
 {
@@ -42,7 +44,8 @@ namespace Pass4Win
         private bool EnableTray;
         // Remote status of GIT
         private bool GITRepoOffline = true;
-
+        // Setting up config
+        public static Config cfg = new Config("Pass4WinConfig", true, true);
 
         /// <summary>
         /// Inits the repo, gpg etc
@@ -51,43 +54,45 @@ namespace Pass4Win
         {
             InitializeComponent();
             EnableTray = false;
-            
+
             // Getting actual version
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             string version = fvi.FileVersion;
-            version = version.Remove(5, 2);
+            cfg["version"] = version.Remove(5, 2);
+            cfg["FirstRun"] = true;
 
-            this.Text = "Pass4Win version " + version;
+            this.Text = "Pass4Win version " + cfg["version"];
 
             // checking for update this an async operation
             LatestPass4WinRelease();
 
             // Do we have a valid password store and settings
-            if (Properties.Settings.Default.PassDirectory == "firstrun")
+            if (cfg["FirstRun"] == true)
             {
                 frmConfig Config = new frmConfig();
                 var dialogResult = Config.ShowDialog();
+                cfg["FirstRun"] = false;
             }
 
             //checking git status
-            if (!LibGit2Sharp.Repository.IsValid(Properties.Settings.Default.PassDirectory))
+            if (!LibGit2Sharp.Repository.IsValid(cfg["PassDirectory"]))
             {
                 // Remote or generate a new one
-                if (Properties.Settings.Default.UseGitRemote == true)
+                if (cfg["UseGitRemote"] == true)
                 {
                     // check if server is alive
-                    if (IsGITAlive(Properties.Settings.Default.GitRemote) || IsHTTPSAlive(Properties.Settings.Default.GitRemote))
+                    if (IsGITAlive(cfg["UseGitRemote"]) || IsHTTPSAlive(cfg["UseGitRemote"]))
                     {
                         // clone the repo and catch any error
                         try
                         {
-                            string clonedRepoPath = LibGit2Sharp.Repository.Clone(Properties.Settings.Default.GitRemote, Properties.Settings.Default.PassDirectory, new CloneOptions()
+                            string clonedRepoPath = LibGit2Sharp.Repository.Clone(cfg["GitRemote"], cfg["PassDirectory"], new CloneOptions()
                             {
                                 CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                                 {
-                                    Username = Properties.Settings.Default.GitUser,
-                                    Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
+                                    Username = cfg["GitUser"],
+                                    Password = DecryptConfig(cfg["GitPass"], "pass4win")
                                 }
                             });
                         }
@@ -106,7 +111,7 @@ namespace Pass4Win
                 else
                 {
                     // creating new Git
-                    var repo = LibGit2Sharp.Repository.Init(Properties.Settings.Default.PassDirectory, false);
+                    var repo = LibGit2Sharp.Repository.Init(cfg["PassDirectory"], false);
                     toolStripOffline.Visible = true;
                 }
             }
@@ -117,13 +122,13 @@ namespace Pass4Win
             }
 
             // Making sure core.autocrlf = true
-            using (var repo = new LibGit2Sharp.Repository(Properties.Settings.Default.PassDirectory))
+            using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
             {
                 repo.Config.Set("core.autocrlf", true);
             }
 
             // Init GPG if needed
-            string gpgfile = Properties.Settings.Default.PassDirectory;
+            string gpgfile = cfg["PassDirectory"];
             gpgfile += "\\.gpg-id";
             // Check if we need to init the directory
             if (!File.Exists(gpgfile))
@@ -136,7 +141,7 @@ namespace Pass4Win
                     {
                         w.Write(newKeySelect.gpgkey);
                     }
-                    using (var repo = new LibGit2Sharp.Repository(Properties.Settings.Default.PassDirectory))
+                    using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
                     {
                         repo.Stage(gpgfile);
                         repo.Commit("gpgid added", new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
@@ -149,13 +154,13 @@ namespace Pass4Win
                 }
             }
             // Setting the exe location for the GPG Dll
-            GpgInterface.ExePath = Properties.Settings.Default.GPGEXE;
+            GpgInterface.ExePath = cfg["GPGEXE"];
 
             // Setting up datagrid
             dt.Columns.Add("colPath", typeof(string));
             dt.Columns.Add("colText", typeof(string));
 
-            ListDirectory(new DirectoryInfo(Properties.Settings.Default.PassDirectory), "");
+            ListDirectory(new DirectoryInfo(cfg["PassDirectory"]), "");
 
             dataPass.DataSource = dt.DefaultView;
             dataPass.Columns[0].Visible = false;
@@ -174,17 +179,11 @@ namespace Pass4Win
             var _releaseClient = client.Release;
             var releases = await _releaseClient.GetAll("mbos", "Pass4Win");
 
-            // current version
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = fvi.FileVersion;
-            version = version.Remove(5, 2);
-
             // online version
             string newversion = releases[0].TagName.Remove(0, 8);
 
             // if diff warn and redirect
-            if (version != newversion)
+            if (cfg["version"] != newversion)
             {
                 DialogResult result = MessageBox.Show("There is a newer version of Pass4Win, do you want to update?.", "Update available", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 if (result == DialogResult.OK)
@@ -215,7 +214,7 @@ namespace Pass4Win
                     return "Value cannot be empty.";
                 if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
                     return "Not a valid name, can only use characters or numbers and _ - \\.";
-                if (File.Exists(Properties.Settings.Default.PassDirectory + "\\" + @val + ".gpg"))
+                if (File.Exists(cfg["PassDirectory"] + "\\" + @val + ".gpg"))
                     return "Entry already exists.";
                 return "";
             };
@@ -224,7 +223,7 @@ namespace Pass4Win
             if (InputBox.Show("Enter a new name", "Name:", ref value, validation) == DialogResult.OK)
             {
                 // parse path
-                string tmpPath = Properties.Settings.Default.PassDirectory + "\\" + @value + ".gpg"; ;
+                string tmpPath = cfg["PassDirectory"] + "\\" + @value + ".gpg"; ;
                 Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
                 using (File.Create(tmpPath)) { }
 
@@ -241,7 +240,7 @@ namespace Pass4Win
                     }
                 }
                 // add to git
-                using (var repo = new LibGit2Sharp.Repository(Properties.Settings.Default.PassDirectory))
+                using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
                 {
                     // Stage the file
                     repo.Stage(tmpPath);
@@ -337,7 +336,7 @@ namespace Pass4Win
                 // check if .gpg-id exists otherwise get the root .gpg-id
                 if (!File.Exists(gpgfile))
                 {
-                    gpgfile = Properties.Settings.Default.PassDirectory;
+                    gpgfile = cfg["PassDirectory"];
                     gpgfile += "\\.gpg-id";
                 }
                 List<string> GPGRec = new List<string>() { };
@@ -346,7 +345,7 @@ namespace Pass4Win
                     string line;
                     while ((line = r.ReadLine()) != null)
                     {
-                        GPGRec.Add(line);
+                        GPGRec.Add(line.TrimEnd(' '));
                     }
                 }
                 // match keyid
@@ -369,7 +368,7 @@ namespace Pass4Win
                     }
                     if (!GotTheKey)
                     {
-                        MessageBox.Show("So it seems you have a key defined in .gpg-id that's not in your GPG keystore as public key. Please correct this", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("So it seems you have a key defined in .gpg-id that's not in your GPG keystore as public key. Please correct this. Key " + line.ToString() + "is missing.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -426,21 +425,21 @@ namespace Pass4Win
                 File.Delete(path);
                 File.Move(tmpFile2, path);
                 // add to git
-                using (var repo = new LibGit2Sharp.Repository(Properties.Settings.Default.PassDirectory))
+                using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
                 {
                     // Stage the file
                     repo.Stage(path);
                     // Commit
                     repo.Commit("password changes", new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
-                    if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
+                    if (cfg["UseGitRemote"] == true && GITRepoOffline == false)
                     {
                         toolStripOffline.Visible = false;
                         var remote = repo.Network.Remotes["origin"];
                         var options = new PushOptions();
                         options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                         {
-                            Username = Properties.Settings.Default.GitUser,
-                            Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
+                            Username = cfg["GitUser"],
+                            Password = DecryptConfig(cfg["GitPass"], "pass4win")
                         };
                         var pushRefSpec = @"refs/heads/master";
                         repo.Network.Push(remote, pushRefSpec, options);
@@ -551,7 +550,7 @@ namespace Pass4Win
                     return "Value cannot be empty.";
                 if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
                     return "Not a valid name, can only use characters or numbers and _ - \\.";
-                if (File.Exists(Properties.Settings.Default.PassDirectory + "\\" + @val + ".gpg"))
+                if (File.Exists(cfg["PassDirectory"] + "\\" + @val + ".gpg"))
                     return "Entry already exists.";
                 return "";
             };
@@ -560,10 +559,10 @@ namespace Pass4Win
             if (InputBox.Show("Enter a new name", "Name:", ref value, validation) == DialogResult.OK)
             {
                 // parse path
-                string tmpPath = Properties.Settings.Default.PassDirectory + "\\" + @value + ".gpg";
+                string tmpPath = cfg["PassDirectory"] + "\\" + @value + ".gpg";
                 Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
                 File.Copy(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(), tmpPath);
-                using (var repo = new LibGit2Sharp.Repository(Properties.Settings.Default.PassDirectory))
+                using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
                 {
                     // add the file
                     repo.Remove(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
@@ -571,7 +570,7 @@ namespace Pass4Win
                     // Commit
                     repo.Commit("password moved", new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
 
-                    if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
+                    if (cfg["UseGitRemote"] == true && GITRepoOffline == false)
                     {
                         //push
                         toolStripOffline.Visible = false;
@@ -579,8 +578,8 @@ namespace Pass4Win
                         var options = new PushOptions();
                         options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                         {
-                            Username = Properties.Settings.Default.GitUser,
-                            Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
+                            Username = cfg["GitUser"],
+                            Password = DecryptConfig(cfg["GitPass"], "pass4win")
                         };
                         var pushRefSpec = @"refs/heads/master";
                         repo.Network.Push(remote, pushRefSpec, options);
@@ -600,14 +599,14 @@ namespace Pass4Win
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // remove from git
-            using (var repo = new LibGit2Sharp.Repository(Properties.Settings.Default.PassDirectory))
+            using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
             {
                 // remove the file
                 repo.Remove(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
                 // Commit
                 repo.Commit("password removed", new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
 
-                if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
+                if (cfg["UseGitRemote"] == true && GITRepoOffline == false)
                 {
                     // push
                     toolStripOffline.Visible = false;
@@ -615,8 +614,8 @@ namespace Pass4Win
                     var options = new PushOptions();
                     options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                     {
-                        Username = Properties.Settings.Default.GitUser,
-                        Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
+                        Username = cfg["GitUser"],
+                        Password = DecryptConfig(cfg["GitPass"], "pass4win")
                     };
                     var pushRefSpec = @"refs/heads/master";
                     repo.Network.Push(remote, pushRefSpec, options);
@@ -653,8 +652,8 @@ namespace Pass4Win
         private void ResetDatagrid()
         {
             dt.Clear();
-            processDirectory(Properties.Settings.Default.PassDirectory);
-            ListDirectory(new DirectoryInfo(Properties.Settings.Default.PassDirectory), "");
+            processDirectory(cfg["PassDirectory"]);
+            ListDirectory(new DirectoryInfo(cfg["PassDirectory"]), "");
         }
 
         /// <summary>
@@ -786,10 +785,10 @@ namespace Pass4Win
         private void CheckOnline(bool silent = false)
         {
             // Is remote on in the config
-            if (Properties.Settings.Default.UseGitRemote)
+            if (cfg["UseGitRemote"])
             {
                 // Check if the remote is there
-                if (IsGITAlive(Properties.Settings.Default.GitRemote) || IsHTTPSAlive(Properties.Settings.Default.GitRemote))
+                if (IsGITAlive(cfg["GitRemote"]) || IsHTTPSAlive(cfg["GitRemote"]))
                 {
                     // looks good, let's try
                     GITRepoOffline = false;
@@ -807,7 +806,7 @@ namespace Pass4Win
                     // We're online
                     toolStripOffline.Visible = false;
                     // look if we have changes we should sync
-                    using (var repo = new LibGit2Sharp.Repository(Properties.Settings.Default.PassDirectory))
+                    using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
                     {
 
                         TreeChanges tc = repo.Diff.Compare<TreeChanges>(repo.Branches["origin/master"].Tip.Tree, repo.Head.Tip.Tree);
@@ -817,8 +816,8 @@ namespace Pass4Win
                             var options = new PushOptions();
                             options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                             {
-                                Username = Properties.Settings.Default.GitUser,
-                                Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
+                                Username = cfg["GitUser"],
+                                Password = DecryptConfig(cfg["GitPass"], "pass4win")
                             };
                             var pushRefSpec = @"refs/heads/master";
                             repo.Network.Push(remote, pushRefSpec, options);
@@ -883,17 +882,17 @@ namespace Pass4Win
         /// <returns></returns>
         public bool GitFetch()
         {
-            if (Properties.Settings.Default.UseGitRemote == true && GITRepoOffline == false)
+            if (cfg["UseGitRemote"] == true && GITRepoOffline == false)
             {
                 toolStripOffline.Visible = false;
-                using (var repo = new LibGit2Sharp.Repository(Properties.Settings.Default.PassDirectory))
+                using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
                 {
                     LibGit2Sharp.Signature Signature = new LibGit2Sharp.Signature("pass4win", "pull@pass4win.com", new DateTimeOffset(2011, 06, 16, 10, 58, 27, TimeSpan.FromHours(2)));
                     FetchOptions fetchOptions = new FetchOptions();
                     fetchOptions.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
                     {
-                        Username = Properties.Settings.Default.GitUser,
-                        Password = DecryptConfig(Properties.Settings.Default.GitPass, "pass4win")
+                        Username = cfg["GitUser"],
+                        Password = DecryptConfig(cfg["GitPass"], "pass4win")
                     };
                     MergeOptions mergeOptions = new MergeOptions();
                     PullOptions pullOptions = new PullOptions();

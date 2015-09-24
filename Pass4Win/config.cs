@@ -29,15 +29,15 @@ namespace Pass4Win
             InitializeComponent();     
 
             // fill in the blanks
-            if (Properties.Settings.Default.PassDirectory != "firstrun")
+            if (frmMain.cfg["FirstRun"] == false)
             {
                 // set config values
-                txtPassFolder.Text = Properties.Settings.Default.PassDirectory;
-                txtGPG.Text = Properties.Settings.Default.GPGEXE;
-                chkboxRemoteRepo.Checked = Properties.Settings.Default.UseGitRemote;
-                txtGitUser.Text = Properties.Settings.Default.GitUser;
-                txtGitPass.Text = Properties.Settings.Default.GitPass;
-                txtGitHost.Text = Properties.Settings.Default.GitRemote;
+                txtPassFolder.Text = frmMain.cfg["PassDirectory"];
+                txtGPG.Text = frmMain.cfg["GPGEXE"];
+                chkboxRemoteRepo.Checked = frmMain.cfg["UseGitRemote"];
+                txtGitUser.Text = frmMain.cfg["GitUser"];
+                txtGitPass.Text = frmMain.cfg["GitPass"];
+                txtGitHost.Text = frmMain.cfg["GitRemote"];
 
                 // set access
                 txtGitUser.ReadOnly = !chkboxRemoteRepo.Checked;
@@ -91,8 +91,7 @@ namespace Pass4Win
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                Properties.Settings.Default.PassDirectory = folderBrowserDialog1.SelectedPath;
-                Properties.Settings.Default.Save();
+                frmMain.cfg["PassDirectory"] = folderBrowserDialog1.SelectedPath;
                 txtPassFolder.Text = folderBrowserDialog1.SelectedPath;
             }
         }
@@ -106,8 +105,7 @@ namespace Pass4Win
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                Properties.Settings.Default.GPGEXE = openFileDialog1.FileName;
-                Properties.Settings.Default.Save();
+                frmMain.cfg["GPGEXE"] = openFileDialog1.FileName;
                 txtGPG.Text = openFileDialog1.FileName;
             }
         }
@@ -119,8 +117,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void chkboxRemoteRepo_CheckedChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.UseGitRemote = chkboxRemoteRepo.Checked;
-            Properties.Settings.Default.Save();
+            frmMain.cfg["UseGitRemote"] = chkboxRemoteRepo.Checked;
             // Enabling and disabling based on checkbox state
             txtGitUser.ReadOnly = !chkboxRemoteRepo.Checked;
             txtGitPass.ReadOnly = !chkboxRemoteRepo.Checked;
@@ -134,8 +131,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void txtGitUser_Leave(object sender, EventArgs e)
         {
-            Properties.Settings.Default.GitUser = txtGitUser.Text;
-            Properties.Settings.Default.Save();
+            frmMain.cfg["GitUser"] = txtGitUser.Text;
         }
 
         /// <summary>
@@ -145,8 +141,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void txtGitPass_Leave(object sender, EventArgs e)
         {
-            Properties.Settings.Default.GitPass = frmMain.EncryptConfig(txtGitPass.Text,"pass4win");
-            Properties.Settings.Default.Save();
+            frmMain.cfg["GitPass"] = frmMain.EncryptConfig(txtGitPass.Text,"pass4win");
         }
 
         /// <summary>
@@ -156,8 +151,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void txtGitHost_Leave(object sender, EventArgs e)
         {
-            Properties.Settings.Default.GitRemote = txtGitHost.Text;
-            Properties.Settings.Default.Save();
+            frmMain.cfg["GitRemote"] = txtGitHost.Text;
         }
 
         /// <summary>

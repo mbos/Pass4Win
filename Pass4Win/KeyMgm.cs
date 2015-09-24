@@ -30,9 +30,9 @@ namespace Pass4Win
         public frmKeyManager()
         {
             InitializeComponent();
-            GpgInterface.ExePath = Properties.Settings.Default.GPGEXE;
+            GpgInterface.ExePath = frmMain.cfg["GPGEXE"];
 
-            ListDirectory(treeView1, new DirectoryInfo(Properties.Settings.Default.PassDirectory));
+            ListDirectory(treeView1, new DirectoryInfo(frmMain.cfg["PassDirectory"]));
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            string tmpFile = Path.GetDirectoryName(Properties.Settings.Default.PassDirectory) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
+            string tmpFile = Path.GetDirectoryName(frmMain.cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
             if (File.Exists(tmpFile)) {
                 listBox1.Items.Clear();
                 using (StreamReader r = new StreamReader(tmpFile))
@@ -101,7 +101,7 @@ namespace Pass4Win
                 if (listBox1.Items[0].ToString() == "There are no specific keys set")
                     listBox1.Items.Clear();
                 listBox1.Items.Add(newKeySelect.gpgkey);
-                string tmpFile = Path.GetDirectoryName(Properties.Settings.Default.PassDirectory) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
+                string tmpFile = Path.GetDirectoryName(frmMain.cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
                 using (StreamWriter w = new StreamWriter(tmpFile))
                 {
                     foreach(var line in listBox1.Items){
@@ -109,7 +109,7 @@ namespace Pass4Win
                     }
                 }
 
-                DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(Properties.Settings.Default.PassDirectory) + "\\" + treeView1.SelectedNode.FullPath);
+                DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(frmMain.cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath);
 
                 foreach (var ffile in path.GetFiles())
                 {
@@ -157,7 +157,7 @@ namespace Pass4Win
                 {
                     listBox1.Items.Remove(listBox1.SelectedItem);
                     listBox1.Refresh();
-                    string tmpFile = Path.GetDirectoryName(Properties.Settings.Default.PassDirectory) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
+                    string tmpFile = Path.GetDirectoryName(frmMain.cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
                     File.Delete(tmpFile);
                     using (StreamWriter w = new StreamWriter(tmpFile))
                     {
@@ -166,13 +166,13 @@ namespace Pass4Win
                             w.WriteLine(line.ToString());
                         }
                     }
-                    using (var repo = new Repository(Properties.Settings.Default.PassDirectory))
+                    using (var repo = new Repository(frmMain.cfg["PassDirectory"]))
                     {
                         repo.Stage(tmpFile);
                         repo.Commit("gpgid changed", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
                     }
                 }
-            DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(Properties.Settings.Default.PassDirectory) + "\\" + treeView1.SelectedNode.FullPath);
+            DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(frmMain.cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath);
 
             foreach (var ffile in path.GetFiles())
             {

@@ -30,12 +30,7 @@ namespace Pass4Win
             InitializeComponent();
             
             // Getting actual version
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = fvi.FileVersion;
-            version = version.Remove(5, 2);
-
-            txtPassVersion.Text = "Pass4Win version " + version;
+            txtPassVersion.Text = "Pass4Win version " + frmMain.cfg["version"];
         }
 
         /// <summary>
