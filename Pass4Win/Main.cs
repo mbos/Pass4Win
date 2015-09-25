@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using SharpConfig;
+using System.Net.Mail;
 
 namespace Pass4Win
 {
@@ -44,8 +45,8 @@ namespace Pass4Win
         private bool EnableTray;
         // Remote status of GIT
         private bool GITRepoOffline = true;
-        // Setting up config
-        public static Config cfg = new Config("Pass4WinConfig", true, true);
+        // Setting up config second parameter should be false for normal install and true for portable
+        public static Config cfg = new Config("Pass4Win", false, true);
 
         /// <summary>
         /// Inits the repo, gpg etc
@@ -60,7 +61,6 @@ namespace Pass4Win
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             string version = fvi.FileVersion;
             cfg["version"] = version.Remove(5, 2);
-            cfg["FirstRun"] = true;
 
             this.Text = "Pass4Win version " + cfg["version"];
 
@@ -68,13 +68,20 @@ namespace Pass4Win
             LatestPass4WinRelease();
 
             // Do we have a valid password store and settings
-            if (cfg["FirstRun"] == true)
+            try
             {
+                if (cfg["PassDirectory"] == "")
+                {
+                    // this will fail, I know ugly hack
+                }
+            }
+            catch
+            {
+                cfg["FirstRun"] = true;
                 frmConfig Config = new frmConfig();
                 var dialogResult = Config.ShowDialog();
-                cfg["FirstRun"] = false;
+                
             }
-
             //checking git status
             if (!LibGit2Sharp.Repository.IsValid(cfg["PassDirectory"]))
             {
@@ -353,13 +360,14 @@ namespace Pass4Win
                 foreach (var line in GPGRec)
                 {
                     bool GotTheKey = false;
+                    MailAddress email = new MailAddress(line.ToString());
                     GpgListPublicKeys publicKeys = new GpgListPublicKeys();
                     publicKeys.Execute();
                     foreach (Key key in publicKeys.Keys)
                     {
                         for (int i = 0; i < key.UserInfos.Count; i++)
                         {
-                            if (key.UserInfos[i].Email == line.ToString())
+                            if (key.UserInfos[i].Email == email.Address)
                             {
                                 recipients.Add(key.Id);
                                 GotTheKey = true;

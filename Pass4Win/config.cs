@@ -43,6 +43,13 @@ namespace Pass4Win
                 txtGitUser.ReadOnly = !chkboxRemoteRepo.Checked;
                 txtGitPass.ReadOnly = !chkboxRemoteRepo.Checked;
                 txtGitHost.ReadOnly = !chkboxRemoteRepo.Checked;
+                frmMain.cfg["FirstRun"] = false;
+            } else
+            {
+                frmMain.cfg["UseGitRemote"] = false;
+                frmMain.cfg["GitUser"] = "";
+                frmMain.cfg["GitPass"] = "";
+                frmMain.cfg["GitRemote"] = "";
             }
         }
 

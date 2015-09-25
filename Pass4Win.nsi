@@ -16,7 +16,7 @@
 !define UPDATEURL "https://github.com/mbos/Pass4Win" # "Product Updates" link
 !define ABOUTURL "https://github.com/mbos/Pass4Win" # "Publisher" link
 # This is the size (in kB) of all the files copied into "Program Files"
-!define INSTALLSIZE 3003
+!define INSTALLSIZE 4353
 
 #SilentInstall silent
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
@@ -57,6 +57,8 @@ section "install"
   file "${src_dir}\Pass4Win\bin\Release\LibGit2Sharp.dll"
   file "${src_dir}\Pass4Win\bin\Release\GpgApi.dll"
   file "${src_dir}\Pass4Win\bin\Release\Octokit.dll"
+  file "${src_dir}\Pass4Win\bin\Release\Newtonsoft.Json.dll"
+  file "${src_dir}\Pass4Win\bin\Release\SimpleConfig.dll"
   file "${src_dir}\Pass4Win\bin\Release\Pass4Win.exe.config"
 
   SetOutPath "$INSTDIR\NativeBinaries\x86"
@@ -120,6 +122,8 @@ section "uninstall"
   delete $INSTDIR\git2-e0902fb.dll
   delete $INSTDIR\Octokit.dll
   delete $INSTDIR\Pass4Win.exe.config
+  delete $INSTDIR\Newtonsoft.Json.dll
+  delete $INSTDIR\SimpleConfig.dll
 
   delete $INSTDIR\NativeBinaries\x86\git2-e0902fb.dll
   rmdir $INSTDIR\NativeBinaries\x86
