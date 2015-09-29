@@ -83,7 +83,7 @@ namespace Pass4Win
             else
             {
                 listBox1.Items.Clear();
-                listBox1.Items.Add("There are no specific keys set");
+                listBox1.Items.Add(Strings.Error_keys_set);
 
             }
         }
@@ -98,7 +98,7 @@ namespace Pass4Win
             KeySelect newKeySelect = new KeySelect();
             if (newKeySelect.ShowDialog() == DialogResult.OK)
             {
-                if (listBox1.Items[0].ToString() == "There are no specific keys set")
+                if (listBox1.Items[0].ToString() == Strings.Error_keys_set)
                     listBox1.Items.Clear();
                 listBox1.Items.Add(newKeySelect.gpgkey);
                 string tmpFile = Path.GetDirectoryName(frmMain.cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
@@ -152,7 +152,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (listBox1.Items[0].ToString() != "There are no specific keys set")
+            if (listBox1.Items[0].ToString() != Strings.Error_keys_set)
                 if (listBox1.Items.Count > 1)
                 {
                     listBox1.Items.Remove(listBox1.SelectedItem);

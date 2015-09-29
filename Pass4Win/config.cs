@@ -170,7 +170,7 @@ namespace Pass4Win
         {
             if (txtPassFolder.Text == "")
             {
-                errorProvider1.SetError(txtPassFolder, "This is a required field!");
+                errorProvider1.SetError(txtPassFolder, Strings.Error_required_field);
                 if (ValCancel) e.Cancel = true;
             }
         }
@@ -184,7 +184,7 @@ namespace Pass4Win
         {
             if (txtGPG.Text == "")
             {
-                errorProvider1.SetError(txtGPG, "This is a required field!");
+                errorProvider1.SetError(txtGPG, Strings.Error_required_field);
                 if (ValCancel) e.Cancel = true;
             }
         }
@@ -198,7 +198,7 @@ namespace Pass4Win
         {
             if (chkboxRemoteRepo.Checked == true && txtGitUser.Text == "")
             {
-                errorProvider1.SetError(txtGitUser, "This is a required field!");
+                errorProvider1.SetError(txtGitUser, Strings.Error_required_field);
                 if (ValCancel) e.Cancel = true;
             }
         }
@@ -212,7 +212,7 @@ namespace Pass4Win
         {
             if (chkboxRemoteRepo.Checked == true && txtGitPass.Text == "")
             {
-                errorProvider1.SetError(txtGitPass, "This is a required field!");
+                errorProvider1.SetError(txtGitPass, Strings.Error_required_field);
                 if (ValCancel) e.Cancel = true;
             }
         }
@@ -227,7 +227,7 @@ namespace Pass4Win
         {
             if (chkboxRemoteRepo.Checked == true && txtGitHost.Text == "")
             {
-                errorProvider1.SetError(txtGitHost, "This is a required field!");
+                errorProvider1.SetError(txtGitHost, Strings.Error_required_field);
                 if (ValCancel) e.Cancel = true;
             }
             else
@@ -241,13 +241,13 @@ namespace Pass4Win
                             Uri HostTest;
                             if (!Uri.TryCreate(txtGitHost.Text, UriKind.Absolute, out HostTest))
                             {
-                                errorProvider1.SetError(txtGitHost, "Not a valid URL!");
+                                errorProvider1.SetError(txtGitHost, Strings.Error_notvalid_URL);
                                 e.Cancel = true;
                             }
                         }
                         else
                         {
-                            errorProvider1.SetError(txtGitHost, "Host unreachable!");
+                            errorProvider1.SetError(txtGitHost, Strings.Error_host_unreachable);
                             Offline = true;
                         }
                     } else

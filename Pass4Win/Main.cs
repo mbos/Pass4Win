@@ -62,7 +62,7 @@ namespace Pass4Win
             string version = fvi.FileVersion;
             cfg["version"] = version.Remove(5, 2);
 
-            this.Text = "Pass4Win version " + cfg["version"];
+            this.Text = "Pass4Win " + Strings.Version + " " + cfg["version"];
 
             // checking for update this an async operation
             LatestPass4WinRelease();
@@ -105,13 +105,13 @@ namespace Pass4Win
                         }
                         catch
                         {
-                            MessageBox.Show("Couldn't connect to remote git repository. Pass4Win set to offline mode.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             toolStripOffline.Visible = true;
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Can't reach your GIT host. Pass4Win set to offline mode.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Strings.Error_git_unreachable, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         toolStripOffline.Visible = true;
                     }
                 }
@@ -156,7 +156,7 @@ namespace Pass4Win
                 }
                 else
                 {
-                    MessageBox.Show("Need key...... Restart the program and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Strings.Error_nokey, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     System.Environment.Exit(1);
                 }
             }
@@ -192,7 +192,7 @@ namespace Pass4Win
             // if diff warn and redirect
             if (cfg["version"] != newversion)
             {
-                DialogResult result = MessageBox.Show("There is a newer version of Pass4Win, do you want to update?.", "Update available", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                DialogResult result = MessageBox.Show(Strings.Info_new_version, Strings.Info_new_version_caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 if (result == DialogResult.OK)
                 {
                     // start browser
@@ -220,14 +220,14 @@ namespace Pass4Win
                 if (val == "")
                     return "Value cannot be empty.";
                 if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
-                    return "Not a valid name, can only use characters or numbers and _ - \\.";
+                    return Strings.Error_valid_filename;
                 if (File.Exists(cfg["PassDirectory"] + "\\" + @val + ".gpg"))
-                    return "Entry already exists.";
+                    return Strings.Error_already_exists;
                 return "";
             };
 
             string value = "";
-            if (InputBox.Show("Enter a new name", "Name:", ref value, validation) == DialogResult.OK)
+            if (InputBox.Show(Strings.Input_new_name, Strings.Input_new_name_label, ref value, validation) == DialogResult.OK)
             {
                 // parse path
                 string tmpPath = cfg["PassDirectory"] + "\\" + @value + ".gpg"; ;
@@ -376,7 +376,7 @@ namespace Pass4Win
                     }
                     if (!GotTheKey)
                     {
-                        MessageBox.Show("So it seems you have a key defined in .gpg-id that's not in your GPG keystore as public key. Please correct this. Key " + line.ToString() + "is missing.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Strings.Error_key_missing_part1 + line.ToString() + " " + Strings.Error_key_missing_part2, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -456,7 +456,7 @@ namespace Pass4Win
             }
             else
             {
-                MessageBox.Show("You shouldn't see this.... Awkward right... Encryption failed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Strings.Error_weird_shit_happened_encryption,Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -482,7 +482,7 @@ namespace Pass4Win
                         statusPB.Value = 0;
                         statusPB.Step = 1;
                         statusPB.Visible = true;
-                        statusTxt.Text = "Countdown to clearing clipboard  ";
+                        statusTxt.Text = Strings.Statusbar_countdown + " ";
                         //Create the timer
                         _timer = new System.Threading.Timer(ClearClipboard, null, 0, 1000);
                     }
@@ -490,7 +490,7 @@ namespace Pass4Win
             }
             else
             {
-                txtPassDetail.Text = "Something went wrong.....";
+                txtPassDetail.Text = Strings.Error_weird_shit_happened;
             }
         }
 
@@ -555,16 +555,16 @@ namespace Pass4Win
             InputBoxValidation validation = delegate (string val)
             {
                 if (val == "")
-                    return "Value cannot be empty.";
+                    return Strings.Error_not_empty;
                 if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
-                    return "Not a valid name, can only use characters or numbers and _ - \\.";
+                    return Strings.Error_valid_filename;
                 if (File.Exists(cfg["PassDirectory"] + "\\" + @val + ".gpg"))
-                    return "Entry already exists.";
+                    return Strings.Error_already_exists;
                 return "";
             };
 
             string value = dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[1].Value.ToString();
-            if (InputBox.Show("Enter a new name", "Name:", ref value, validation) == DialogResult.OK)
+            if (InputBox.Show(Strings.Input_new_name, Strings.Input_new_name_label, ref value, validation) == DialogResult.OK)
             {
                 // parse path
                 string tmpPath = cfg["PassDirectory"] + "\\" + @value + ".gpg";
@@ -642,12 +642,12 @@ namespace Pass4Win
             {
                 this.BeginInvoke((Action)(() => Clipboard.Clear()));
                 this.BeginInvoke((Action)(() => statusPB.Visible = false));
-                this.BeginInvoke((Action)(() => statusTxt.Text = "Ready"));
+                this.BeginInvoke((Action)(() => statusTxt.Text = Strings.Ready));
                 this.BeginInvoke((Action)(() => statusPB.Value = 0));
                 this.BeginInvoke((Action)(() => btnMakeVisible.Visible = true));
                 this.BeginInvoke((Action)(() => txtPassDetail.Visible = false));
             }
-            else if (statusTxt.Text != "Ready")
+            else if (statusTxt.Text != Strings.Ready)
             {
                 this.BeginInvoke((Action)(() => statusPB.PerformStep()));
             }
@@ -807,7 +807,7 @@ namespace Pass4Win
                 {
                     // nope not online
                     GITRepoOffline = true;
-                    MessageBox.Show("Couldn't connect to remote git repository. Please check the config or the remote host.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -836,7 +836,7 @@ namespace Pass4Win
             else
             {
                 // no remote checkbox so we're staying offline
-                if (!silent) MessageBox.Show("In the config remote is disabled.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!silent) MessageBox.Show(Strings.Error_remote_disabled, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

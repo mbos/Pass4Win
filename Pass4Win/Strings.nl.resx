@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Error" xml:space="preserve">
+    <value>Fout</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Error_already_exists" xml:space="preserve">
+    <value>Item bestaat reeds.</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Error_connection" xml:space="preserve">
+    <value>Kon niet verbinden met externe git repository. Pass4Win ingesteld op de offlinemodus.</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Error_git_unreachable" xml:space="preserve">
+    <value>Kon niet verbinden met externe git repository. Pass4Win ingesteld op de offlinemodus.</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Error_host_unreachable" xml:space="preserve">
+    <value>Kan host niet bereiken!</value>
+    <comment>config.cs validating</comment>
+  </data>
+  <data name="Error_keys_set" xml:space="preserve">
+    <value>Er zijn geen specifieke keys gezet</value>
+    <comment>KeyMgm.cs treeView1_AfterSelect() and various other functions</comment>
+  </data>
+  <data name="Error_key_missing_part1" xml:space="preserve">
+    <value>Er is een key gedefinieerd in .gpg-id die niet in de GPG keystore zit als publieke key. Graag corrigeren. Key</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Error_key_missing_part2" xml:space="preserve">
+    <value>mist.</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Error_nokey" xml:space="preserve">
+    <value>Er is een key nodig… Start het programma opnieuw en probeer nog een keer.</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Error_notvalid_URL" xml:space="preserve">
+    <value>Geen geldige URL!</value>
+    <comment>Config.cs validating</comment>
+  </data>
+  <data name="Error_not_empty" xml:space="preserve">
+    <value>Waarde kan niet leeg zijn.</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Error_remote_disabled" xml:space="preserve">
+    <value>In de instellingen is externe Git repo uitgeschakeld.</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Error_required_field" xml:space="preserve">
+    <value>Verplicht veld!</value>
+    <comment>Config.cs validating functions</comment>
+  </data>
+  <data name="Error_valid_filename" xml:space="preserve">
+    <value>Niet een geldige naam, kunt alleen letters of cijfers en _ - \\.</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Error_weird_shit_happened" xml:space="preserve">
+    <value>Er ging iets mis.....</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Error_weird_shit_happened_encryption" xml:space="preserve">
+    <value>Deze foutmelding zou nooit moeten verschijnen. Encryptie gefaald.</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Info_new_version" xml:space="preserve">
+    <value>Er is een nieuwere versie van Pass4Win, wilt u bijwerken?</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Info_new_version_caption" xml:space="preserve">
+    <value>Update beschikbaar</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Input_new_name" xml:space="preserve">
+    <value>Voer een nieuwe naam in</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Input_new_name_label" xml:space="preserve">
+    <value>Naam:</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Gereed</value>
+    <comment>Main.cs</comment>
+  </data>
+  <data name="Statusbar_countdown" xml:space="preserve">
+    <value>Aftellen naar het klembord wissen</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>versie</value>
+    <comment>main.cs</comment>
+  </data>
+</root>

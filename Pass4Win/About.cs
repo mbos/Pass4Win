@@ -30,7 +30,7 @@ namespace Pass4Win
             InitializeComponent();
             
             // Getting actual version
-            txtPassVersion.Text = "Pass4Win version " + frmMain.cfg["version"];
+            txtPassVersion.Text += " " + frmMain.cfg["version"];
         }
 
         /// <summary>

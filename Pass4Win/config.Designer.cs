@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfig));
             this.txtPassFolder = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -50,150 +51,148 @@
             // 
             // txtPassFolder
             // 
-            this.txtPassFolder.Location = new System.Drawing.Point(294, 13);
+            resources.ApplyResources(this.txtPassFolder, "txtPassFolder");
+            this.errorProvider1.SetError(this.txtPassFolder, resources.GetString("txtPassFolder.Error"));
+            this.errorProvider1.SetIconAlignment(this.txtPassFolder, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("txtPassFolder.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.txtPassFolder, ((int)(resources.GetObject("txtPassFolder.IconPadding"))));
             this.txtPassFolder.Name = "txtPassFolder";
             this.txtPassFolder.ReadOnly = true;
-            this.txtPassFolder.Size = new System.Drawing.Size(306, 20);
-            this.txtPassFolder.TabIndex = 0;
             this.txtPassFolder.Click += new System.EventHandler(this.txtPassFolder_Click);
             this.txtPassFolder.Validating += new System.ComponentModel.CancelEventHandler(this.txtPassFolder_Validating);
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 20);
+            resources.ApplyResources(this.label1, "label1");
+            this.errorProvider1.SetError(this.label1, resources.GetString("label1.Error"));
+            this.errorProvider1.SetIconAlignment(this.label1, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label1.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.label1, ((int)(resources.GetObject("label1.IconPadding"))));
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(261, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "The directory where you want to store your passwords";
             this.label1.Click += new System.EventHandler(this.txtPassFolder_Click);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.DefaultExt = "exe";
             this.openFileDialog1.FileName = "gpg2.exe";
-            this.openFileDialog1.Filter = "gpg2.exe|gpg2.exe";
+            resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
             // 
             // folderBrowserDialog1
             // 
-            this.folderBrowserDialog1.Description = "Select the directory where you want to store your passwords";
+            resources.ApplyResources(this.folderBrowserDialog1, "folderBrowserDialog1");
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(176, 51);
+            resources.ApplyResources(this.label2, "label2");
+            this.errorProvider1.SetError(this.label2, resources.GetString("label2.Error"));
+            this.errorProvider1.SetIconAlignment(this.label2, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label2.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.label2, ((int)(resources.GetObject("label2.IconPadding"))));
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(101, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Location of gpg.exe";
             this.label2.Click += new System.EventHandler(this.txtGPG_Click);
             // 
             // txtGPG
             // 
-            this.txtGPG.Location = new System.Drawing.Point(294, 44);
+            resources.ApplyResources(this.txtGPG, "txtGPG");
+            this.errorProvider1.SetError(this.txtGPG, resources.GetString("txtGPG.Error"));
+            this.errorProvider1.SetIconAlignment(this.txtGPG, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("txtGPG.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.txtGPG, ((int)(resources.GetObject("txtGPG.IconPadding"))));
             this.txtGPG.Name = "txtGPG";
             this.txtGPG.ReadOnly = true;
-            this.txtGPG.Size = new System.Drawing.Size(306, 20);
-            this.txtGPG.TabIndex = 3;
             this.txtGPG.Click += new System.EventHandler(this.txtGPG_Click);
             this.txtGPG.Validating += new System.ComponentModel.CancelEventHandler(this.txtGPG_Validating);
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(163, 78);
+            resources.ApplyResources(this.label3, "label3");
+            this.errorProvider1.SetError(this.label3, resources.GetString("label3.Error"));
+            this.errorProvider1.SetIconAlignment(this.label3, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label3.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.label3, ((int)(resources.GetObject("label3.IconPadding"))));
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(114, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Use a remote git repo?";
             // 
             // chkboxRemoteRepo
             // 
-            this.chkboxRemoteRepo.AutoSize = true;
-            this.chkboxRemoteRepo.Location = new System.Drawing.Point(294, 74);
+            resources.ApplyResources(this.chkboxRemoteRepo, "chkboxRemoteRepo");
+            this.errorProvider1.SetError(this.chkboxRemoteRepo, resources.GetString("chkboxRemoteRepo.Error"));
+            this.errorProvider1.SetIconAlignment(this.chkboxRemoteRepo, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("chkboxRemoteRepo.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.chkboxRemoteRepo, ((int)(resources.GetObject("chkboxRemoteRepo.IconPadding"))));
             this.chkboxRemoteRepo.Name = "chkboxRemoteRepo";
-            this.chkboxRemoteRepo.Size = new System.Drawing.Size(15, 14);
-            this.chkboxRemoteRepo.TabIndex = 5;
             this.chkboxRemoteRepo.UseVisualStyleBackColor = true;
             this.chkboxRemoteRepo.CheckedChanged += new System.EventHandler(this.chkboxRemoteRepo_CheckedChanged);
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(205, 103);
+            resources.ApplyResources(this.label4, "label4");
+            this.errorProvider1.SetError(this.label4, resources.GetString("label4.Error"));
+            this.errorProvider1.SetIconAlignment(this.label4, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label4.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.label4, ((int)(resources.GetObject("label4.IconPadding"))));
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Git user name";
             // 
             // txtGitUser
             // 
-            this.txtGitUser.Location = new System.Drawing.Point(294, 95);
+            resources.ApplyResources(this.txtGitUser, "txtGitUser");
+            this.errorProvider1.SetError(this.txtGitUser, resources.GetString("txtGitUser.Error"));
+            this.errorProvider1.SetIconAlignment(this.txtGitUser, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("txtGitUser.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.txtGitUser, ((int)(resources.GetObject("txtGitUser.IconPadding"))));
             this.txtGitUser.Name = "txtGitUser";
             this.txtGitUser.ReadOnly = true;
-            this.txtGitUser.Size = new System.Drawing.Size(306, 20);
-            this.txtGitUser.TabIndex = 7;
             this.txtGitUser.Leave += new System.EventHandler(this.txtGitUser_Leave);
             this.txtGitUser.Validating += new System.ComponentModel.CancelEventHandler(this.txtGitUser_Validating);
             // 
             // txtGitPass
             // 
-            this.txtGitPass.Location = new System.Drawing.Point(294, 121);
+            resources.ApplyResources(this.txtGitPass, "txtGitPass");
+            this.errorProvider1.SetError(this.txtGitPass, resources.GetString("txtGitPass.Error"));
+            this.errorProvider1.SetIconAlignment(this.txtGitPass, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("txtGitPass.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.txtGitPass, ((int)(resources.GetObject("txtGitPass.IconPadding"))));
             this.txtGitPass.Name = "txtGitPass";
-            this.txtGitPass.PasswordChar = '*';
             this.txtGitPass.ReadOnly = true;
-            this.txtGitPass.Size = new System.Drawing.Size(306, 20);
-            this.txtGitPass.TabIndex = 9;
             this.txtGitPass.Leave += new System.EventHandler(this.txtGitPass_Leave);
             this.txtGitPass.Validating += new System.ComponentModel.CancelEventHandler(this.txtGitPass_Validating);
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(205, 129);
+            resources.ApplyResources(this.label5, "label5");
+            this.errorProvider1.SetError(this.label5, resources.GetString("label5.Error"));
+            this.errorProvider1.SetIconAlignment(this.label5, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label5.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.label5, ((int)(resources.GetObject("label5.IconPadding"))));
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(68, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Git password";
             // 
             // txtGitHost
             // 
-            this.txtGitHost.Location = new System.Drawing.Point(294, 147);
+            resources.ApplyResources(this.txtGitHost, "txtGitHost");
+            this.errorProvider1.SetError(this.txtGitHost, resources.GetString("txtGitHost.Error"));
+            this.errorProvider1.SetIconAlignment(this.txtGitHost, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("txtGitHost.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.txtGitHost, ((int)(resources.GetObject("txtGitHost.IconPadding"))));
             this.txtGitHost.Name = "txtGitHost";
             this.txtGitHost.ReadOnly = true;
-            this.txtGitHost.Size = new System.Drawing.Size(306, 20);
-            this.txtGitHost.TabIndex = 11;
             this.txtGitHost.Leave += new System.EventHandler(this.txtGitHost_Leave);
             this.txtGitHost.Validating += new System.ComponentModel.CancelEventHandler(this.txtGitHost_Validating);
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(116, 154);
+            resources.ApplyResources(this.label6, "label6");
+            this.errorProvider1.SetError(this.label6, resources.GetString("label6.Error"));
+            this.errorProvider1.SetIconAlignment(this.label6, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label6.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.label6, ((int)(resources.GetObject("label6.IconPadding"))));
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(161, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Git host address (HTTPS or GIT)";
             // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
+            resources.ApplyResources(this.errorProvider1, "errorProvider1");
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(523, 188);
+            resources.ApplyResources(this.btnSave, "btnSave");
+            this.errorProvider1.SetError(this.btnSave, resources.GetString("btnSave.Error"));
+            this.errorProvider1.SetIconAlignment(this.btnSave, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("btnSave.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.btnSave, ((int)(resources.GetObject("btnSave.IconPadding"))));
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(77, 27);
-            this.btnSave.TabIndex = 12;
-            this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // frmConfig
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(630, 227);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtGitHost);
             this.Controls.Add(this.label6);
@@ -213,8 +212,6 @@
             this.Name = "frmConfig";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Config";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmConfig_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);

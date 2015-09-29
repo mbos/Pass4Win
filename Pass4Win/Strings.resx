@@ -117,76 +117,96 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;btnOk.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;comboBox1.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="Error_already_exists" xml:space="preserve">
+    <value>Entry already exists.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;comboBox1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="Error_connection" xml:space="preserve">
+    <value>Couldn't connect to remote git repository. Pass4Win set to offline mode.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="btnOk.Text" xml:space="preserve">
-    <value>Ok</value>
+  <data name="Error_git_unreachable" xml:space="preserve">
+    <value>Can't reach your GIT host. Pass4Win set to offline mode.</value>
+    <comment>main.cs</comment>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnOk.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="Error_host_unreachable" xml:space="preserve">
+    <value>Host unreachable!</value>
+    <comment>config.cs validating</comment>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="Error_keys_set" xml:space="preserve">
+    <value>There are no specific keys set</value>
+    <comment>KeyMgm.cs treeView1_AfterSelect() and various other functions</comment>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Error_key_missing_part1" xml:space="preserve">
+    <value>So it seems you have a key defined in .gpg-id that's not in your GPG keystore as public key. Please correct this. Key</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>340, 49</value>
+  <data name="Error_key_missing_part2" xml:space="preserve">
+    <value>is missing.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;comboBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Error_nokey" xml:space="preserve">
+    <value>Need key...... Restart the program and try again.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+  <data name="Error_notvalid_URL" xml:space="preserve">
+    <value>Not a valid URL!</value>
+    <comment>Config.cs validating</comment>
   </data>
-  <data name="&gt;&gt;comboBox1.Name" xml:space="preserve">
-    <value>comboBox1</value>
+  <data name="Error_not_empty" xml:space="preserve">
+    <value>Value cannot be empty.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="comboBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 13</value>
+  <data name="Error_remote_disabled" xml:space="preserve">
+    <value>In the config remote is disabled.</value>
+    <comment>main.cs</comment>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
+  <data name="Error_required_field" xml:space="preserve">
+    <value>This is a required field!</value>
+    <comment>Config.cs validating functions</comment>
   </data>
-  <data name="&gt;&gt;btnOk.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Error_valid_filename" xml:space="preserve">
+    <value>Not a valid name, can only use characters or numbers and _ - \\.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="comboBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="Error_weird_shit_happened" xml:space="preserve">
+    <value>Something went wrong.....</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="comboBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>222, 21</value>
+  <data name="Error_weird_shit_happened_encryption" xml:space="preserve">
+    <value>You shouldn't see this.... Awkward right... Encryption failed</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>KeySelect</value>
+  <data name="Info_new_version" xml:space="preserve">
+    <value>There is a newer version of Pass4Win, do you want to update?</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>251, 13</value>
+  <data name="Info_new_version_caption" xml:space="preserve">
+    <value>Update available</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;btnOk.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="Input_new_name" xml:space="preserve">
+    <value>Enter a new name</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="btnOk.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+  <data name="Input_new_name_label" xml:space="preserve">
+    <value>Name:</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>KeySelect</value>
+  <data name="Ready" xml:space="preserve">
+    <value>Ready</value>
+    <comment>Main.cs</comment>
   </data>
-  <data name="&gt;&gt;btnOk.Name" xml:space="preserve">
-    <value>btnOk</value>
+  <data name="Statusbar_countdown" xml:space="preserve">
+    <value>Countdown to clearing clipboard</value>
+    <comment>main.cs</comment>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="Version" xml:space="preserve">
+    <value>version</value>
+    <comment>main.cs</comment>
+  </data>
 </root>

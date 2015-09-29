@@ -46,11 +46,11 @@
             this.btnKeyManager = new System.Windows.Forms.Button();
             this.btnMakeVisible = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.btnConfig = new System.Windows.Forms.Button();
-            this.btnAbout = new System.Windows.Forms.Button();
             this.SystrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openSystrayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitSystrayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnConfig = new System.Windows.Forms.Button();
+            this.btnAbout = new System.Windows.Forms.Button();
             this.statusPass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
@@ -59,12 +59,8 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAdd.Location = new System.Drawing.Point(372, 5);
+            resources.ApplyResources(this.btnAdd, "btnAdd");
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(61, 23);
-            this.btnAdd.TabIndex = 2;
-            this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -74,56 +70,42 @@
             this.statusTxt,
             this.statusPB,
             this.toolStripOffline});
-            this.statusPass.Location = new System.Drawing.Point(0, 290);
+            resources.ApplyResources(this.statusPass, "statusPass");
             this.statusPass.Name = "statusPass";
-            this.statusPass.Size = new System.Drawing.Size(659, 22);
             this.statusPass.SizingGrip = false;
-            this.statusPass.TabIndex = 4;
-            this.statusPass.Text = "Ready";
             // 
             // statusTxt
             // 
             this.statusTxt.Name = "statusTxt";
-            this.statusTxt.Size = new System.Drawing.Size(39, 17);
-            this.statusTxt.Text = "Ready";
+            resources.ApplyResources(this.statusTxt, "statusTxt");
             // 
             // statusPB
             // 
             this.statusPB.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.statusPB.Name = "statusPB";
-            this.statusPB.Size = new System.Drawing.Size(100, 16);
+            resources.ApplyResources(this.statusPB, "statusPB");
             this.statusPB.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.statusPB.Visible = false;
             // 
             // toolStripOffline
             // 
             this.toolStripOffline.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripOffline.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            resources.ApplyResources(this.toolStripOffline, "toolStripOffline");
             this.toolStripOffline.ForeColor = System.Drawing.Color.IndianRed;
             this.toolStripOffline.Name = "toolStripOffline";
-            this.toolStripOffline.Size = new System.Drawing.Size(605, 17);
             this.toolStripOffline.Spring = true;
-            this.toolStripOffline.Text = "OFFLINE (click to sync)";
-            this.toolStripOffline.Visible = false;
             this.toolStripOffline.Click += new System.EventHandler(this.toolStripOffline_Click);
             // 
             // txtPassDetail
             // 
-            this.txtPassDetail.Location = new System.Drawing.Point(370, 32);
+            resources.ApplyResources(this.txtPassDetail, "txtPassDetail");
             this.txtPassDetail.Name = "txtPassDetail";
             this.txtPassDetail.ReadOnly = true;
-            this.txtPassDetail.Size = new System.Drawing.Size(283, 255);
-            this.txtPassDetail.TabIndex = 5;
-            this.txtPassDetail.Text = "";
-            this.txtPassDetail.Visible = false;
             this.txtPassDetail.Leave += new System.EventHandler(this.txtPassDetail_Leave);
             // 
             // txtPass
             // 
-            this.txtPass.Location = new System.Drawing.Point(3, 5);
+            resources.ApplyResources(this.txtPass, "txtPass");
             this.txtPass.Name = "txtPass";
-            this.txtPass.Size = new System.Drawing.Size(361, 20);
-            this.txtPass.TabIndex = 1;
             this.txtPass.TextChanged += new System.EventHandler(this.txtPass_TextChanged);
             this.txtPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPass_KeyDown);
             // 
@@ -140,7 +122,7 @@
             this.dataPass.ColumnHeadersVisible = false;
             this.dataPass.ContextMenuStrip = this.dataMenu;
             this.dataPass.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataPass.Location = new System.Drawing.Point(3, 31);
+            resources.ApplyResources(this.dataPass, "dataPass");
             this.dataPass.MultiSelect = false;
             this.dataPass.Name = "dataPass";
             this.dataPass.ReadOnly = true;
@@ -148,8 +130,6 @@
             this.dataPass.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataPass.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataPass.ShowEditingIcon = false;
-            this.dataPass.Size = new System.Drawing.Size(361, 256);
-            this.dataPass.TabIndex = 4;
             this.dataPass.SelectionChanged += new System.EventHandler(this.dataPass_SelectionChanged);
             // 
             // dataMenu
@@ -160,90 +140,53 @@
             this.renameToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.dataMenu.Name = "dataMenu";
-            this.dataMenu.Size = new System.Drawing.Size(118, 92);
+            resources.ApplyResources(this.dataMenu, "dataMenu");
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.copyToolStripMenuItem.Text = "Copy";
+            resources.ApplyResources(this.copyToolStripMenuItem, "copyToolStripMenuItem");
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.editToolStripMenuItem.Text = "Edit";
+            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // renameToolStripMenuItem
             // 
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.renameToolStripMenuItem.Text = "Rename";
+            resources.ApplyResources(this.renameToolStripMenuItem, "renameToolStripMenuItem");
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
+            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // btnKeyManager
             // 
-            this.btnKeyManager.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnKeyManager.Location = new System.Drawing.Point(445, 5);
+            resources.ApplyResources(this.btnKeyManager, "btnKeyManager");
             this.btnKeyManager.Name = "btnKeyManager";
-            this.btnKeyManager.Size = new System.Drawing.Size(61, 23);
-            this.btnKeyManager.TabIndex = 3;
-            this.btnKeyManager.Text = "Keys";
             this.btnKeyManager.UseVisualStyleBackColor = true;
             this.btnKeyManager.Click += new System.EventHandler(this.btnKeyManager_Click);
             // 
             // btnMakeVisible
             // 
-            this.btnMakeVisible.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMakeVisible.Location = new System.Drawing.Point(438, 138);
+            resources.ApplyResources(this.btnMakeVisible, "btnMakeVisible");
             this.btnMakeVisible.Name = "btnMakeVisible";
-            this.btnMakeVisible.Size = new System.Drawing.Size(158, 38);
-            this.btnMakeVisible.TabIndex = 6;
-            this.btnMakeVisible.Text = "Make visible";
             this.btnMakeVisible.UseVisualStyleBackColor = true;
             this.btnMakeVisible.Click += new System.EventHandler(this.btnMakeVisible_Click);
             // 
             // notifyIcon1
             // 
-            this.notifyIcon1.BalloonTipText = "Pass4Win";
+            resources.ApplyResources(this.notifyIcon1, "notifyIcon1");
             this.notifyIcon1.ContextMenuStrip = this.SystrayMenu;
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "Pass4Win";
-            this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
-            // 
-            // btnConfig
-            // 
-            this.btnConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnConfig.Location = new System.Drawing.Point(516, 5);
-            this.btnConfig.Name = "btnConfig";
-            this.btnConfig.Size = new System.Drawing.Size(61, 23);
-            this.btnConfig.TabIndex = 7;
-            this.btnConfig.Text = "Config";
-            this.btnConfig.UseVisualStyleBackColor = true;
-            this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
-            // 
-            // btnAbout
-            // 
-            this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAbout.Location = new System.Drawing.Point(590, 5);
-            this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(61, 23);
-            this.btnAbout.TabIndex = 8;
-            this.btnAbout.Text = "About";
-            this.btnAbout.UseVisualStyleBackColor = true;
-            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
             // SystrayMenu
             // 
@@ -251,27 +194,38 @@
             this.openSystrayMenuItem,
             this.quitSystrayMenuItem});
             this.SystrayMenu.Name = "SystrayMenu";
-            this.SystrayMenu.Size = new System.Drawing.Size(104, 48);
+            resources.ApplyResources(this.SystrayMenu, "SystrayMenu");
             // 
             // openSystrayMenuItem
             // 
             this.openSystrayMenuItem.Name = "openSystrayMenuItem";
-            this.openSystrayMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.openSystrayMenuItem.Text = "Open";
+            resources.ApplyResources(this.openSystrayMenuItem, "openSystrayMenuItem");
             this.openSystrayMenuItem.Click += new System.EventHandler(this.openSystrayMenuItem_Click);
             // 
             // quitSystrayMenuItem
             // 
             this.quitSystrayMenuItem.Name = "quitSystrayMenuItem";
-            this.quitSystrayMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.quitSystrayMenuItem.Text = "Quit";
+            resources.ApplyResources(this.quitSystrayMenuItem, "quitSystrayMenuItem");
             this.quitSystrayMenuItem.Click += new System.EventHandler(this.quitSystrayMenuItem_Click);
+            // 
+            // btnConfig
+            // 
+            resources.ApplyResources(this.btnConfig, "btnConfig");
+            this.btnConfig.Name = "btnConfig";
+            this.btnConfig.UseVisualStyleBackColor = true;
+            this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
+            // 
+            // btnAbout
+            // 
+            resources.ApplyResources(this.btnAbout, "btnAbout");
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.UseVisualStyleBackColor = true;
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(659, 312);
             this.Controls.Add(this.btnAbout);
             this.Controls.Add(this.btnConfig);
             this.Controls.Add(this.btnMakeVisible);
@@ -282,10 +236,8 @@
             this.Controls.Add(this.statusPass);
             this.Controls.Add(this.btnAdd);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "frmMain";
-            this.Text = "Pass4Win";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.statusPass.ResumeLayout(false);
