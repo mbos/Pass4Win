@@ -17,3 +17,5 @@ If you wish to donate feel free, you can do so with bitcoin 184CdvL6i9sDoEpMNST6
 Regards,
 
 Mike
+
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/pass4win/localized.svg)](https://crowdin.com/project/pass4win)
