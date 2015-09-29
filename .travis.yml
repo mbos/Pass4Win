@@ -1,2 +1,17 @@
 language: csharp
 solution: Pass4Win.sln
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "DI0gBymImBazUxrKBSqWUW7gQY405nnXX2Hwp9Lo7PxSKC3wU5ejDeHtgPnSI//nrakUzHTSSJurn8XxWWn8J59ryQ5IyTajHLgSpjzn8AmwNa9pWxP3xSHxvtH4kmqOU87X4w9nkXo9K+m2E5wg3e67vfvNDX5DFGyx0AQUQFx3IbpDwZZzL9FogyCmgoZLmC7lGXJTIPIS0HEwWF8JnkhayV9LR+Q7IzaIN/edukpF6a6Nl6Cy0he8VPs2vjGW37UjuaxnYjLDNyCKdDNeaE20lfYN0Grt2O1xFEgPZfjnkgx/661PLNbYX3RRt3k2lBA7iWwBTSsicR2fiRNJzZJDG/+MK0L/AYvs+NSsUrm4inAkvmm6QjwENMVxzWDamAynN1Nial7BFs7ItuhO+AgJqgcw0E//u8+I839Uz+d274pGbWjgj8cPoVs5stgzzydoq/lW65R2KqcEa+DFrztzLTvUN923Flb5ty1pyNRQHFtOdr7+ZijPlhz3q8GcsQUgsLQyv4R/HfGe/MiupGmzlv4cUEoE7yr6WBbPDZFb7ppn9+WaOLlnFr8NUlovoQBaovqH9Hdtv2aIU4HgXtzv1X+mN2glAMXKCRNs+gKGZGlPNgfQ/GfmsxaDgtlmKSYqUPhFtyuD3nx3myvjRNffezAtGCo6Gl+0hlYizWA="
+
+addons:
+  coverity_scan:
+    project:
+      name: "mbos/Pass4Win"
+      description: "Build submitted via Travis CI"
+    notification_email: mikebos@mik3.com
+    build_command_prepend: "msbuild /t:Clean"
+    build_command:   "msbuild /t:Rebuild"
