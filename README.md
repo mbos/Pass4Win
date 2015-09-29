@@ -19,3 +19,4 @@ Regards,
 Mike
 
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/pass4win/localized.svg)](https://crowdin.com/project/pass4win)
+[![Code Advisor On Demand Status](https://badges.ondemand.coverity.com/streams/pbcmfjgk2d3571ldjkj4pa553s)](https://ondemand.coverity.com/streams/pbcmfjgk2d3571ldjkj4pa553s/jobs)

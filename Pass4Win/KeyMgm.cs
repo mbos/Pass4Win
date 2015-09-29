@@ -119,7 +119,7 @@ namespace Pass4Win
                 
                 ScanDirectory(path);
             }
-             
+            newKeySelect.Close(); 
         }
 
         /// <summary>

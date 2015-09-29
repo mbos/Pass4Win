@@ -156,6 +156,7 @@ namespace Pass4Win
                 }
                 else
                 {
+                    newKeySelect.Close();
                     MessageBox.Show(Strings.Error_nokey, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     System.Environment.Exit(1);
                 }
@@ -846,16 +847,25 @@ namespace Pass4Win
             if (Uri.TryCreate(hostName, UriKind.Absolute, out HostTest))
             {
                 var client = new TcpClient();
-                var result = client.BeginConnect(HostTest.Authority, 9418, null, null);
-
-                result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
-                if (!client.Connected)
-                {
-                    return false;
+                try {
+                    var result = client.BeginConnect(HostTest.Authority, 9418, null, null);
+                    result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
+                    if (!client.Connected)
+                    {
+                        client.Close();
+                        return false;
+                    }
+                    // we have connected
+                    client.EndConnect(result);
+                    client.Close();
+                    return true;
                 }
-                // we have connected
-                client.EndConnect(result);
-                return true;
+                catch
+                {
+                    client.Close();
+                    return false;
+
+                }
             }
             //fail
             return false;
@@ -868,16 +878,26 @@ namespace Pass4Win
                 if (Uri.TryCreate(hostName, UriKind.Absolute, out HostTest))
                 {
                     var client = new TcpClient();
-                    var result = client.BeginConnect(HostTest.Authority, 443, null, null);
-
-                    result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
-                    if (!client.Connected)
+                    try
                     {
-                        return false;
+                        var result = client.BeginConnect(HostTest.Authority, 443, null, null);
+                        result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
+                        if (!client.Connected)
+                        {
+                            client.Close();
+                            return false;
+                        }
+                        // we have connected
+                        client.EndConnect(result);
+                        client.Close();
+                        return true;
                     }
-                    // we have connected
-                    client.EndConnect(result);
-                    return true;
+                    catch
+                    {
+                        client.Close();
+                        return false;
+
+                    }
                 }
                 //fail
                 return false;
