@@ -57,7 +57,6 @@ namespace Pass4Win
             InitializeComponent();
 
             var bugsnag = new BaseClient("23814316a6ecfe8ff344b6a467f07171");
-            bugsnag.Notify(new ArgumentException("Non-fatal"));
 
             EnableTray = false;
 
@@ -179,6 +178,16 @@ namespace Pass4Win
             dataPass.Columns[0].Visible = false;
 
             EnableTray = true;
+
+            //use LINQ method syntax to pull the Title field from a DT into a string array...
+            string[] postSource = dt
+                                .AsEnumerable()
+                                .Select<System.Data.DataRow, String>(x => x.Field<String>("colText"))
+                                .ToArray();
+
+            AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
+            collection.AddRange(postSource);
+            toolStriptextSearch.AutoCompleteCustomSource = collection;
         }
 
 
@@ -207,108 +216,6 @@ namespace Pass4Win
             }
         }
 
-        private void btnKeyManager_Click(object sender, EventArgs e)
-        {
-            frmKeyManager KeyManager = new frmKeyManager();
-            KeyManager.Show();
-        }
-
-        /// <summary>
-        /// Adds an entry, validates input, creates the filepath and adds the file to git
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            // get the new entryname
-            InputBoxValidation validation = delegate (string val)
-            {
-                if (val == "")
-                    return "Value cannot be empty.";
-                if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
-                    return Strings.Error_valid_filename;
-                if (File.Exists(cfg["PassDirectory"] + "\\" + @val + ".gpg"))
-                    return Strings.Error_already_exists;
-                return "";
-            };
-
-            string value = "";
-            if (InputBox.Show(Strings.Input_new_name, Strings.Input_new_name_label, ref value, validation) == DialogResult.OK)
-            {
-                // parse path
-                string tmpPath = cfg["PassDirectory"] + "\\" + @value + ".gpg"; ;
-                Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
-                using (File.Create(tmpPath)) { }
-
-                ResetDatagrid();
-                // set the selected item.
-                foreach (DataGridViewRow row in dataPass.Rows)
-                {
-                    if (row.Cells[1].Value.ToString().Equals(value))
-                    {
-                        dataPass.CurrentCell = row.Cells[1];
-                        row.Selected = true;
-                        dataPass.FirstDisplayedScrollingRowIndex = row.Index;
-                        break;
-                    }
-                }
-                // add to git
-                using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
-                {
-                    // Stage the file
-                    repo.Stage(tmpPath);
-                }
-                // dispose timer thread and clear ui.
-
-                if (_timer != null) _timer.Dispose();
-                statusPB.Visible = false;
-                statusTxt.Text = "Ready";
-                // Set the text detail to the correct state
-                txtPassDetail.Text = "";
-                txtPassDetail.ReadOnly = false;
-                txtPassDetail.BackColor = Color.White;
-                txtPassDetail.Visible = true;
-                btnMakeVisible.Visible = false;
-
-                txtPassDetail.Focus();
-            }
-        }
-
-        /// <summary>
-        /// Set the sql to adjust the datagrid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void txtPass_TextChanged(object sender, EventArgs e)
-        {
-            dt.DefaultView.RowFilter = "colText LIKE '%" + txtPass.Text + "%'";
-            if (dt.DefaultView.Count == 0)
-            {
-                txtPassDetail.Clear();
-                // dispose timer thread and clear ui.
-                if (_timer != null) _timer.Dispose();
-                statusPB.Visible = false;
-                // disable right click
-                dataMenu.Enabled = false;
-                statusTxt.Text = "Ready";
-            } else
-            {
-                // making sure the menu works
-                dataMenu.Enabled = true;
-            }
-        }
-
-        /// <summary>
-        /// Decrypt the selected entry when pressing enter in textbox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void txtPass_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
-                if (dt.DefaultView.Count != 0)
-                    decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
-        }
 
         /// <summary>
         /// Decrypts current selection and cleans up the detail view
@@ -755,13 +662,6 @@ namespace Pass4Win
         }
 
 
-        private void btnConfig_Click(object sender, EventArgs e)
-        {
-            frmConfig Config = new frmConfig();
-            Config.SendOffline += new EventHandler(Config_SendOffline);
-            Config.Show();
-        }
-
         /// <summary>
         /// Callback for the event from config that the git repo is changed
         /// </summary>
@@ -782,8 +682,7 @@ namespace Pass4Win
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
-            frmAbout About = new frmAbout();
-            About.Show();
+
         }
 
         /// <summary>
@@ -967,6 +866,119 @@ namespace Pass4Win
             {
                 this.Hide();
                 e.Cancel = true;
+            }
+        }
+
+        private void ToolStripbtnAdd_Click(object sender, EventArgs e)
+        {
+            // get the new entryname
+            InputBoxValidation validation = delegate (string val)
+            {
+                if (val == "")
+                    return "Value cannot be empty.";
+                if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
+                    return Strings.Error_valid_filename;
+                if (File.Exists(cfg["PassDirectory"] + "\\" + @val + ".gpg"))
+                    return Strings.Error_already_exists;
+                return "";
+            };
+
+            string value = "";
+            if (InputBox.Show(Strings.Input_new_name, Strings.Input_new_name_label, ref value, validation) == DialogResult.OK)
+            {
+                // parse path
+                string tmpPath = cfg["PassDirectory"] + "\\" + @value + ".gpg"; ;
+                Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
+                using (File.Create(tmpPath)) { }
+
+                ResetDatagrid();
+                // set the selected item.
+                foreach (DataGridViewRow row in dataPass.Rows)
+                {
+                    if (row.Cells[1].Value.ToString().Equals(value))
+                    {
+                        dataPass.CurrentCell = row.Cells[1];
+                        row.Selected = true;
+                        dataPass.FirstDisplayedScrollingRowIndex = row.Index;
+                        break;
+                    }
+                }
+                // add to git
+                using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
+                {
+                    // Stage the file
+                    repo.Stage(tmpPath);
+                }
+                // dispose timer thread and clear ui.
+
+                if (_timer != null) _timer.Dispose();
+                statusPB.Visible = false;
+                statusTxt.Text = "Ready";
+                // Set the text detail to the correct state
+                txtPassDetail.Text = "";
+                txtPassDetail.ReadOnly = false;
+                txtPassDetail.BackColor = Color.White;
+                txtPassDetail.Visible = true;
+                btnMakeVisible.Visible = false;
+
+                txtPassDetail.Focus();
+            }
+        }
+
+        private void toolStripbtnKey_Click(object sender, EventArgs e)
+        {
+            frmKeyManager KeyManager = new frmKeyManager();
+            KeyManager.Show();
+        }
+
+        private void toolStripbtnConfig_Click(object sender, EventArgs e)
+        {
+            frmConfig Config = new frmConfig();
+            Config.SendOffline += new EventHandler(Config_SendOffline);
+            Config.Show();
+        }
+
+        private void toolStripbtnAbout_Click(object sender, EventArgs e)
+        {
+            frmAbout About = new frmAbout();
+            About.Show();
+        }
+
+        private void toolStripbtnQuit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void toolStriptextSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
+                if (dt.DefaultView.Count != 0)
+                    decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+        }
+
+        private void toolStriptextSearch_TextChanged(object sender, EventArgs e)
+        {
+            TextDelay.Stop();
+            TextDelay.Start();
+        }
+
+        private void TextDelay_Tick(object sender, EventArgs e)
+        {
+            dt.DefaultView.RowFilter = "colText LIKE '%" + toolStriptextSearch.Text + "%'";
+            if (dt.DefaultView.Count == 0)
+            {
+                txtPassDetail.Clear();
+                // dispose timer thread and clear ui.
+                if (_timer != null) _timer.Dispose();
+                statusPB.Visible = false;
+                // disable right click
+                dataMenu.Enabled = false;
+                statusTxt.Text = "Ready";
+            }
+            else
+            {
+                // making sure the menu works
+                dataMenu.Enabled = true;
             }
         }
     }

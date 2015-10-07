@@ -30,39 +30,36 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            this.btnAdd = new System.Windows.Forms.Button();
             this.statusPass = new System.Windows.Forms.StatusStrip();
             this.statusTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusPB = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripOffline = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtPassDetail = new System.Windows.Forms.RichTextBox();
-            this.txtPass = new System.Windows.Forms.TextBox();
             this.dataPass = new System.Windows.Forms.DataGridView();
             this.dataMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnKeyManager = new System.Windows.Forms.Button();
             this.btnMakeVisible = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.SystrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openSystrayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitSystrayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnConfig = new System.Windows.Forms.Button();
-            this.btnAbout = new System.Windows.Forms.Button();
+            this.toolStripSearch = new System.Windows.Forms.ToolStrip();
+            this.toolStriptextSearch = new System.Windows.Forms.ToolStripTextBox();
+            this.ToolStripbtnAdd = new System.Windows.Forms.ToolStripButton();
+            this.toolStripbtnKey = new System.Windows.Forms.ToolStripButton();
+            this.toolStripbtnConfig = new System.Windows.Forms.ToolStripButton();
+            this.toolStripbtnAbout = new System.Windows.Forms.ToolStripButton();
+            this.toolStripbtnQuit = new System.Windows.Forms.ToolStripButton();
+            this.TextDelay = new System.Windows.Forms.Timer(this.components);
             this.statusPass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
             this.SystrayMenu.SuspendLayout();
+            this.toolStripSearch.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnAdd
-            // 
-            resources.ApplyResources(this.btnAdd, "btnAdd");
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // statusPass
             // 
@@ -101,13 +98,6 @@
             this.txtPassDetail.Name = "txtPassDetail";
             this.txtPassDetail.ReadOnly = true;
             this.txtPassDetail.Leave += new System.EventHandler(this.txtPassDetail_Leave);
-            // 
-            // txtPass
-            // 
-            resources.ApplyResources(this.txtPass, "txtPass");
-            this.txtPass.Name = "txtPass";
-            this.txtPass.TextChanged += new System.EventHandler(this.txtPass_TextChanged);
-            this.txtPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPass_KeyDown);
             // 
             // dataPass
             // 
@@ -168,13 +158,6 @@
             resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
-            // btnKeyManager
-            // 
-            resources.ApplyResources(this.btnKeyManager, "btnKeyManager");
-            this.btnKeyManager.Name = "btnKeyManager";
-            this.btnKeyManager.UseVisualStyleBackColor = true;
-            this.btnKeyManager.Click += new System.EventHandler(this.btnKeyManager_Click);
-            // 
             // btnMakeVisible
             // 
             resources.ApplyResources(this.btnMakeVisible, "btnMakeVisible");
@@ -208,33 +191,83 @@
             resources.ApplyResources(this.quitSystrayMenuItem, "quitSystrayMenuItem");
             this.quitSystrayMenuItem.Click += new System.EventHandler(this.quitSystrayMenuItem_Click);
             // 
-            // btnConfig
+            // toolStripSearch
             // 
-            resources.ApplyResources(this.btnConfig, "btnConfig");
-            this.btnConfig.Name = "btnConfig";
-            this.btnConfig.UseVisualStyleBackColor = true;
-            this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
+            this.toolStripSearch.CanOverflow = false;
+            this.toolStripSearch.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStriptextSearch,
+            this.ToolStripbtnAdd,
+            this.toolStripbtnQuit,
+            this.toolStripbtnAbout,
+            this.toolStripbtnConfig,
+            this.toolStripbtnKey});
+            this.toolStripSearch.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            resources.ApplyResources(this.toolStripSearch, "toolStripSearch");
+            this.toolStripSearch.Name = "toolStripSearch";
             // 
-            // btnAbout
+            // toolStriptextSearch
             // 
-            resources.ApplyResources(this.btnAbout, "btnAbout");
-            this.btnAbout.Name = "btnAbout";
-            this.btnAbout.UseVisualStyleBackColor = true;
-            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
+            this.toolStriptextSearch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.toolStriptextSearch.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            resources.ApplyResources(this.toolStriptextSearch, "toolStriptextSearch");
+            this.toolStriptextSearch.CausesValidation = false;
+            this.toolStriptextSearch.Name = "toolStriptextSearch";
+            this.toolStriptextSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.toolStriptextSearch_KeyUp);
+            this.toolStriptextSearch.TextChanged += new System.EventHandler(this.toolStriptextSearch_TextChanged);
+            // 
+            // ToolStripbtnAdd
+            // 
+            this.ToolStripbtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.ToolStripbtnAdd, "ToolStripbtnAdd");
+            this.ToolStripbtnAdd.Name = "ToolStripbtnAdd";
+            this.ToolStripbtnAdd.Click += new System.EventHandler(this.ToolStripbtnAdd_Click);
+            // 
+            // toolStripbtnKey
+            // 
+            this.toolStripbtnKey.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripbtnKey.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripbtnKey, "toolStripbtnKey");
+            this.toolStripbtnKey.Name = "toolStripbtnKey";
+            this.toolStripbtnKey.Click += new System.EventHandler(this.toolStripbtnKey_Click);
+            // 
+            // toolStripbtnConfig
+            // 
+            this.toolStripbtnConfig.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripbtnConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripbtnConfig, "toolStripbtnConfig");
+            this.toolStripbtnConfig.Name = "toolStripbtnConfig";
+            this.toolStripbtnConfig.Click += new System.EventHandler(this.toolStripbtnConfig_Click);
+            // 
+            // toolStripbtnAbout
+            // 
+            this.toolStripbtnAbout.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripbtnAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripbtnAbout, "toolStripbtnAbout");
+            this.toolStripbtnAbout.Name = "toolStripbtnAbout";
+            this.toolStripbtnAbout.Click += new System.EventHandler(this.toolStripbtnAbout_Click);
+            // 
+            // toolStripbtnQuit
+            // 
+            this.toolStripbtnQuit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripbtnQuit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripbtnQuit, "toolStripbtnQuit");
+            this.toolStripbtnQuit.Name = "toolStripbtnQuit";
+            this.toolStripbtnQuit.Click += new System.EventHandler(this.toolStripbtnQuit_Click);
+            // 
+            // TextDelay
+            // 
+            this.TextDelay.Interval = 500;
+            this.TextDelay.Tick += new System.EventHandler(this.TextDelay_Tick);
             // 
             // frmMain
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnAbout);
-            this.Controls.Add(this.btnConfig);
+            this.Controls.Add(this.toolStripSearch);
             this.Controls.Add(this.btnMakeVisible);
-            this.Controls.Add(this.btnKeyManager);
             this.Controls.Add(this.dataPass);
-            this.Controls.Add(this.txtPass);
             this.Controls.Add(this.txtPassDetail);
             this.Controls.Add(this.statusPass);
-            this.Controls.Add(this.btnAdd);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "frmMain";
@@ -245,34 +278,38 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).EndInit();
             this.dataMenu.ResumeLayout(false);
             this.SystrayMenu.ResumeLayout(false);
+            this.toolStripSearch.ResumeLayout(false);
+            this.toolStripSearch.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.StatusStrip statusPass;
         private System.Windows.Forms.ToolStripStatusLabel statusTxt;
         private System.Windows.Forms.ToolStripProgressBar statusPB;
         private System.Windows.Forms.RichTextBox txtPassDetail;
-        private System.Windows.Forms.TextBox txtPass;
         private System.Windows.Forms.DataGridView dataPass;
         private System.Windows.Forms.ContextMenuStrip dataMenu;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.Button btnKeyManager;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.Button btnMakeVisible;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.Button btnConfig;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripOffline;
-        private System.Windows.Forms.Button btnAbout;
         private System.Windows.Forms.ContextMenuStrip SystrayMenu;
         private System.Windows.Forms.ToolStripMenuItem openSystrayMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quitSystrayMenuItem;
+        private System.Windows.Forms.ToolStrip toolStripSearch;
+        private System.Windows.Forms.ToolStripButton ToolStripbtnAdd;
+        private System.Windows.Forms.ToolStripButton toolStripbtnKey;
+        private System.Windows.Forms.ToolStripButton toolStripbtnConfig;
+        private System.Windows.Forms.ToolStripTextBox toolStriptextSearch;
+        private System.Windows.Forms.ToolStripButton toolStripbtnAbout;
+        private System.Windows.Forms.ToolStripButton toolStripbtnQuit;
+        private System.Windows.Forms.Timer TextDelay;
     }
 }
 
