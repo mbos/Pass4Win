@@ -30,6 +30,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using SharpConfig;
 using System.Net.Mail;
+using Bugsnag.Clients;
 
 namespace Pass4Win
 {
@@ -54,6 +55,10 @@ namespace Pass4Win
         public frmMain()
         {
             InitializeComponent();
+
+            var bugsnag = new BaseClient("23814316a6ecfe8ff344b6a467f07171");
+            bugsnag.Notify(new ArgumentException("Non-fatal"));
+
             EnableTray = false;
 
             // Getting actual version

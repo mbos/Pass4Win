@@ -78,6 +78,10 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bugsnag, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GpgApi">
       <HintPath>..\packages\GpgAPI.1.5.0\lib\GpgApi.dll</HintPath>
     </Reference>
@@ -208,7 +212,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="lock.ico" />
