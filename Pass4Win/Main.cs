@@ -178,16 +178,6 @@ namespace Pass4Win
             dataPass.Columns[0].Visible = false;
 
             EnableTray = true;
-
-            //use LINQ method syntax to pull the Title field from a DT into a string array...
-            string[] postSource = dt
-                                .AsEnumerable()
-                                .Select<System.Data.DataRow, String>(x => x.Field<String>("colText"))
-                                .ToArray();
-
-            AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
-            collection.AddRange(postSource);
-            toolStriptextSearch.AutoCompleteCustomSource = collection;
         }
 
 
@@ -617,6 +607,16 @@ namespace Pass4Win
                         dt.Rows.Add(newItemRow);
                     }
                 }
+
+            // rebuild autocomplete
+            string[] postSource = dt
+                    .AsEnumerable()
+                    .Select<System.Data.DataRow, String>(x => x.Field<String>("colText"))
+                    .ToArray();
+
+            AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
+            collection.AddRange(postSource);
+            toolStriptextSearch.AutoCompleteCustomSource = collection;
         }
 
         /// <summary>
@@ -980,6 +980,18 @@ namespace Pass4Win
                 // making sure the menu works
                 dataMenu.Enabled = true;
             }
+        }
+
+        private void toolStripBtnGenPass_Click(object sender, EventArgs e)
+        {
+            // Kill timer
+            if (_timer != null) _timer.Dispose();
+            statusPB.Visible = false;
+            statusTxt.Text = "Ready";
+
+            // Open Form
+            Genpass frmGenpass = new Genpass();
+            frmGenpass.Show();
         }
     }
 

@@ -49,11 +49,12 @@
             this.toolStripSearch = new System.Windows.Forms.ToolStrip();
             this.toolStriptextSearch = new System.Windows.Forms.ToolStripTextBox();
             this.ToolStripbtnAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripbtnKey = new System.Windows.Forms.ToolStripButton();
-            this.toolStripbtnConfig = new System.Windows.Forms.ToolStripButton();
-            this.toolStripbtnAbout = new System.Windows.Forms.ToolStripButton();
             this.toolStripbtnQuit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripbtnAbout = new System.Windows.Forms.ToolStripButton();
+            this.toolStripbtnConfig = new System.Windows.Forms.ToolStripButton();
+            this.toolStripbtnKey = new System.Windows.Forms.ToolStripButton();
             this.TextDelay = new System.Windows.Forms.Timer(this.components);
+            this.toolStripBtnGenPass = new System.Windows.Forms.ToolStripButton();
             this.statusPass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
@@ -200,7 +201,8 @@
             this.toolStripbtnQuit,
             this.toolStripbtnAbout,
             this.toolStripbtnConfig,
-            this.toolStripbtnKey});
+            this.toolStripbtnKey,
+            this.toolStripBtnGenPass});
             this.toolStripSearch.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             resources.ApplyResources(this.toolStripSearch, "toolStripSearch");
             this.toolStripSearch.Name = "toolStripSearch";
@@ -222,21 +224,13 @@
             this.ToolStripbtnAdd.Name = "ToolStripbtnAdd";
             this.ToolStripbtnAdd.Click += new System.EventHandler(this.ToolStripbtnAdd_Click);
             // 
-            // toolStripbtnKey
+            // toolStripbtnQuit
             // 
-            this.toolStripbtnKey.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripbtnKey.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.toolStripbtnKey, "toolStripbtnKey");
-            this.toolStripbtnKey.Name = "toolStripbtnKey";
-            this.toolStripbtnKey.Click += new System.EventHandler(this.toolStripbtnKey_Click);
-            // 
-            // toolStripbtnConfig
-            // 
-            this.toolStripbtnConfig.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripbtnConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.toolStripbtnConfig, "toolStripbtnConfig");
-            this.toolStripbtnConfig.Name = "toolStripbtnConfig";
-            this.toolStripbtnConfig.Click += new System.EventHandler(this.toolStripbtnConfig_Click);
+            this.toolStripbtnQuit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripbtnQuit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripbtnQuit, "toolStripbtnQuit");
+            this.toolStripbtnQuit.Name = "toolStripbtnQuit";
+            this.toolStripbtnQuit.Click += new System.EventHandler(this.toolStripbtnQuit_Click);
             // 
             // toolStripbtnAbout
             // 
@@ -246,18 +240,33 @@
             this.toolStripbtnAbout.Name = "toolStripbtnAbout";
             this.toolStripbtnAbout.Click += new System.EventHandler(this.toolStripbtnAbout_Click);
             // 
-            // toolStripbtnQuit
+            // toolStripbtnConfig
             // 
-            this.toolStripbtnQuit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripbtnQuit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.toolStripbtnQuit, "toolStripbtnQuit");
-            this.toolStripbtnQuit.Name = "toolStripbtnQuit";
-            this.toolStripbtnQuit.Click += new System.EventHandler(this.toolStripbtnQuit_Click);
+            this.toolStripbtnConfig.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripbtnConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripbtnConfig, "toolStripbtnConfig");
+            this.toolStripbtnConfig.Name = "toolStripbtnConfig";
+            this.toolStripbtnConfig.Click += new System.EventHandler(this.toolStripbtnConfig_Click);
+            // 
+            // toolStripbtnKey
+            // 
+            this.toolStripbtnKey.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripbtnKey.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripbtnKey, "toolStripbtnKey");
+            this.toolStripbtnKey.Name = "toolStripbtnKey";
+            this.toolStripbtnKey.Click += new System.EventHandler(this.toolStripbtnKey_Click);
             // 
             // TextDelay
             // 
             this.TextDelay.Interval = 500;
             this.TextDelay.Tick += new System.EventHandler(this.TextDelay_Tick);
+            // 
+            // toolStripBtnGenPass
+            // 
+            this.toolStripBtnGenPass.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripBtnGenPass, "toolStripBtnGenPass");
+            this.toolStripBtnGenPass.Name = "toolStripBtnGenPass";
+            this.toolStripBtnGenPass.Click += new System.EventHandler(this.toolStripBtnGenPass_Click);
             // 
             // frmMain
             // 
@@ -310,6 +319,7 @@
         private System.Windows.Forms.ToolStripButton toolStripbtnAbout;
         private System.Windows.Forms.ToolStripButton toolStripbtnQuit;
         private System.Windows.Forms.Timer TextDelay;
+        private System.Windows.Forms.ToolStripButton toolStripBtnGenPass;
     }
 }
 
