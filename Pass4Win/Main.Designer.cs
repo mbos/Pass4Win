@@ -53,8 +53,8 @@
             this.toolStripbtnAbout = new System.Windows.Forms.ToolStripButton();
             this.toolStripbtnConfig = new System.Windows.Forms.ToolStripButton();
             this.toolStripbtnKey = new System.Windows.Forms.ToolStripButton();
-            this.TextDelay = new System.Windows.Forms.Timer(this.components);
             this.toolStripBtnGenPass = new System.Windows.Forms.ToolStripButton();
+            this.TextDelay = new System.Windows.Forms.Timer(this.components);
             this.statusPass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
@@ -256,17 +256,17 @@
             this.toolStripbtnKey.Name = "toolStripbtnKey";
             this.toolStripbtnKey.Click += new System.EventHandler(this.toolStripbtnKey_Click);
             // 
-            // TextDelay
-            // 
-            this.TextDelay.Interval = 500;
-            this.TextDelay.Tick += new System.EventHandler(this.TextDelay_Tick);
-            // 
             // toolStripBtnGenPass
             // 
             this.toolStripBtnGenPass.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.toolStripBtnGenPass, "toolStripBtnGenPass");
             this.toolStripBtnGenPass.Name = "toolStripBtnGenPass";
             this.toolStripBtnGenPass.Click += new System.EventHandler(this.toolStripBtnGenPass_Click);
+            // 
+            // TextDelay
+            // 
+            this.TextDelay.Interval = 500;
+            this.TextDelay.Tick += new System.EventHandler(this.TextDelay_Tick);
             // 
             // frmMain
             // 

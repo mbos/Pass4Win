@@ -6634,9 +6634,6 @@
   <data name="toolStripSearch.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
-  <data name="toolStripSearch.Text" xml:space="preserve">
-    <value>Tool menu</value>
-  </data>
   <data name="&gt;&gt;toolStripSearch.Name" xml:space="preserve">
     <value>toolStripSearch</value>
   </data>
@@ -12932,17 +12929,17 @@
   <data name="&gt;&gt;toolStripbtnKey.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TextDelay.Name" xml:space="preserve">
-    <value>TextDelay</value>
-  </data>
-  <data name="&gt;&gt;TextDelay.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;toolStripBtnGenPass.Name" xml:space="preserve">
     <value>toolStripBtnGenPass</value>
   </data>
   <data name="&gt;&gt;toolStripBtnGenPass.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextDelay.Name" xml:space="preserve">
+    <value>TextDelay</value>
+  </data>
+  <data name="&gt;&gt;TextDelay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>frmMain</value>

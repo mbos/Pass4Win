@@ -117,73 +117,99 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
-  <data name="richTextBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
-  <data name="richTextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 33</value>
+  <data name="txtGenPass.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 13</value>
   </data>
-  <data name="richTextBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>428, 243</value>
+  <data name="txtGenPass.Size" type="System.Drawing.Size, System.Drawing">
+    <value>371, 20</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
-  <data name="richTextBox1.TabIndex" type="System.Int32, mscorlib">
+  <data name="txtGenPass.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="richTextBox1.Text" xml:space="preserve">
-    <value>Pass4Win is voortgekomen uit Pass ((http://www.passwordstore.org/) in die zin dat het formaat van opslaan exact hetzelfde is.
-
-For help, bugreports of de laatste versie kijk op https://github.com/mbos/Pass4Win.
-
-Copyright (C) 2015 by Mike Bos
-
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content</value>
+  <data name="&gt;&gt;txtGenPass.Name" xml:space="preserve">
+    <value>txtGenPass</value>
   </data>
-  <data name="&gt;&gt;richTextBox1.Name" xml:space="preserve">
-    <value>richTextBox1</value>
+  <data name="&gt;&gt;txtGenPass.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;richTextBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;richTextBox1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;txtGenPass.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;richTextBox1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;txtGenPass.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="btnCopy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>151, 82</value>
+  </data>
+  <data name="btnCopy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>132, 23</value>
+  </data>
+  <data name="btnCopy.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="txtPassVersion.AutoSize" type="System.Boolean, mscorlib">
+  <data name="btnCopy.Text" xml:space="preserve">
+    <value>Naar klembord kopiëren</value>
+  </data>
+  <data name="&gt;&gt;btnCopy.Name" xml:space="preserve">
+    <value>btnCopy</value>
+  </data>
+  <data name="&gt;&gt;btnCopy.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnCopy.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnCopy.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tbChars.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 40</value>
+  </data>
+  <data name="tbChars.Size" type="System.Drawing.Size, System.Drawing">
+    <value>410, 45</value>
+  </data>
+  <data name="tbChars.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tbChars.Name" xml:space="preserve">
+    <value>tbChars</value>
+  </data>
+  <data name="&gt;&gt;tbChars.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbChars.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tbChars.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblChars.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="txtPassVersion.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt, style=Bold</value>
+  <data name="lblChars.Location" type="System.Drawing.Point, System.Drawing">
+    <value>390, 16</value>
   </data>
-  <data name="txtPassVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>118, 9</value>
+  <data name="lblChars.Size" type="System.Drawing.Size, System.Drawing">
+    <value>19, 13</value>
   </data>
-  <data name="txtPassVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 20</value>
+  <data name="lblChars.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
-  <data name="txtPassVersion.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="lblChars.Text" xml:space="preserve">
+    <value>10</value>
   </data>
-  <data name="txtPassVersion.Text" xml:space="preserve">
-    <value>Pass4Win versie</value>
+  <data name="&gt;&gt;lblChars.Name" xml:space="preserve">
+    <value>lblChars</value>
   </data>
-  <data name="&gt;&gt;txtPassVersion.Name" xml:space="preserve">
-    <value>txtPassVersion</value>
-  </data>
-  <data name="&gt;&gt;txtPassVersion.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblChars.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;txtPassVersion.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblChars.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;txtPassVersion.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblChars.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -193,13 +219,13 @@ A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.ht
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>430, 278</value>
+    <value>435, 129</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Over</value>
+    <value>Wachtwoord genereren</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>frmAbout</value>
+    <value>Genpass</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

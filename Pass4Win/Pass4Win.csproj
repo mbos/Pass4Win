@@ -177,6 +177,9 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Genpass.nl.resx">
+      <DependentUpon>Genpass.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Genpass.resx">
       <DependentUpon>Genpass.cs</DependentUpon>
     </EmbeddedResource>
