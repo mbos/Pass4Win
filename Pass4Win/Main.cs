@@ -993,6 +993,11 @@ namespace Pass4Win
             Genpass frmGenpass = new Genpass();
             frmGenpass.Show();
         }
+
+        private void copyPassDetailMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(txtPassDetail.SelectedText);
+        }
     }
 
     /// <summary>

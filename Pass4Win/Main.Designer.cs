@@ -35,6 +35,8 @@
             this.statusPB = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripOffline = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtPassDetail = new System.Windows.Forms.RichTextBox();
+            this.passDetailMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyPassDetailMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataPass = new System.Windows.Forms.DataGridView();
             this.dataMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,6 +58,7 @@
             this.toolStripBtnGenPass = new System.Windows.Forms.ToolStripButton();
             this.TextDelay = new System.Windows.Forms.Timer(this.components);
             this.statusPass.SuspendLayout();
+            this.passDetailMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
             this.SystrayMenu.SuspendLayout();
@@ -64,6 +67,7 @@
             // 
             // statusPass
             // 
+            this.statusPass.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.statusPass.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusTxt,
             this.statusPB,
@@ -95,10 +99,25 @@
             // 
             // txtPassDetail
             // 
+            this.txtPassDetail.ContextMenuStrip = this.passDetailMenu;
             resources.ApplyResources(this.txtPassDetail, "txtPassDetail");
             this.txtPassDetail.Name = "txtPassDetail";
             this.txtPassDetail.ReadOnly = true;
             this.txtPassDetail.Leave += new System.EventHandler(this.txtPassDetail_Leave);
+            // 
+            // passDetailMenu
+            // 
+            this.passDetailMenu.ImageScalingSize = new System.Drawing.Size(18, 18);
+            this.passDetailMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyPassDetailMenuItem});
+            this.passDetailMenu.Name = "passDetailMenu";
+            resources.ApplyResources(this.passDetailMenu, "passDetailMenu");
+            // 
+            // copyPassDetailMenuItem
+            // 
+            this.copyPassDetailMenuItem.Name = "copyPassDetailMenuItem";
+            resources.ApplyResources(this.copyPassDetailMenuItem, "copyPassDetailMenuItem");
+            this.copyPassDetailMenuItem.Click += new System.EventHandler(this.copyPassDetailMenuItem_Click);
             // 
             // dataPass
             // 
@@ -125,6 +144,7 @@
             // 
             // dataMenu
             // 
+            this.dataMenu.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.dataMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyToolStripMenuItem,
             this.editToolStripMenuItem,
@@ -174,6 +194,7 @@
             // 
             // SystrayMenu
             // 
+            this.SystrayMenu.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.SystrayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openSystrayMenuItem,
             this.quitSystrayMenuItem});
@@ -195,6 +216,7 @@
             // toolStripSearch
             // 
             this.toolStripSearch.CanOverflow = false;
+            this.toolStripSearch.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.toolStripSearch.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStriptextSearch,
             this.ToolStripbtnAdd,
@@ -284,6 +306,7 @@
             this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.statusPass.ResumeLayout(false);
             this.statusPass.PerformLayout();
+            this.passDetailMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).EndInit();
             this.dataMenu.ResumeLayout(false);
             this.SystrayMenu.ResumeLayout(false);
@@ -320,6 +343,8 @@
         private System.Windows.Forms.ToolStripButton toolStripbtnQuit;
         private System.Windows.Forms.Timer TextDelay;
         private System.Windows.Forms.ToolStripButton toolStripBtnGenPass;
+        private System.Windows.Forms.ContextMenuStrip passDetailMenu;
+        private System.Windows.Forms.ToolStripMenuItem copyPassDetailMenuItem;
     }
 }
 
