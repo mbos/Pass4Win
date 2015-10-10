@@ -435,9 +435,7 @@ namespace Pass4Win
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // dispose timer thread and clear ui.
-            if (_timer != null) _timer.Dispose();
-            statusPB.Visible = false;
-            statusTxt.Text = "Ready";
+            KillTimer();
             // make control editable, give focus and content
             decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(), false);
             txtPassDetail.ReadOnly = false;
@@ -910,10 +908,7 @@ namespace Pass4Win
                     repo.Stage(tmpPath);
                 }
                 // dispose timer thread and clear ui.
-
-                if (_timer != null) _timer.Dispose();
-                statusPB.Visible = false;
-                statusTxt.Text = "Ready";
+                KillTimer();
                 // Set the text detail to the correct state
                 txtPassDetail.Text = "";
                 txtPassDetail.ReadOnly = false;
@@ -969,11 +964,9 @@ namespace Pass4Win
             {
                 txtPassDetail.Clear();
                 // dispose timer thread and clear ui.
-                if (_timer != null) _timer.Dispose();
-                statusPB.Visible = false;
+                KillTimer();
                 // disable right click
                 dataMenu.Enabled = false;
-                statusTxt.Text = "Ready";
             }
             else
             {
@@ -984,10 +977,7 @@ namespace Pass4Win
 
         private void toolStripBtnGenPass_Click(object sender, EventArgs e)
         {
-            // Kill timer
-            if (_timer != null) _timer.Dispose();
-            statusPB.Visible = false;
-            statusTxt.Text = "Ready";
+            KillTimer();
 
             // Open Form
             Genpass frmGenpass = new Genpass();
@@ -997,6 +987,14 @@ namespace Pass4Win
         private void copyPassDetailMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(txtPassDetail.SelectedText);
+            KillTimer();
+        }
+
+        private void KillTimer()
+        {
+            if (_timer != null) _timer.Dispose();
+            statusPB.Visible = false;
+            statusTxt.Text = "Ready";
         }
     }
 
