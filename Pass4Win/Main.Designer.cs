@@ -57,6 +57,7 @@
             this.toolStripbtnKey = new System.Windows.Forms.ToolStripButton();
             this.toolStripBtnGenPass = new System.Windows.Forms.ToolStripButton();
             this.TextDelay = new System.Windows.Forms.Timer(this.components);
+            this.dirTreeView = new System.Windows.Forms.TreeView();
             this.statusPass.SuspendLayout();
             this.passDetailMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
@@ -237,6 +238,7 @@
             resources.ApplyResources(this.toolStriptextSearch, "toolStriptextSearch");
             this.toolStriptextSearch.CausesValidation = false;
             this.toolStriptextSearch.Name = "toolStriptextSearch";
+            this.toolStriptextSearch.Enter += new System.EventHandler(this.toolStriptextSearch_Enter);
             this.toolStriptextSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.toolStriptextSearch_KeyUp);
             this.toolStriptextSearch.TextChanged += new System.EventHandler(this.toolStriptextSearch_TextChanged);
             // 
@@ -291,10 +293,17 @@
             this.TextDelay.Interval = 500;
             this.TextDelay.Tick += new System.EventHandler(this.TextDelay_Tick);
             // 
+            // dirTreeView
+            // 
+            resources.ApplyResources(this.dirTreeView, "dirTreeView");
+            this.dirTreeView.Name = "dirTreeView";
+            this.dirTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.dirTreeView_NodeMouseDoubleClick);
+            // 
             // frmMain
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dirTreeView);
             this.Controls.Add(this.toolStripSearch);
             this.Controls.Add(this.btnMakeVisible);
             this.Controls.Add(this.dataPass);
@@ -346,6 +355,7 @@
         private System.Windows.Forms.ToolStripButton toolStripBtnGenPass;
         private System.Windows.Forms.ContextMenuStrip passDetailMenu;
         private System.Windows.Forms.ToolStripMenuItem copyPassDetailMenuItem;
+        private System.Windows.Forms.TreeView dirTreeView;
     }
 }
 
