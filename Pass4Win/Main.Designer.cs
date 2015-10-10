@@ -112,6 +112,7 @@
             this.copyPassDetailMenuItem});
             this.passDetailMenu.Name = "passDetailMenu";
             resources.ApplyResources(this.passDetailMenu, "passDetailMenu");
+            this.passDetailMenu.Opening += new System.ComponentModel.CancelEventHandler(this.passDetailMenu_Opening);
             // 
             // copyPassDetailMenuItem
             // 

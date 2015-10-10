@@ -174,13 +174,13 @@
     <value>1140, 17</value>
   </metadata>
   <data name="copyPassDetailMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>165, 24</value>
+    <value>113, 24</value>
   </data>
   <data name="copyPassDetailMenuItem.Text" xml:space="preserve">
     <value>Copy</value>
   </data>
   <data name="passDetailMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 52</value>
+    <value>114, 28</value>
   </data>
   <data name="&gt;&gt;passDetailMenu.Name" xml:space="preserve">
     <value>passDetailMenu</value>

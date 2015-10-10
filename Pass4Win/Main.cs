@@ -996,6 +996,11 @@ namespace Pass4Win
             statusPB.Visible = false;
             statusTxt.Text = "Ready";
         }
+
+        private void passDetailMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            copyPassDetailMenuItem.Enabled = (txtPassDetail.SelectedText != null && txtPassDetail.SelectedText.Length > 0);
+        }
     }
 
     /// <summary>
