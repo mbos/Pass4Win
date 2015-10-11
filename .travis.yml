@@ -1,7 +1,10 @@
 language: csharp
 solution: Pass4Win.sln
 before_install:
-  - sudo apt-get install nunit-console
+  addons:
+  apt:
+    packages:
+  	- nunit-console
 before_script:
   - nuget restore Pass4Win.sln
 after_script:
