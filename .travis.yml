@@ -1,2 +1,8 @@
 language: csharp
 solution: Pass4Win.sln
+before_install:
+  - sudo apt-get install nunit-console
+before_script:
+  - nuget restore Pass4Win.sln
+after_script:
+  - nunit-console Pass4Win.UnitTests/bin/Release/Pass4Win.UnitTests.dll
