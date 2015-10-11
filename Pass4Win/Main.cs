@@ -38,6 +38,7 @@ namespace Pass4Win
     {
         // Used for class access to the data
         private DataTable dt = new DataTable();
+        private DataTable treeDt = new DataTable();
         // Class access to the tempfile
         private string tmpfile;
         // timer for clearing clipboard
@@ -172,7 +173,11 @@ namespace Pass4Win
             dt.Columns.Add("colPath", typeof(string));
             dt.Columns.Add("colText", typeof(string));
 
+            treeDt.Columns.Add("colPath", typeof(string));
+            treeDt.Columns.Add("colText", typeof(string));
+
             ListDirectory(new DirectoryInfo(cfg["PassDirectory"]), "");
+            fillDirectoryTree(dirTreeView, cfg["PassDirectory"]);
 
             dataPass.DataSource = dt.DefaultView;
             dataPass.Columns[0].Visible = false;
@@ -617,6 +622,60 @@ namespace Pass4Win
             toolStriptextSearch.AutoCompleteCustomSource = collection;
         }
 
+        private void fillDirectoryTree(TreeView treeView, string path)
+        {
+            treeView.Nodes.Clear();
+            var rootDirectoryInfo = new DirectoryInfo(path);
+            treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
+        }
+
+        private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
+        {
+            int dirFileCount = directoryInfo.EnumerateFiles().Count();
+            StringBuilder nodeName = new StringBuilder();
+            nodeName.Append(directoryInfo.Name);
+            if (dirFileCount > 0)
+            {
+                nodeName.AppendFormat(" ({0})", dirFileCount);
+            }
+
+            var directoryNode = new TreeNode(nodeName.ToString());
+            directoryNode.Tag = directoryInfo.FullName;
+            foreach (var directory in directoryInfo.GetDirectories())
+            {
+                if (!directory.Name.StartsWith("."))
+                {
+                    directoryNode.Nodes.Add(CreateDirectoryNode(directory));
+                }
+            }
+
+            return directoryNode;
+        }
+
+        private void dirTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            var tv = sender as TreeView;
+            DirectoryInfo dirInfo = new DirectoryInfo(tv.SelectedNode.Tag.ToString());
+            treeDt.Clear();
+
+            foreach (var file in dirInfo.GetFiles())
+            {
+                if (!file.Name.StartsWith("."))
+                {
+                    if (file.Extension.ToLower() == ".gpg")
+                    {
+                        DataRow newItemRow = treeDt.NewRow();
+
+                        newItemRow["colPath"] = file.FullName;
+                        newItemRow["colText"] = Path.GetFileNameWithoutExtension(file.Name);
+
+                        treeDt.Rows.Add(newItemRow);
+                    }
+                }
+            }
+            dataPass.DataSource = treeDt;
+        }
+
         /// <summary>
         /// cleanup script to remove empty directories from the password store
         /// </summary>
@@ -1000,6 +1059,11 @@ namespace Pass4Win
         private void passDetailMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             copyPassDetailMenuItem.Enabled = (txtPassDetail.SelectedText != null && txtPassDetail.SelectedText.Length > 0);
+        }
+
+        private void toolStriptextSearch_Enter(object sender, EventArgs e)
+        {
+            dataPass.DataSource = dt.DefaultView;
         }
     }
 
