@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Pass4Win
 {
     [TestFixture]
-    public class PWGenUnitTests
+    public class Pass4Win_PWGenUnitTests
     {
         [TestFixtureSetUp]
         public void SetUp()

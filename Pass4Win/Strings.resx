@@ -209,4 +209,16 @@
     <value>version</value>
     <comment>main.cs</comment>
   </data>
+  <data name="Info_git_error" xml:space="preserve">
+    <value>Failed to pull from Git server</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Info_git_pull" xml:space="preserve">
+    <value>Pulling from Git Server</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Info_git_succes" xml:space="preserve">
+    <value>Successfully pulled from Git server</value>
+    <comment>main.cs</comment>
+  </data>
 </root>
