@@ -35,6 +35,8 @@
             this.statusPB = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripOffline = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtPassDetail = new System.Windows.Forms.RichTextBox();
+            this.passDetailMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyPassDetailMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataPass = new System.Windows.Forms.DataGridView();
             this.dataMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,12 +51,15 @@
             this.toolStripSearch = new System.Windows.Forms.ToolStrip();
             this.toolStriptextSearch = new System.Windows.Forms.ToolStripTextBox();
             this.ToolStripbtnAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripbtnKey = new System.Windows.Forms.ToolStripButton();
-            this.toolStripbtnConfig = new System.Windows.Forms.ToolStripButton();
-            this.toolStripbtnAbout = new System.Windows.Forms.ToolStripButton();
             this.toolStripbtnQuit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripbtnAbout = new System.Windows.Forms.ToolStripButton();
+            this.toolStripbtnConfig = new System.Windows.Forms.ToolStripButton();
+            this.toolStripbtnKey = new System.Windows.Forms.ToolStripButton();
+            this.toolStripBtnGenPass = new System.Windows.Forms.ToolStripButton();
             this.TextDelay = new System.Windows.Forms.Timer(this.components);
+            this.dirTreeView = new System.Windows.Forms.TreeView();
             this.statusPass.SuspendLayout();
+            this.passDetailMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
             this.dataMenu.SuspendLayout();
             this.SystrayMenu.SuspendLayout();
@@ -63,6 +68,7 @@
             // 
             // statusPass
             // 
+            this.statusPass.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.statusPass.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusTxt,
             this.statusPB,
@@ -94,10 +100,26 @@
             // 
             // txtPassDetail
             // 
+            this.txtPassDetail.ContextMenuStrip = this.passDetailMenu;
             resources.ApplyResources(this.txtPassDetail, "txtPassDetail");
             this.txtPassDetail.Name = "txtPassDetail";
             this.txtPassDetail.ReadOnly = true;
             this.txtPassDetail.Leave += new System.EventHandler(this.txtPassDetail_Leave);
+            // 
+            // passDetailMenu
+            // 
+            this.passDetailMenu.ImageScalingSize = new System.Drawing.Size(18, 18);
+            this.passDetailMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyPassDetailMenuItem});
+            this.passDetailMenu.Name = "passDetailMenu";
+            resources.ApplyResources(this.passDetailMenu, "passDetailMenu");
+            this.passDetailMenu.Opening += new System.ComponentModel.CancelEventHandler(this.passDetailMenu_Opening);
+            // 
+            // copyPassDetailMenuItem
+            // 
+            this.copyPassDetailMenuItem.Name = "copyPassDetailMenuItem";
+            resources.ApplyResources(this.copyPassDetailMenuItem, "copyPassDetailMenuItem");
+            this.copyPassDetailMenuItem.Click += new System.EventHandler(this.copyPassDetailMenuItem_Click);
             // 
             // dataPass
             // 
@@ -124,6 +146,7 @@
             // 
             // dataMenu
             // 
+            this.dataMenu.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.dataMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyToolStripMenuItem,
             this.editToolStripMenuItem,
@@ -173,6 +196,7 @@
             // 
             // SystrayMenu
             // 
+            this.SystrayMenu.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.SystrayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openSystrayMenuItem,
             this.quitSystrayMenuItem});
@@ -194,13 +218,15 @@
             // toolStripSearch
             // 
             this.toolStripSearch.CanOverflow = false;
+            this.toolStripSearch.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.toolStripSearch.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStriptextSearch,
             this.ToolStripbtnAdd,
             this.toolStripbtnQuit,
             this.toolStripbtnAbout,
             this.toolStripbtnConfig,
-            this.toolStripbtnKey});
+            this.toolStripbtnKey,
+            this.toolStripBtnGenPass});
             this.toolStripSearch.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             resources.ApplyResources(this.toolStripSearch, "toolStripSearch");
             this.toolStripSearch.Name = "toolStripSearch";
@@ -212,6 +238,7 @@
             resources.ApplyResources(this.toolStriptextSearch, "toolStriptextSearch");
             this.toolStriptextSearch.CausesValidation = false;
             this.toolStriptextSearch.Name = "toolStriptextSearch";
+            this.toolStriptextSearch.Enter += new System.EventHandler(this.toolStriptextSearch_Enter);
             this.toolStriptextSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.toolStriptextSearch_KeyUp);
             this.toolStriptextSearch.TextChanged += new System.EventHandler(this.toolStriptextSearch_TextChanged);
             // 
@@ -222,21 +249,13 @@
             this.ToolStripbtnAdd.Name = "ToolStripbtnAdd";
             this.ToolStripbtnAdd.Click += new System.EventHandler(this.ToolStripbtnAdd_Click);
             // 
-            // toolStripbtnKey
+            // toolStripbtnQuit
             // 
-            this.toolStripbtnKey.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripbtnKey.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.toolStripbtnKey, "toolStripbtnKey");
-            this.toolStripbtnKey.Name = "toolStripbtnKey";
-            this.toolStripbtnKey.Click += new System.EventHandler(this.toolStripbtnKey_Click);
-            // 
-            // toolStripbtnConfig
-            // 
-            this.toolStripbtnConfig.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripbtnConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.toolStripbtnConfig, "toolStripbtnConfig");
-            this.toolStripbtnConfig.Name = "toolStripbtnConfig";
-            this.toolStripbtnConfig.Click += new System.EventHandler(this.toolStripbtnConfig_Click);
+            this.toolStripbtnQuit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripbtnQuit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripbtnQuit, "toolStripbtnQuit");
+            this.toolStripbtnQuit.Name = "toolStripbtnQuit";
+            this.toolStripbtnQuit.Click += new System.EventHandler(this.toolStripbtnQuit_Click);
             // 
             // toolStripbtnAbout
             // 
@@ -246,23 +265,45 @@
             this.toolStripbtnAbout.Name = "toolStripbtnAbout";
             this.toolStripbtnAbout.Click += new System.EventHandler(this.toolStripbtnAbout_Click);
             // 
-            // toolStripbtnQuit
+            // toolStripbtnConfig
             // 
-            this.toolStripbtnQuit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripbtnQuit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.toolStripbtnQuit, "toolStripbtnQuit");
-            this.toolStripbtnQuit.Name = "toolStripbtnQuit";
-            this.toolStripbtnQuit.Click += new System.EventHandler(this.toolStripbtnQuit_Click);
+            this.toolStripbtnConfig.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripbtnConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripbtnConfig, "toolStripbtnConfig");
+            this.toolStripbtnConfig.Name = "toolStripbtnConfig";
+            this.toolStripbtnConfig.Click += new System.EventHandler(this.toolStripbtnConfig_Click);
+            // 
+            // toolStripbtnKey
+            // 
+            this.toolStripbtnKey.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripbtnKey.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripbtnKey, "toolStripbtnKey");
+            this.toolStripbtnKey.Name = "toolStripbtnKey";
+            this.toolStripbtnKey.Click += new System.EventHandler(this.toolStripbtnKey_Click);
+            // 
+            // toolStripBtnGenPass
+            // 
+            this.toolStripBtnGenPass.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripBtnGenPass, "toolStripBtnGenPass");
+            this.toolStripBtnGenPass.Name = "toolStripBtnGenPass";
+            this.toolStripBtnGenPass.Click += new System.EventHandler(this.toolStripBtnGenPass_Click);
             // 
             // TextDelay
             // 
             this.TextDelay.Interval = 500;
             this.TextDelay.Tick += new System.EventHandler(this.TextDelay_Tick);
             // 
+            // dirTreeView
+            // 
+            resources.ApplyResources(this.dirTreeView, "dirTreeView");
+            this.dirTreeView.Name = "dirTreeView";
+            this.dirTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.dirTreeView_NodeMouseDoubleClick);
+            // 
             // frmMain
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dirTreeView);
             this.Controls.Add(this.toolStripSearch);
             this.Controls.Add(this.btnMakeVisible);
             this.Controls.Add(this.dataPass);
@@ -275,6 +316,7 @@
             this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.statusPass.ResumeLayout(false);
             this.statusPass.PerformLayout();
+            this.passDetailMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).EndInit();
             this.dataMenu.ResumeLayout(false);
             this.SystrayMenu.ResumeLayout(false);
@@ -310,6 +352,10 @@
         private System.Windows.Forms.ToolStripButton toolStripbtnAbout;
         private System.Windows.Forms.ToolStripButton toolStripbtnQuit;
         private System.Windows.Forms.Timer TextDelay;
+        private System.Windows.Forms.ToolStripButton toolStripBtnGenPass;
+        private System.Windows.Forms.ContextMenuStrip passDetailMenu;
+        private System.Windows.Forms.ToolStripMenuItem copyPassDetailMenuItem;
+        private System.Windows.Forms.TreeView dirTreeView;
     }
 }
 

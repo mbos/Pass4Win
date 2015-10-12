@@ -116,6 +116,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Genpass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Genpass.Designer.cs">
+      <DependentUpon>Genpass.cs</DependentUpon>
+    </Compile>
     <Compile Include="pwgen.cs" />
     <Compile Include="config.cs">
       <SubType>Form</SubType>
@@ -170,6 +176,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Genpass.nl.resx">
+      <DependentUpon>Genpass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Genpass.resx">
+      <DependentUpon>Genpass.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="KeyMgm.nl.resx">
       <DependentUpon>KeyMgm.cs</DependentUpon>

@@ -217,6 +217,7 @@ namespace Pass4Win
             }
 
             // Convert password characters into a string and return the result.
+            rng.Dispose();
             return new string(password);
         }
     }
