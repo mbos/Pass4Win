@@ -93,8 +93,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>json\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Octokit, Version=0.15.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Octokit.0.15.0\lib\net45\Octokit.dll</HintPath>
+    <Reference Include="Octokit, Version=0.16.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.0.16.0\lib\net45\Octokit.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SimpleConfig, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
