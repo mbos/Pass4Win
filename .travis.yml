@@ -5,7 +5,7 @@ addons:
     packages:
     - nunit-console
 install:
-  - sudo pip install codecov
+  - pip install --user codecov
 before_script:
   - nuget restore Pass4Win.sln
 after_success:
