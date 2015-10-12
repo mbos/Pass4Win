@@ -57,6 +57,8 @@ namespace Pass4Win
         {
             InitializeComponent();
 
+            toolStripStatusLabel1.Text = "";
+
             var bugsnag = new BaseClient("23814316a6ecfe8ff344b6a467f07171");
 
             EnableTray = false;
@@ -1064,6 +1066,22 @@ namespace Pass4Win
         private void toolStriptextSearch_Enter(object sender, EventArgs e)
         {
             dataPass.DataSource = dt.DefaultView;
+        }
+
+        private void toolStripUpdateButton_Click(object sender, EventArgs e)
+        {
+            toolStripStatusLabel1.Text = "Pulling from Git Server";
+            if (GitFetch())
+            {
+                fillDirectoryTree(dirTreeView, cfg["PassDirectory"]);
+                toolStripStatusLabel1.Text = DateTime.Now.ToShortTimeString() + "> Successfully pulled from Git server";
+            }
+            else
+            {
+                toolStripStatusLabel1.Text = DateTime.Now.ToShortTimeString() + "> Failed to pull from Git server";
+                MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
     }
 

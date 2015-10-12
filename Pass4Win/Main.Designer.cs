@@ -56,8 +56,10 @@
             this.toolStripbtnConfig = new System.Windows.Forms.ToolStripButton();
             this.toolStripbtnKey = new System.Windows.Forms.ToolStripButton();
             this.toolStripBtnGenPass = new System.Windows.Forms.ToolStripButton();
+            this.toolStripUpdateButton = new System.Windows.Forms.ToolStripButton();
             this.TextDelay = new System.Windows.Forms.Timer(this.components);
             this.dirTreeView = new System.Windows.Forms.TreeView();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusPass.SuspendLayout();
             this.passDetailMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPass)).BeginInit();
@@ -72,7 +74,8 @@
             this.statusPass.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusTxt,
             this.statusPB,
-            this.toolStripOffline});
+            this.toolStripOffline,
+            this.toolStripStatusLabel1});
             resources.ApplyResources(this.statusPass, "statusPass");
             this.statusPass.Name = "statusPass";
             this.statusPass.SizingGrip = false;
@@ -226,7 +229,8 @@
             this.toolStripbtnAbout,
             this.toolStripbtnConfig,
             this.toolStripbtnKey,
-            this.toolStripBtnGenPass});
+            this.toolStripBtnGenPass,
+            this.toolStripUpdateButton});
             this.toolStripSearch.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             resources.ApplyResources(this.toolStripSearch, "toolStripSearch");
             this.toolStripSearch.Name = "toolStripSearch";
@@ -288,6 +292,15 @@
             this.toolStripBtnGenPass.Name = "toolStripBtnGenPass";
             this.toolStripBtnGenPass.Click += new System.EventHandler(this.toolStripBtnGenPass_Click);
             // 
+            // toolStripUpdateButton
+            // 
+            this.toolStripUpdateButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripUpdateButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripUpdateButton.Image = global::Pass4Win.Properties.Resources.refresh_16;
+            resources.ApplyResources(this.toolStripUpdateButton, "toolStripUpdateButton");
+            this.toolStripUpdateButton.Name = "toolStripUpdateButton";
+            this.toolStripUpdateButton.Click += new System.EventHandler(this.toolStripUpdateButton_Click);
+            // 
             // TextDelay
             // 
             this.TextDelay.Interval = 500;
@@ -298,6 +311,11 @@
             resources.ApplyResources(this.dirTreeView, "dirTreeView");
             this.dirTreeView.Name = "dirTreeView";
             this.dirTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.dirTreeView_NodeMouseDoubleClick);
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
             // 
             // frmMain
             // 
@@ -356,6 +374,8 @@
         private System.Windows.Forms.ContextMenuStrip passDetailMenu;
         private System.Windows.Forms.ToolStripMenuItem copyPassDetailMenuItem;
         private System.Windows.Forms.TreeView dirTreeView;
+        private System.Windows.Forms.ToolStripButton toolStripUpdateButton;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 
