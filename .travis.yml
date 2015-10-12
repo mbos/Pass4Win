@@ -10,4 +10,4 @@ before_script:
   - nuget restore Pass4Win.sln
 after_script:
   - nunit-console Pass4Win.UnitTests/bin/Release/Pass4Win.UnitTests.dll
-  - codecov /testcontainer:Pass4Win.UnitTests/bin/Debug/Pass4Win.UnitTests.dll
+  - codecov --testcontainer:Pass4Win.UnitTests/bin/Debug/Pass4Win.UnitTests.dll
