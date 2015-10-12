@@ -8,7 +8,6 @@ install:
   - pip install --user codecov
 before_script:
   - nuget restore Pass4Win.sln
-after_success:
-  - codecov
 after_script:
   - nunit-console Pass4Win.UnitTests/bin/Release/Pass4Win.UnitTests.dll
+  - codecov
