@@ -1055,7 +1055,7 @@ namespace Pass4Win
         {
             if (_timer != null) _timer.Dispose();
             statusPB.Visible = false;
-            statusTxt.Text = "Ready";
+            statusTxt.Text = Strings.Ready;
         }
 
         private void passDetailMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -1070,15 +1070,15 @@ namespace Pass4Win
 
         private void toolStripUpdateButton_Click(object sender, EventArgs e)
         {
-            toolStripStatusLabel1.Text = "Pulling from Git Server";
+            toolStripStatusLabel1.Text = Strings.Info_git_pull;
             if (GitFetch())
             {
                 fillDirectoryTree(dirTreeView, cfg["PassDirectory"]);
-                toolStripStatusLabel1.Text = DateTime.Now.ToShortTimeString() + "> Successfully pulled from Git server";
+                toolStripStatusLabel1.Text = DateTime.Now.ToShortTimeString() + ": " + Strings.Info_git_succes;
             }
             else
             {
-                toolStripStatusLabel1.Text = DateTime.Now.ToShortTimeString() + "> Failed to pull from Git server";
+                toolStripStatusLabel1.Text = DateTime.Now.ToShortTimeString() + ": " + Strings.Info_git_error;
                 MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             

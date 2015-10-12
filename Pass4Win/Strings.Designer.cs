@@ -205,6 +205,33 @@ namespace Pass4Win {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to pull from Git server.
+        /// </summary>
+        internal static string Info_git_error {
+            get {
+                return ResourceManager.GetString("Info_git_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pulling from Git Server.
+        /// </summary>
+        internal static string Info_git_pull {
+            get {
+                return ResourceManager.GetString("Info_git_pull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully pulled from Git server.
+        /// </summary>
+        internal static string Info_git_succes {
+            get {
+                return ResourceManager.GetString("Info_git_succes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is a newer version of Pass4Win, do you want to update?.
         /// </summary>
         internal static string Info_new_version {
