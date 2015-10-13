@@ -5,6 +5,7 @@
 *.suo
 *.user
 *.sln.docstates
+.coverity
 
 # Build results
 [Dd]ebug/
