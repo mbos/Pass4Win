@@ -12,27 +12,22 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GpgApi;
 using LibGit2Sharp;
 
 namespace Pass4Win
 {
-    public partial class frmKeyManager : Form
+    public partial class FrmKeyManager : Form
     {
-        public frmKeyManager()
+        public FrmKeyManager()
         {
             InitializeComponent();
-            GpgInterface.ExePath = frmMain.cfg["GPGEXE"];
+            GpgInterface.ExePath = FrmMain.Cfg["GPGEXE"];
 
-            ListDirectory(treeView1, new DirectoryInfo(frmMain.cfg["PassDirectory"]));
+            ListDirectory(treeView1, new DirectoryInfo(FrmMain.Cfg["PassDirectory"]));
         }
 
         /// <summary>
@@ -67,7 +62,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            string tmpFile = Path.GetDirectoryName(frmMain.cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
+            string tmpFile = Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
             if (File.Exists(tmpFile)) {
                 listBox1.Items.Clear();
                 using (StreamReader r = new StreamReader(tmpFile))
@@ -100,8 +95,8 @@ namespace Pass4Win
             {
                 if (listBox1.Items[0].ToString() == Strings.Error_keys_set)
                     listBox1.Items.Clear();
-                listBox1.Items.Add(newKeySelect.gpgkey);
-                string tmpFile = Path.GetDirectoryName(frmMain.cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
+                listBox1.Items.Add(newKeySelect.Gpgkey);
+                string tmpFile = Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
                 using (StreamWriter w = new StreamWriter(tmpFile))
                 {
                     foreach(var line in listBox1.Items){
@@ -109,12 +104,12 @@ namespace Pass4Win
                     }
                 }
 
-                DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(frmMain.cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath);
+                DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath);
 
                 foreach (var ffile in path.GetFiles())
                 {
                     if (!ffile.Name.StartsWith("."))
-                        recrypt(ffile.FullName);
+                        Recrypt(ffile.FullName);
                 }
                 
                 ScanDirectory(path);
@@ -135,7 +130,7 @@ namespace Pass4Win
                     foreach (var ffile in directory.GetFiles())
                     {
                         if (!ffile.Name.StartsWith("."))
-                            recrypt(ffile.FullName);
+                            Recrypt(ffile.FullName);
                     }
                 }
                 if (!directory.Name.StartsWith("."))
@@ -157,7 +152,7 @@ namespace Pass4Win
                 {
                     listBox1.Items.Remove(listBox1.SelectedItem);
                     listBox1.Refresh();
-                    string tmpFile = Path.GetDirectoryName(frmMain.cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
+                    string tmpFile = Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
                     File.Delete(tmpFile);
                     using (StreamWriter w = new StreamWriter(tmpFile))
                     {
@@ -166,18 +161,18 @@ namespace Pass4Win
                             w.WriteLine(line.ToString());
                         }
                     }
-                    using (var repo = new Repository(frmMain.cfg["PassDirectory"]))
+                    using (var repo = new Repository(FrmMain.Cfg["PassDirectory"]))
                     {
                         repo.Stage(tmpFile);
-                        repo.Commit("gpgid changed", new Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
+                        repo.Commit("gpgid changed", new Signature("pass4win", "pass4win", DateTimeOffset.Now), new Signature("pass4win", "pass4win", DateTimeOffset.Now));
                     }
                 }
-            DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(frmMain.cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath);
+            DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath);
 
             foreach (var ffile in path.GetFiles())
             {
                 if (!ffile.Name.StartsWith("."))
-                    recrypt(ffile.FullName);
+                    Recrypt(ffile.FullName);
             }
 
             ScanDirectory(path);
@@ -187,7 +182,7 @@ namespace Pass4Win
         /// Fires a decrypt thread with a callback the encrypts it again, used to make the keys current
         /// </summary>
         /// <param name="path"></param>
-        private void recrypt(string path)
+        private void Recrypt(string path)
         {
             string tmpFile = Path.GetTempFileName();
             GpgDecrypt decrypt = new GpgDecrypt(path, tmpFile);
@@ -208,25 +203,19 @@ namespace Pass4Win
         {
             if (result.Status == GpgInterfaceStatus.Success)
             {
-                List<GpgApi.KeyId> recipients = new List<KeyId>() { };
+                List<KeyId> recipients = new List<KeyId>();
                 foreach (var line in listBox1.Items)
                 {
                     GpgListSecretKeys publicKeys = new GpgListSecretKeys();
                     publicKeys.Execute();
-                    foreach (Key key in publicKeys.Keys)
-                    {
-                        if (key.UserInfos[0].Email == line.ToString())
-                        {
-                            recipients.Add(key.Id);
-                        }
-                    }                
+                    recipients.AddRange(from key in publicKeys.Keys where key.UserInfos[0].Email == line.ToString() select key.Id);
                 }
 
  
                 string tmpFile2 = Path.GetTempFileName();
-                GpgEncrypt encrypt = new GpgEncrypt(tmpFile, tmpFile2, false, false, null, recipients, GpgApi.CipherAlgorithm.None);
-                GpgInterfaceResult enc_result = encrypt.Execute();
-                Encrypt_Callback(enc_result, tmpFile, tmpFile2, path);
+                GpgEncrypt encrypt = new GpgEncrypt(tmpFile, tmpFile2, false, false, null, recipients, CipherAlgorithm.None);
+                GpgInterfaceResult encResult = encrypt.Execute();
+                Encrypt_Callback(encResult, tmpFile, tmpFile2, path);
             }
             else
             {

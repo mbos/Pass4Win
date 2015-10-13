@@ -11,13 +11,6 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GpgApi;
 
@@ -32,7 +25,7 @@ namespace Pass4Win
 
         private void KeySelect_Load(object sender, EventArgs e)
         {
-            GpgInterface.ExePath = frmMain.cfg["GPGEXE"];
+            GpgInterface.ExePath = FrmMain.Cfg["GPGEXE"];
             GpgListPublicKeys publicKeys = new GpgListPublicKeys();
             publicKeys.Execute();
             foreach (Key key in publicKeys.Keys)
@@ -40,13 +33,10 @@ namespace Pass4Win
                 comboBox1.Items.Add(key.UserInfos[0].Email + "(" + key.Id + ")");
             }
             comboBox1.SelectedIndex= 0;
-            this.TopMost = true;
+            TopMost = true;
         }
 
-         public string gpgkey
-        {
-            get { return comboBox1.Text.Split('(')[0]; }
-        }
+         public string Gpgkey => comboBox1.Text.Split('(')[0];
 
         private void btnOk_Click(object sender, EventArgs e)
         {

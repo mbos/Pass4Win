@@ -221,4 +221,15 @@
     <value>Successfully pulled from Git server</value>
     <comment>main.cs</comment>
   </data>
+  <data name="InputBox_Show_OK" xml:space="preserve">
+    <value>OK</value>
+    <comment>Main.cs</comment>
+  </data>
+  <data name="InputBox_Show_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Main.cs</comment>
+  </data>
+  <data name="InputBox_Show_Validation_Error" xml:space="preserve">
+    <value>Validation Error</value>
+  </data>
 </root>

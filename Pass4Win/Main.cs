@@ -11,65 +11,74 @@
 */
 
 
-
-using GpgApi;
-using LibGit2Sharp;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using SharpConfig;
-using System.Net.Mail;
 using Bugsnag.Clients;
+using GpgApi;
+using LibGit2Sharp;
+using Octokit;
+using SharpConfig;
+// ReSharper disable once RedundantUsingDirective
+using static LibGit2Sharp.Repository;
+using Application = System.Windows.Forms.Application;
+using Label = System.Windows.Forms.Label;
+using Repository = LibGit2Sharp.Repository;
+using Signature = LibGit2Sharp.Signature;
+using Timer = System.Threading.Timer;
 
 namespace Pass4Win
 {
-    public partial class frmMain : Form
+    public partial class FrmMain : Form
     {
-        // Used for class access to the data
-        private DataTable dt = new DataTable();
-        private DataTable treeDt = new DataTable();
-        // Class access to the tempfile
-        private string tmpfile;
         // timer for clearing clipboard
-        static System.Threading.Timer _timer;
-        // UI Trayicon toggle
-        private bool EnableTray;
-        // Remote status of GIT
-        private bool GITRepoOffline = true;
+        private static Timer _timer;
         // Setting up config second parameter should be false for normal install and true for portable
-        public static Config cfg = new Config("Pass4Win", false, true);
+        public static Config Cfg = new Config("Pass4Win", false, true);
+        // Used for class access to the data
+        private readonly DataTable _dt = new DataTable();
+        // UI Trayicon toggle
+        private readonly bool _enableTray;
+        // Remote status of GIT
+        private bool _gitRepoOffline = true;
+        // Class access to the tempfile
+        private string _tmpfile;
+        private readonly DataTable _treeDt = new DataTable();
 
         /// <summary>
-        /// Inits the repo, gpg etc
+        ///     Inits the repo, gpg etc
         /// </summary>
-        public frmMain()
+        public FrmMain()
         {
             InitializeComponent();
 
             toolStripStatusLabel1.Text = "";
 
+            // ReSharper disable once UnusedVariable
             var bugsnag = new BaseClient("23814316a6ecfe8ff344b6a467f07171");
 
-            EnableTray = false;
+            _enableTray = false;
 
             // Getting actual version
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = fvi.FileVersion;
-            cfg["version"] = version.Remove(5, 2);
+            var assembly = Assembly.GetExecutingAssembly();
+            var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            var version = fvi.FileVersion;
+            Cfg["version"] = version.Remove(5, 2);
 
-            this.Text = "Pass4Win " + Strings.Version + " " + cfg["version"];
+            Text = @"Pass4Win " + Strings.Version + @" " + Cfg["version"];
 
             // checking for update this an async operation
             LatestPass4WinRelease();
@@ -77,55 +86,57 @@ namespace Pass4Win
             // Do we have a valid password store and settings
             try
             {
-                if (cfg["PassDirectory"] == "")
+                if (Cfg["PassDirectory"] == "")
                 {
                     // this will fail, I know ugly hack
                 }
             }
             catch
             {
-                cfg["FirstRun"] = true;
-                frmConfig Config = new frmConfig();
-                var dialogResult = Config.ShowDialog();
-                
+                Cfg["FirstRun"] = true;
+                var config = new FrmConfig();
+                config.ShowDialog();
             }
             //checking git status
-            if (!LibGit2Sharp.Repository.IsValid(cfg["PassDirectory"]))
+            if (!IsValid(Cfg["PassDirectory"]))
             {
                 // Remote or generate a new one
-                if (cfg["UseGitRemote"] == true)
+                if (Cfg["UseGitRemote"] == true)
                 {
                     // check if server is alive
-                    if (IsGITAlive(cfg["UseGitRemote"]) || IsHTTPSAlive(cfg["UseGitRemote"]))
+                    if (IsGitAlive(Cfg["UseGitRemote"]) || IsHttpsAlive(Cfg["UseGitRemote"]))
                     {
                         // clone the repo and catch any error
                         try
                         {
-                            string clonedRepoPath = LibGit2Sharp.Repository.Clone(cfg["GitRemote"], cfg["PassDirectory"], new CloneOptions()
-                            {
-                                CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                            Clone(Cfg["GitRemote"], Cfg["PassDirectory"],
+                                new CloneOptions
                                 {
-                                    Username = cfg["GitUser"],
-                                    Password = DecryptConfig(cfg["GitPass"], "pass4win")
-                                }
-                            });
+                                    CredentialsProvider = (url, user, cred) => new UsernamePasswordCredentials
+                                    {
+                                        Username = Cfg["GitUser"],
+                                        Password = DecryptConfig(Cfg["GitPass"], "pass4win")
+                                    }
+                                });
                         }
                         catch
                         {
-                            MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
                             toolStripOffline.Visible = true;
                         }
                     }
                     else
                     {
-                        MessageBox.Show(Strings.Error_git_unreachable, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Strings.Error_git_unreachable, Strings.Error, MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                         toolStripOffline.Visible = true;
                     }
                 }
                 else
                 {
                     // creating new Git
-                    var repo = LibGit2Sharp.Repository.Init(cfg["PassDirectory"], false);
+                    Repository.Init(Cfg["PassDirectory"], false);
                     toolStripOffline.Visible = true;
                 }
             }
@@ -136,86 +147,96 @@ namespace Pass4Win
             }
 
             // Making sure core.autocrlf = true
-            using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
+            using (var repo = new Repository(Cfg["PassDirectory"]))
             {
                 repo.Config.Set("core.autocrlf", true);
             }
 
             // Init GPG if needed
-            string gpgfile = cfg["PassDirectory"];
+            string gpgfile = Cfg["PassDirectory"];
             gpgfile += "\\.gpg-id";
             // Check if we need to init the directory
             if (!File.Exists(gpgfile))
             {
+                // ReSharper disable once AssignNullToNotNullAttribute
                 Directory.CreateDirectory(Path.GetDirectoryName(gpgfile));
-                KeySelect newKeySelect = new KeySelect();
+                var newKeySelect = new KeySelect();
                 if (newKeySelect.ShowDialog() == DialogResult.OK)
                 {
-                    using (StreamWriter w = new StreamWriter(gpgfile))
+                    using (var w = new StreamWriter(gpgfile))
                     {
-                        w.Write(newKeySelect.gpgkey);
+                        w.Write(newKeySelect.Gpgkey);
                     }
-                    using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
+                    using (var repo = new Repository(Cfg["PassDirectory"]))
                     {
                         repo.Stage(gpgfile);
-                        repo.Commit("gpgid added", new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
+                        repo.Commit("gpgid added",
+                            new Signature("pass4win", "pass4win", DateTimeOffset.Now),
+                            new Signature("pass4win", "pass4win", DateTimeOffset.Now));
                     }
                 }
                 else
                 {
                     newKeySelect.Close();
                     MessageBox.Show(Strings.Error_nokey, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    System.Environment.Exit(1);
+                    Environment.Exit(1);
                 }
             }
             // Setting the exe location for the GPG Dll
-            GpgInterface.ExePath = cfg["GPGEXE"];
+            GpgInterface.ExePath = Cfg["GPGEXE"];
 
             // Setting up datagrid
-            dt.Columns.Add("colPath", typeof(string));
-            dt.Columns.Add("colText", typeof(string));
+            _dt.Columns.Add("colPath", typeof (string));
+            _dt.Columns.Add("colText", typeof (string));
 
-            treeDt.Columns.Add("colPath", typeof(string));
-            treeDt.Columns.Add("colText", typeof(string));
+            _treeDt.Columns.Add("colPath", typeof (string));
+            _treeDt.Columns.Add("colText", typeof (string));
 
-            ListDirectory(new DirectoryInfo(cfg["PassDirectory"]), "");
-            fillDirectoryTree(dirTreeView, cfg["PassDirectory"]);
+            ListDirectory(new DirectoryInfo(Cfg["PassDirectory"]), "");
+            FillDirectoryTree(dirTreeView, Cfg["PassDirectory"]);
 
-            dataPass.DataSource = dt.DefaultView;
+            dataPass.DataSource = _dt.DefaultView;
             dataPass.Columns[0].Visible = false;
 
-            EnableTray = true;
+            _enableTray = true;
+        }
+
+        public override sealed string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; }
         }
 
 
         /// <summary>
-        /// Async latest version checker, gives a popup if a different version is detected
+        ///     Async latest version checker, gives a popup if a different version is detected
         /// </summary>
         /// <returns></returns>
         public async Task LatestPass4WinRelease()
         {
-            var client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("Pass4Win"));
-            var _releaseClient = client.Release;
-            var releases = await _releaseClient.GetAll("mbos", "Pass4Win");
+            var client = new GitHubClient(new ProductHeaderValue("Pass4Win"));
+            var releaseClient = client.Release;
+            var releases = await releaseClient.GetAll("mbos", "Pass4Win");
 
             // online version
-            string newversion = releases[0].TagName.Remove(0, 8);
+            var newversion = releases[0].TagName.Remove(0, 8);
 
             // if diff warn and redirect
-            if (cfg["version"] != newversion)
+            if (Cfg["version"] != newversion)
             {
-                DialogResult result = MessageBox.Show(Strings.Info_new_version, Strings.Info_new_version_caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                var result = MessageBox.Show(Strings.Info_new_version, Strings.Info_new_version_caption,
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 if (result == DialogResult.OK)
                 {
                     // start browser
-                    System.Diagnostics.Process.Start("https://github.com/mbos/Pass4Win/releases");
+                    Process.Start("https://github.com/mbos/Pass4Win/releases");
                 }
             }
         }
 
 
         /// <summary>
-        /// Decrypts current selection and cleans up the detail view
+        ///     Decrypts current selection and cleans up the detail view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -235,7 +256,7 @@ namespace Pass4Win
         }
 
         /// <summary>
-        /// Cleans up and reencrypts after an edit
+        ///     Cleans up and reencrypts after an edit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -248,88 +269,90 @@ namespace Pass4Win
                 btnMakeVisible.Visible = true;
                 txtPassDetail.BackColor = Color.LightGray;
                 // read .gpg-id
-                string gpgfile = Path.GetDirectoryName(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+                var gpgfile = Path.GetDirectoryName(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
                 gpgfile += "\\.gpg-id";
                 // check if .gpg-id exists otherwise get the root .gpg-id
                 if (!File.Exists(gpgfile))
                 {
-                    gpgfile = cfg["PassDirectory"];
+                    gpgfile = Cfg["PassDirectory"];
                     gpgfile += "\\.gpg-id";
                 }
-                List<string> GPGRec = new List<string>() { };
-                using (StreamReader r = new StreamReader(gpgfile))
+                var gpgRec = new List<string>();
+                using (var r = new StreamReader(gpgfile))
                 {
                     string line;
                     while ((line = r.ReadLine()) != null)
                     {
-                        GPGRec.Add(line.TrimEnd(' '));
+                        gpgRec.Add(line.TrimEnd(' '));
                     }
                 }
                 // match keyid
-                List<GpgApi.KeyId> recipients = new List<KeyId>() { };
-                foreach (var line in GPGRec)
+                var recipients = new List<KeyId>(); 
+                foreach (var line in gpgRec)
                 {
-                    bool GotTheKey = false;
-                    MailAddress email = new MailAddress(line.ToString());
-                    GpgListPublicKeys publicKeys = new GpgListPublicKeys();
+                    var gotTheKey = false;
+                    var email = new MailAddress(line);
+                    var publicKeys = new GpgListPublicKeys();
                     publicKeys.Execute();
-                    foreach (Key key in publicKeys.Keys)
+                    foreach (var key in publicKeys.Keys)
                     {
-                        for (int i = 0; i < key.UserInfos.Count; i++)
+                        foreach (KeyUserInfo t in key.UserInfos)
                         {
-                            if (key.UserInfos[i].Email == email.Address)
+                            if (t.Email == email.Address)
                             {
                                 recipients.Add(key.Id);
-                                GotTheKey = true;
+                                gotTheKey = true;
                             }
                         }
                     }
-                    if (!GotTheKey)
+                    if (!gotTheKey)
                     {
-                        MessageBox.Show(Strings.Error_key_missing_part1 + line.ToString() + " " + Strings.Error_key_missing_part2, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Strings.Error_key_missing_part1 + line + @" " + Strings.Error_key_missing_part2,
+                            Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
 
                 // encrypt
-                string tmpFile = Path.GetTempFileName();
-                string tmpFile2 = Path.GetTempFileName();
+                var tmpFile = Path.GetTempFileName();
+                var tmpFile2 = Path.GetTempFileName();
 
-                using (StreamWriter w = new StreamWriter(tmpFile))
+                using (var w = new StreamWriter(tmpFile))
                 {
                     w.Write(txtPassDetail.Text);
                 }
 
-                GpgEncrypt encrypt = new GpgEncrypt(tmpFile, tmpFile2, false, false, null, recipients, GpgApi.CipherAlgorithm.None);
-                GpgInterfaceResult enc_result = encrypt.Execute();
-                Encrypt_Callback(enc_result, tmpFile, tmpFile2, dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+                var encrypt = new GpgEncrypt(tmpFile, tmpFile2, false, false, null, recipients, CipherAlgorithm.None);
+                var encResult = encrypt.Execute();
+                Encrypt_Callback(encResult, tmpFile, tmpFile2,
+                    dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
             }
 
             dataPass.Enabled = true;
         }
 
         /// <summary>
-        /// Decrypt the file into a tempfile
+        ///     Decrypt the file into a tempfile
         /// </summary>
         /// <param name="path"></param>
         /// <param name="clear"></param>
         private void decrypt_pass(string path, bool clear = true)
         {
-            FileInfo f = new FileInfo(path);
+            var f = new FileInfo(path);
             if (f.Length > 0)
             {
-                tmpfile = Path.GetTempFileName();
-                GpgDecrypt decrypt = new GpgDecrypt(path, tmpfile);
+                _tmpfile = Path.GetTempFileName();
+                var decrypt = new GpgDecrypt(path, _tmpfile);
                 {
                     // The current thread is blocked until the decryption is finished.
-                    GpgInterfaceResult result = decrypt.Execute();
+                    var result = decrypt.Execute();
                     Decrypt_Callback(result, clear);
                 }
             }
         }
 
         /// <summary>
-        /// Callback for the encrypt thread
+        ///     Callback for the encrypt thread
         /// </summary>
         /// <param name="result"></param>
         /// <param name="tmpFile"></param>
@@ -343,21 +366,24 @@ namespace Pass4Win
                 File.Delete(path);
                 File.Move(tmpFile2, path);
                 // add to git
-                using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
+                using (var repo = new Repository(Cfg["PassDirectory"]))
                 {
                     // Stage the file
                     repo.Stage(path);
                     // Commit
-                    repo.Commit("password changes", new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
-                    if (cfg["UseGitRemote"] == true && GITRepoOffline == false)
+                    repo.Commit("password changes", new Signature("pass4win", "pass4win", DateTimeOffset.Now),
+                        new Signature("pass4win", "pass4win", DateTimeOffset.Now));
+                    if (Cfg["UseGitRemote"] == true && _gitRepoOffline == false)
                     {
                         toolStripOffline.Visible = false;
                         var remote = repo.Network.Remotes["origin"];
-                        var options = new PushOptions();
-                        options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                        var options = new PushOptions
                         {
-                            Username = cfg["GitUser"],
-                            Password = DecryptConfig(cfg["GitPass"], "pass4win")
+                            CredentialsProvider = (url, user, cred) => new UsernamePasswordCredentials
+                            {
+                                Username = Cfg["GitUser"],
+                                Password = DecryptConfig(Cfg["GitPass"], "pass4win")
+                            }
                         };
                         var pushRefSpec = @"refs/heads/master";
                         repo.Network.Push(remote, pushRefSpec, options);
@@ -366,12 +392,13 @@ namespace Pass4Win
             }
             else
             {
-                MessageBox.Show(Strings.Error_weird_shit_happened_encryption,Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Strings.Error_weird_shit_happened_encryption, Strings.Error, MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
         /// <summary>
-        /// Callback for the decrypt thread
+        ///     Callback for the decrypt thread
         /// </summary>
         /// <param name="result"></param>
         /// <param name="clear"></param>
@@ -379,8 +406,8 @@ namespace Pass4Win
         {
             if (result.Status == GpgInterfaceStatus.Success)
             {
-                txtPassDetail.Text = File.ReadAllText(this.tmpfile);
-                File.Delete(tmpfile);
+                txtPassDetail.Text = File.ReadAllText(_tmpfile);
+                File.Delete(_tmpfile);
                 // copy to clipboard
                 if (txtPassDetail.Text != "")
                 {
@@ -392,9 +419,9 @@ namespace Pass4Win
                         statusPB.Value = 0;
                         statusPB.Step = 1;
                         statusPB.Visible = true;
-                        statusTxt.Text = Strings.Statusbar_countdown + " ";
+                        statusTxt.Text = Strings.Statusbar_countdown + @" ";
                         //Create the timer
-                        _timer = new System.Threading.Timer(ClearClipboard, null, 0, 1000);
+                        _timer = new Timer(ClearClipboard, null, 0, 1000);
                     }
                 }
             }
@@ -405,37 +432,37 @@ namespace Pass4Win
         }
 
         /// <summary>
-        /// Encrypt the git password
+        ///     Encrypt the git password
         /// </summary>
         /// <param name="password"></param>
         /// <param name="salt"></param>
         /// <returns></returns>
-        static public string EncryptConfig(string password, string salt)
+        public static string EncryptConfig(string password, string salt)
         {
-            byte[] passwordBytes = Encoding.Unicode.GetBytes(password);
-            byte[] saltBytes = Encoding.Unicode.GetBytes(salt);
-            byte[] cipherBytes = ProtectedData.Protect(passwordBytes, saltBytes, DataProtectionScope.CurrentUser);
+            var passwordBytes = Encoding.Unicode.GetBytes(password);
+            var saltBytes = Encoding.Unicode.GetBytes(salt);
+            var cipherBytes = ProtectedData.Protect(passwordBytes, saltBytes, DataProtectionScope.CurrentUser);
 
             return Convert.ToBase64String(cipherBytes);
         }
 
         /// <summary>
-        /// decrypts the git password
+        ///     decrypts the git password
         /// </summary>
         /// <param name="cipher"></param>
         /// <param name="salt"></param>
         /// <returns></returns>
-        static public string DecryptConfig(string cipher, string salt)
+        public static string DecryptConfig(string cipher, string salt)
         {
-            byte[] cipherBytes = Convert.FromBase64String(cipher);
-            byte[] saltBytes = Encoding.Unicode.GetBytes(salt);
-            byte[] passwordBytes = ProtectedData.Unprotect(cipherBytes, saltBytes, DataProtectionScope.CurrentUser);
+            var cipherBytes = Convert.FromBase64String(cipher);
+            var saltBytes = Encoding.Unicode.GetBytes(salt);
+            var passwordBytes = ProtectedData.Unprotect(cipherBytes, saltBytes, DataProtectionScope.CurrentUser);
 
             return Encoding.Unicode.GetString(passwordBytes);
         }
 
         /// <summary>
-        /// Start an edit
+        ///     Start an edit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -453,85 +480,91 @@ namespace Pass4Win
         }
 
         /// <summary>
-        /// rename the entry with all the hassle that accompanies it.
+        ///     rename the entry with all the hassle that accompanies it.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // rename the entry
-            InputBoxValidation validation = delegate (string val)
+            InputBoxValidation validation = delegate(string val)
             {
                 if (val == "")
                     return Strings.Error_not_empty;
                 if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
                     return Strings.Error_valid_filename;
-                if (File.Exists(cfg["PassDirectory"] + "\\" + @val + ".gpg"))
+                if (File.Exists(Cfg["PassDirectory"] + "\\" + @val + ".gpg"))
                     return Strings.Error_already_exists;
                 return "";
             };
 
-            string value = dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[1].Value.ToString();
-            if (InputBox.Show(Strings.Input_new_name, Strings.Input_new_name_label, ref value, validation) == DialogResult.OK)
+            var value = dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[1].Value.ToString();
+            if (InputBox.Show(Strings.Input_new_name, Strings.Input_new_name_label, ref value, validation) ==
+                DialogResult.OK)
             {
                 // parse path
-                string tmpPath = cfg["PassDirectory"] + "\\" + @value + ".gpg";
+                string tmpPath = Cfg["PassDirectory"] + "\\" + @value + ".gpg";
+                // ReSharper disable once AssignNullToNotNullAttribute
                 Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
                 File.Copy(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(), tmpPath);
-                using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
+                using (var repo = new Repository(Cfg["PassDirectory"]))
                 {
                     // add the file
                     repo.Remove(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
                     repo.Stage(tmpPath);
                     // Commit
-                    repo.Commit("password moved", new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
+                    repo.Commit("password moved", new Signature("pass4win", "pass4win", DateTimeOffset.Now),
+                        new Signature("pass4win", "pass4win", DateTimeOffset.Now));
 
-                    if (cfg["UseGitRemote"] == true && GITRepoOffline == false)
+                    if (Cfg["UseGitRemote"] == true && _gitRepoOffline == false)
                     {
                         //push
                         toolStripOffline.Visible = false;
                         var remote = repo.Network.Remotes["origin"];
-                        var options = new PushOptions();
-                        options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                        var options = new PushOptions
                         {
-                            Username = cfg["GitUser"],
-                            Password = DecryptConfig(cfg["GitPass"], "pass4win")
+                            CredentialsProvider = (url, user, cred) => new UsernamePasswordCredentials
+                            {
+                                Username = Cfg["GitUser"],
+                                Password = DecryptConfig(Cfg["GitPass"], "pass4win")
+                            }
                         };
                         var pushRefSpec = @"refs/heads/master";
                         repo.Network.Push(remote, pushRefSpec, options);
                     }
                 }
                 ResetDatagrid();
-
             }
-
         }
 
         /// <summary>
-        /// Delete an entry
+        ///     Delete an entry
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // remove from git
-            using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
+            using (var repo = new Repository(Cfg["PassDirectory"]))
             {
                 // remove the file
                 repo.Remove(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
                 // Commit
-                repo.Commit("password removed", new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now), new LibGit2Sharp.Signature("pass4win", "pass4win", System.DateTimeOffset.Now));
+                repo.Commit("password removed", new Signature("pass4win", "pass4win", DateTimeOffset.Now),
+                    new Signature("pass4win", "pass4win", DateTimeOffset.Now));
 
-                if (cfg["UseGitRemote"] == true && GITRepoOffline == false)
+                if (Cfg["UseGitRemote"] == true && _gitRepoOffline == false)
                 {
                     // push
                     toolStripOffline.Visible = false;
                     var remote = repo.Network.Remotes["origin"];
-                    var options = new PushOptions();
-                    options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                    var options = new PushOptions
                     {
-                        Username = cfg["GitUser"],
-                        Password = DecryptConfig(cfg["GitPass"], "pass4win")
+                        CredentialsProvider = (url, user, cred) => new UsernamePasswordCredentials
+                        {
+                            Username = Cfg["GitUser"],
+                            Password = DecryptConfig(Cfg["GitPass"], "pass4win")
+                        }
                     };
                     var pushRefSpec = @"refs/heads/master";
                     repo.Network.Push(remote, pushRefSpec, options);
@@ -541,39 +574,38 @@ namespace Pass4Win
         }
 
         /// <summary>
-        /// clear the clipboard and make txt invisible
+        ///     clear the clipboard and make txt invisible
         /// </summary>
         /// <param name="o"></param>
-        void ClearClipboard(object o)
+        private void ClearClipboard(object o)
         {
             if (statusPB.Value == 45)
             {
-                this.BeginInvoke((Action)(() => Clipboard.Clear()));
-                this.BeginInvoke((Action)(() => statusPB.Visible = false));
-                this.BeginInvoke((Action)(() => statusTxt.Text = Strings.Ready));
-                this.BeginInvoke((Action)(() => statusPB.Value = 0));
-                this.BeginInvoke((Action)(() => btnMakeVisible.Visible = true));
-                this.BeginInvoke((Action)(() => txtPassDetail.Visible = false));
+                BeginInvoke((Action) (Clipboard.Clear));
+                BeginInvoke((Action) (() => statusPB.Visible = false));
+                BeginInvoke((Action) (() => statusTxt.Text = Strings.Ready));
+                BeginInvoke((Action) (() => statusPB.Value = 0));
+                BeginInvoke((Action) (() => btnMakeVisible.Visible = true));
+                BeginInvoke((Action) (() => txtPassDetail.Visible = false));
             }
             else if (statusTxt.Text != Strings.Ready)
             {
-                this.BeginInvoke((Action)(() => statusPB.PerformStep()));
+                BeginInvoke((Action) (() => statusPB.PerformStep()));
             }
-
         }
 
         /// <summary>
-        /// reset the datagrid (clear & Fill)
+        ///     reset the datagrid (clear & Fill)
         /// </summary>
         private void ResetDatagrid()
         {
-            dt.Clear();
-            processDirectory(cfg["PassDirectory"]);
-            ListDirectory(new DirectoryInfo(cfg["PassDirectory"]), "");
+            _dt.Clear();
+            ProcessDirectory(Cfg["PassDirectory"]);
+            ListDirectory(new DirectoryInfo(Cfg["PassDirectory"]), "");
         }
 
         /// <summary>
-        /// Fill the datagrid
+        ///     Fill the datagrid
         /// </summary>
         /// <param name="path"></param>
         /// <param name="prefix"></param>
@@ -601,7 +633,7 @@ namespace Pass4Win
                 {
                     if (ffile.Extension.ToLower() == ".gpg")
                     {
-                        DataRow newItemRow = dt.NewRow();
+                        var newItemRow = _dt.NewRow();
 
                         newItemRow["colPath"] = ffile.FullName;
                         if (prefix != "")
@@ -609,22 +641,22 @@ namespace Pass4Win
                         else
                             newItemRow["colText"] = Path.GetFileNameWithoutExtension(ffile.Name);
 
-                        dt.Rows.Add(newItemRow);
+                        _dt.Rows.Add(newItemRow);
                     }
                 }
 
             // rebuild autocomplete
-            string[] postSource = dt
-                    .AsEnumerable()
-                    .Select<System.Data.DataRow, String>(x => x.Field<String>("colText"))
-                    .ToArray();
+            var postSource = _dt
+                .AsEnumerable()
+                .Select(x => x.Field<string>("colText"))
+                .ToArray();
 
-            AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
+            var collection = new AutoCompleteStringCollection();
             collection.AddRange(postSource);
             toolStriptextSearch.AutoCompleteCustomSource = collection;
         }
 
-        private void fillDirectoryTree(TreeView treeView, string path)
+        private void FillDirectoryTree(TreeView treeView, string path)
         {
             treeView.Nodes.Clear();
             var rootDirectoryInfo = new DirectoryInfo(path);
@@ -633,16 +665,15 @@ namespace Pass4Win
 
         private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
         {
-            int dirFileCount = directoryInfo.EnumerateFiles().Count();
-            StringBuilder nodeName = new StringBuilder();
+            var dirFileCount = directoryInfo.EnumerateFiles().Count();
+            var nodeName = new StringBuilder();
             nodeName.Append(directoryInfo.Name);
             if (dirFileCount > 0)
             {
                 nodeName.AppendFormat(" ({0})", dirFileCount);
             }
 
-            var directoryNode = new TreeNode(nodeName.ToString());
-            directoryNode.Tag = directoryInfo.FullName;
+            var directoryNode = new TreeNode(nodeName.ToString()) {Tag = directoryInfo.FullName};
             foreach (var directory in directoryInfo.GetDirectories())
             {
                 if (!directory.Name.StartsWith("."))
@@ -657,36 +688,39 @@ namespace Pass4Win
         private void dirTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             var tv = sender as TreeView;
-            DirectoryInfo dirInfo = new DirectoryInfo(tv.SelectedNode.Tag.ToString());
-            treeDt.Clear();
-
-            foreach (var file in dirInfo.GetFiles())
+            if (tv != null)
             {
-                if (!file.Name.StartsWith("."))
+                var dirInfo = new DirectoryInfo(tv.SelectedNode.Tag.ToString());
+                _treeDt.Clear();
+
+                foreach (var file in dirInfo.GetFiles())
                 {
-                    if (file.Extension.ToLower() == ".gpg")
+                    if (!file.Name.StartsWith("."))
                     {
-                        DataRow newItemRow = treeDt.NewRow();
+                        if (file.Extension.ToLower() == ".gpg")
+                        {
+                            var newItemRow = _treeDt.NewRow();
 
-                        newItemRow["colPath"] = file.FullName;
-                        newItemRow["colText"] = Path.GetFileNameWithoutExtension(file.Name);
+                            newItemRow["colPath"] = file.FullName;
+                            newItemRow["colText"] = Path.GetFileNameWithoutExtension(file.Name);
 
-                        treeDt.Rows.Add(newItemRow);
+                            _treeDt.Rows.Add(newItemRow);
+                        }
                     }
                 }
             }
-            dataPass.DataSource = treeDt;
+            dataPass.DataSource = _treeDt;
         }
 
         /// <summary>
-        /// cleanup script to remove empty directories from the password store
+        ///     cleanup script to remove empty directories from the password store
         /// </summary>
         /// <param name="startLocation"></param>
-        private static void processDirectory(string startLocation)
+        private static void ProcessDirectory(string startLocation)
         {
             foreach (var directory in Directory.GetDirectories(startLocation))
             {
-                processDirectory(directory);
+                ProcessDirectory(directory);
                 if (Directory.GetFiles(directory).Length == 0 && Directory.GetDirectories(directory).Length == 0)
                 {
                     Directory.Delete(directory, false);
@@ -701,20 +735,20 @@ namespace Pass4Win
         }
 
         /// <summary>
-        /// Helper function for systray
+        ///     Helper function for systray
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void frmMain_Resize(object sender, EventArgs e)
         {
-            if (FormWindowState.Minimized == this.WindowState && EnableTray == true)
+            if (FormWindowState.Minimized == WindowState && _enableTray)
             {
                 notifyIcon1.Visible = true;
                 notifyIcon1.ShowBalloonTip(500);
-                this.Hide();
+                Hide();
             }
 
-            else if (FormWindowState.Normal == this.WindowState)
+            else if (FormWindowState.Normal == WindowState)
             {
                 notifyIcon1.Visible = false;
             }
@@ -722,13 +756,13 @@ namespace Pass4Win
 
 
         /// <summary>
-        /// Callback for the event from config that the git repo is changed
+        ///     Callback for the event from config that the git repo is changed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void Config_SendOffline(object sender, EventArgs e)
+        private void Config_SendOffline(object sender, EventArgs e)
         {
-            frmConfig child = sender as frmConfig;
+            var child = sender as FrmConfig;
             if (child != null)
             {
                 toolStripOffline.Visible = child.IsOffline;
@@ -739,13 +773,12 @@ namespace Pass4Win
             }
         }
 
-        private void btnAbout_Click(object sender, EventArgs e)
+        public void btnAbout_Click(object sender, EventArgs e)
         {
-
         }
 
         /// <summary>
-        /// Offline -> Online helper
+        ///     Offline -> Online helper
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -753,24 +786,24 @@ namespace Pass4Win
         {
             CheckOnline();
         }
-        
+
         private void CheckOnline(bool silent = false)
         {
             // Is remote on in the config
-            if (cfg["UseGitRemote"])
+            if (Cfg["UseGitRemote"])
             {
                 // Check if the remote is there
-                if (IsGITAlive(cfg["GitRemote"]) || IsHTTPSAlive(cfg["GitRemote"]))
+                if (IsGitAlive(Cfg["GitRemote"]) || IsHttpsAlive(Cfg["GitRemote"]))
                 {
                     // looks good, let's try
-                    GITRepoOffline = false;
+                    _gitRepoOffline = false;
                 }
 
                 // Do a fetch to get the latest repo.
                 if (!GitFetch())
                 {
                     // nope not online
-                    GITRepoOffline = true;
+                    _gitRepoOffline = true;
                     MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
@@ -778,18 +811,20 @@ namespace Pass4Win
                     // We're online
                     toolStripOffline.Visible = false;
                     // look if we have changes we should sync
-                    using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
+                    using (var repo = new Repository(Cfg["PassDirectory"]))
                     {
-
-                        TreeChanges tc = repo.Diff.Compare<TreeChanges>(repo.Branches["origin/master"].Tip.Tree, repo.Head.Tip.Tree);
-                        if (tc.Count() > 0)
+                        var tc = repo.Diff.Compare<TreeChanges>(repo.Branches["origin/master"].Tip.Tree,
+                            repo.Head.Tip.Tree);
+                        if (tc.Any())
                         {
                             var remote = repo.Network.Remotes["origin"];
-                            var options = new PushOptions();
-                            options.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                            var options = new PushOptions
                             {
-                                Username = cfg["GitUser"],
-                                Password = DecryptConfig(cfg["GitPass"], "pass4win")
+                                CredentialsProvider = (url, user, cred) => new UsernamePasswordCredentials
+                                {
+                                    Username = Cfg["GitUser"],
+                                    Password = DecryptConfig(Cfg["GitPass"], "pass4win")
+                                }
                             };
                             var pushRefSpec = @"refs/heads/master";
                             repo.Network.Push(remote, pushRefSpec, options);
@@ -800,18 +835,21 @@ namespace Pass4Win
             else
             {
                 // no remote checkbox so we're staying offline
-                if (!silent) MessageBox.Show(Strings.Error_remote_disabled, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!silent)
+                    MessageBox.Show(Strings.Error_remote_disabled, Strings.Error, MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
             }
         }
 
-        public static bool IsGITAlive(String hostName)
+        public static bool IsGitAlive(string hostName)
         {
-            Uri HostTest;
-            if (Uri.TryCreate(hostName, UriKind.Absolute, out HostTest))
+            Uri hostTest;
+            if (Uri.TryCreate(hostName, UriKind.Absolute, out hostTest))
             {
                 var client = new TcpClient();
-                try {
-                    var result = client.BeginConnect(HostTest.Authority, 9418, null, null);
+                try
+                {
+                    var result = client.BeginConnect(hostTest.Authority, 9418, null, null);
                     result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
                     if (!client.Connected)
                     {
@@ -827,23 +865,22 @@ namespace Pass4Win
                 {
                     client.Close();
                     return false;
-
                 }
             }
             //fail
             return false;
         }
 
-        public static bool IsHTTPSAlive(String hostName)
+        public static bool IsHttpsAlive(string hostName)
         {
             {
-                Uri HostTest;
-                if (Uri.TryCreate(hostName, UriKind.Absolute, out HostTest))
+                Uri hostTest;
+                if (Uri.TryCreate(hostName, UriKind.Absolute, out hostTest))
                 {
                     var client = new TcpClient();
                     try
                     {
-                        var result = client.BeginConnect(HostTest.Authority, 443, null, null);
+                        var result = client.BeginConnect(hostTest.Authority, 443, null, null);
                         result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
                         if (!client.Connected)
                         {
@@ -859,7 +896,6 @@ namespace Pass4Win
                     {
                         client.Close();
                         return false;
-
                     }
                 }
                 //fail
@@ -868,30 +904,35 @@ namespace Pass4Win
         }
 
         /// <summary>
-        /// Get's the latest and greatest from remote
+        ///     Get's the latest and greatest from remote
         /// </summary>
         /// <returns></returns>
         public bool GitFetch()
         {
-            if (cfg["UseGitRemote"] == true && GITRepoOffline == false)
+            if (Cfg["UseGitRemote"] == true && _gitRepoOffline == false)
             {
                 toolStripOffline.Visible = false;
-                using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
+                using (var repo = new Repository(Cfg["PassDirectory"]))
                 {
-                    LibGit2Sharp.Signature Signature = new LibGit2Sharp.Signature("pass4win", "pull@pass4win.com", new DateTimeOffset(2011, 06, 16, 10, 58, 27, TimeSpan.FromHours(2)));
-                    FetchOptions fetchOptions = new FetchOptions();
-                    fetchOptions.CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                    var signature = new Signature("pass4win", "pull@pass4win.com",
+                        new DateTimeOffset(2011, 06, 16, 10, 58, 27, TimeSpan.FromHours(2)));
+                    var fetchOptions = new FetchOptions
                     {
-                        Username = cfg["GitUser"],
-                        Password = DecryptConfig(cfg["GitPass"], "pass4win")
+                        CredentialsProvider = (url, user, cred) => new UsernamePasswordCredentials
+                        {
+                            Username = Cfg["GitUser"],
+                            Password = DecryptConfig(Cfg["GitPass"], "pass4win")
+                        }
                     };
-                    MergeOptions mergeOptions = new MergeOptions();
-                    PullOptions pullOptions = new PullOptions();
-                    pullOptions.FetchOptions = fetchOptions;
-                    pullOptions.MergeOptions = mergeOptions;
+                    var mergeOptions = new MergeOptions();
+                    var pullOptions = new PullOptions
+                    {
+                        FetchOptions = fetchOptions,
+                        MergeOptions = mergeOptions
+                    };
                     try
                     {
-                        MergeResult mergeResult = repo.Network.Pull(Signature, pullOptions);
+                        repo.Network.Pull(signature, pullOptions);
                     }
                     catch
                     {
@@ -904,14 +945,14 @@ namespace Pass4Win
 
         private void openSystrayMenuItem_Click(object sender, EventArgs e)
         {
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
+            Show();
+            WindowState = FormWindowState.Normal;
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
+            Show();
+            WindowState = FormWindowState.Normal;
         }
 
         private void quitSystrayMenuItem_Click(object sender, EventArgs e)
@@ -923,7 +964,7 @@ namespace Pass4Win
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                this.Hide();
+                Hide();
                 e.Cancel = true;
             }
         }
@@ -931,24 +972,28 @@ namespace Pass4Win
         private void ToolStripbtnAdd_Click(object sender, EventArgs e)
         {
             // get the new entryname
-            InputBoxValidation validation = delegate (string val)
+            InputBoxValidation validation = delegate(string val)
             {
                 if (val == "")
                     return "Value cannot be empty.";
                 if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
                     return Strings.Error_valid_filename;
-                if (File.Exists(cfg["PassDirectory"] + "\\" + @val + ".gpg"))
+                if (File.Exists(Cfg["PassDirectory"] + "\\" + @val + ".gpg"))
                     return Strings.Error_already_exists;
                 return "";
             };
 
-            string value = "";
-            if (InputBox.Show(Strings.Input_new_name, Strings.Input_new_name_label, ref value, validation) == DialogResult.OK)
+            var value = "";
+            if (InputBox.Show(Strings.Input_new_name, Strings.Input_new_name_label, ref value, validation) ==
+                DialogResult.OK)
             {
                 // parse path
-                string tmpPath = cfg["PassDirectory"] + "\\" + @value + ".gpg"; ;
+                string tmpPath = Cfg["PassDirectory"] + "\\" + @value + ".gpg";
+                // ReSharper disable once AssignNullToNotNullAttribute
                 Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
-                using (File.Create(tmpPath)) { }
+                using (File.Create(tmpPath))
+                {
+                }
 
                 ResetDatagrid();
                 // set the selected item.
@@ -963,7 +1008,7 @@ namespace Pass4Win
                     }
                 }
                 // add to git
-                using (var repo = new LibGit2Sharp.Repository(cfg["PassDirectory"]))
+                using (var repo = new Repository(Cfg["PassDirectory"]))
                 {
                     // Stage the file
                     repo.Stage(tmpPath);
@@ -983,21 +1028,21 @@ namespace Pass4Win
 
         private void toolStripbtnKey_Click(object sender, EventArgs e)
         {
-            frmKeyManager KeyManager = new frmKeyManager();
-            KeyManager.Show();
+            var keyManager = new FrmKeyManager();
+            keyManager.Show();
         }
 
         private void toolStripbtnConfig_Click(object sender, EventArgs e)
         {
-            frmConfig Config = new frmConfig();
-            Config.SendOffline += new EventHandler(Config_SendOffline);
-            Config.Show();
+            var config = new FrmConfig();
+            config.SendOffline += Config_SendOffline;
+            config.Show();
         }
 
         private void toolStripbtnAbout_Click(object sender, EventArgs e)
         {
-            frmAbout About = new frmAbout();
-            About.Show();
+            var about = new FrmAbout();
+            about.Show();
         }
 
         private void toolStripbtnQuit_Click(object sender, EventArgs e)
@@ -1008,7 +1053,7 @@ namespace Pass4Win
         private void toolStriptextSearch_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
-                if (dt.DefaultView.Count != 0)
+                if (_dt.DefaultView.Count != 0)
                     decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
         }
 
@@ -1020,8 +1065,8 @@ namespace Pass4Win
 
         private void TextDelay_Tick(object sender, EventArgs e)
         {
-            dt.DefaultView.RowFilter = "colText LIKE '%" + toolStriptextSearch.Text + "%'";
-            if (dt.DefaultView.Count == 0)
+            _dt.DefaultView.RowFilter = "colText LIKE '%" + toolStriptextSearch.Text + "%'";
+            if (_dt.DefaultView.Count == 0)
             {
                 txtPassDetail.Clear();
                 // dispose timer thread and clear ui.
@@ -1041,7 +1086,7 @@ namespace Pass4Win
             KillTimer();
 
             // Open Form
-            Genpass frmGenpass = new Genpass();
+            var frmGenpass = new Genpass();
             frmGenpass.Show();
         }
 
@@ -1053,19 +1098,19 @@ namespace Pass4Win
 
         private void KillTimer()
         {
-            if (_timer != null) _timer.Dispose();
+            _timer?.Dispose();
             statusPB.Visible = false;
             statusTxt.Text = Strings.Ready;
         }
 
-        private void passDetailMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        private void passDetailMenu_Opening(object sender, CancelEventArgs e)
         {
-            copyPassDetailMenuItem.Enabled = (txtPassDetail.SelectedText != null && txtPassDetail.SelectedText.Length > 0);
+            copyPassDetailMenuItem.Enabled = !string.IsNullOrEmpty(txtPassDetail.SelectedText);
         }
 
         private void toolStriptextSearch_Enter(object sender, EventArgs e)
         {
-            dataPass.DataSource = dt.DefaultView;
+            dataPass.DataSource = _dt.DefaultView;
         }
 
         private void toolStripUpdateButton_Click(object sender, EventArgs e)
@@ -1073,20 +1118,19 @@ namespace Pass4Win
             toolStripStatusLabel1.Text = Strings.Info_git_pull;
             if (GitFetch())
             {
-                fillDirectoryTree(dirTreeView, cfg["PassDirectory"]);
-                toolStripStatusLabel1.Text = DateTime.Now.ToShortTimeString() + ": " + Strings.Info_git_succes;
+                FillDirectoryTree(dirTreeView, Cfg["PassDirectory"]);
+                toolStripStatusLabel1.Text = DateTime.Now.ToShortTimeString() + @": " + Strings.Info_git_succes;
             }
             else
             {
-                toolStripStatusLabel1.Text = DateTime.Now.ToShortTimeString() + ": " + Strings.Info_git_error;
+                toolStripStatusLabel1.Text = DateTime.Now.ToShortTimeString() + @": " + Strings.Info_git_error;
                 MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
         }
     }
 
     /// <summary>
-    /// Generic input box
+    ///     Generic input box
     /// </summary>
     public class InputBox
     {
@@ -1096,20 +1140,20 @@ namespace Pass4Win
         }
 
         public static DialogResult Show(string title, string promptText, ref string value,
-                                        InputBoxValidation validation)
+            InputBoxValidation validation)
         {
-            Form form = new Form();
-            Label label = new Label();
-            TextBox textBox = new TextBox();
-            Button buttonOk = new Button();
-            Button buttonCancel = new Button();
+            var form = new Form();
+            var label = new Label();
+            var textBox = new TextBox();
+            var buttonOk = new Button();
+            var buttonCancel = new Button();
 
             form.Text = title;
             label.Text = promptText;
             textBox.Text = value;
 
-            buttonOk.Text = "OK";
-            buttonCancel.Text = "Cancel";
+            buttonOk.Text = Strings.InputBox_Show_OK;
+            buttonCancel.Text = Strings.InputBox_Show_Cancel;
             buttonOk.DialogResult = DialogResult.OK;
             buttonCancel.DialogResult = DialogResult.Cancel;
 
@@ -1124,7 +1168,7 @@ namespace Pass4Win
             buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
 
             form.ClientSize = new Size(396, 107);
-            form.Controls.AddRange(new Control[] { label, textBox, buttonOk, buttonCancel });
+            form.Controls.AddRange(new Control[] {label, textBox, buttonOk, buttonCancel});
             form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
             form.FormBorderStyle = FormBorderStyle.FixedDialog;
             form.StartPosition = FormStartPosition.CenterScreen;
@@ -1134,32 +1178,32 @@ namespace Pass4Win
             form.CancelButton = buttonCancel;
             if (validation != null)
             {
-                form.FormClosing += delegate (object sender, FormClosingEventArgs e)
+                form.FormClosing += delegate(object sender, FormClosingEventArgs e)
                 {
                     if (form.DialogResult == DialogResult.OK)
                     {
-                        string errorText = validation(textBox.Text);
-                        if (e.Cancel = (errorText != ""))
+                        var errorText = validation(textBox.Text);
+                        if (e.Cancel == (errorText != ""))
                         {
-                            MessageBox.Show(form, errorText, "Validation Error",
-                                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(form, errorText, Strings.InputBox_Show_Validation_Error,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
                             textBox.Focus();
                         }
                     }
                 };
             }
 
-            form.Shown += delegate (object sender, EventArgs e)
+            form.Shown += delegate
             {
                 form.TopMost = true;
                 form.Activate();
             };
 
-            DialogResult dialogResult = form.ShowDialog();
+            var dialogResult = form.ShowDialog();
             value = textBox.Text;
             return dialogResult;
         }
     }
+
     public delegate string InputBoxValidation(string errorMessage);
 }
-

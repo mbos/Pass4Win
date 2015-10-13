@@ -152,7 +152,7 @@
     <value>594, 285</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>frmKeyManager</value>
+    <value>FrmKeyManager</value>
   </data>
   <data name="&gt;&gt;listBox1.Name" xml:space="preserve">
     <value>listBox1</value>

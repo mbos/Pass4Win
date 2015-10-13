@@ -11,64 +11,58 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Pass4Win
 {
-    public partial class frmConfig : Form
+    public partial class FrmConfig : Form
     {
-        public frmConfig()
+        public FrmConfig()
         {
             InitializeComponent();     
 
             // fill in the blanks
-            if (frmMain.cfg["FirstRun"] == false)
+            if (FrmMain.Cfg["FirstRun"] == false)
             {
                 // set config values
-                txtPassFolder.Text = frmMain.cfg["PassDirectory"];
-                txtGPG.Text = frmMain.cfg["GPGEXE"];
-                chkboxRemoteRepo.Checked = frmMain.cfg["UseGitRemote"];
-                txtGitUser.Text = frmMain.cfg["GitUser"];
-                txtGitPass.Text = frmMain.cfg["GitPass"];
-                txtGitHost.Text = frmMain.cfg["GitRemote"];
+                txtPassFolder.Text = FrmMain.Cfg["PassDirectory"];
+                txtGPG.Text = FrmMain.Cfg["GPGEXE"];
+                chkboxRemoteRepo.Checked = FrmMain.Cfg["UseGitRemote"];
+                txtGitUser.Text = FrmMain.Cfg["GitUser"];
+                txtGitPass.Text = FrmMain.Cfg["GitPass"];
+                txtGitHost.Text = FrmMain.Cfg["GitRemote"];
 
                 // set access
                 txtGitUser.ReadOnly = !chkboxRemoteRepo.Checked;
                 txtGitPass.ReadOnly = !chkboxRemoteRepo.Checked;
                 txtGitHost.ReadOnly = !chkboxRemoteRepo.Checked;
-                frmMain.cfg["FirstRun"] = false;
+                FrmMain.Cfg["FirstRun"] = false;
             } else
             {
-                frmMain.cfg["UseGitRemote"] = false;
-                frmMain.cfg["GitUser"] = "";
-                frmMain.cfg["GitPass"] = "";
-                frmMain.cfg["GitRemote"] = "";
+                FrmMain.Cfg["UseGitRemote"] = false;
+                FrmMain.Cfg["GitUser"] = "";
+                FrmMain.Cfg["GitPass"] = "";
+                FrmMain.Cfg["GitRemote"] = "";
             }
         }
 
         /// <summary>
         /// Toggle to cancel on validate or not
         /// </summary>
-        private bool ValCancel = false;
+        private bool _valCancel;
         /// <summary>
         /// Toggle to get/set online state
         /// </summary>
-        private bool Offline = false;
+        private bool _offline;
 
         /// <summary>
         /// Var to communicate the online status with the main form
         /// </summary>
         public bool IsOffline
         {
-            get { return Offline; }
-            set { Offline = value; }
+            get { return _offline; }
+            set { _offline = value; }
         }
 
         /// <summary>
@@ -83,10 +77,7 @@ namespace Pass4Win
         protected virtual void OnSendOffline(EventArgs e)
         {
             EventHandler eh = SendOffline;
-            if (eh != null)
-            {
-                eh(this, e);
-            }
+            eh?.Invoke(this, e);
         }
 
         /// <summary>
@@ -98,7 +89,7 @@ namespace Pass4Win
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                frmMain.cfg["PassDirectory"] = folderBrowserDialog1.SelectedPath;
+                FrmMain.Cfg["PassDirectory"] = folderBrowserDialog1.SelectedPath;
                 txtPassFolder.Text = folderBrowserDialog1.SelectedPath;
             }
         }
@@ -112,7 +103,7 @@ namespace Pass4Win
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                frmMain.cfg["GPGEXE"] = openFileDialog1.FileName;
+                FrmMain.Cfg["GPGEXE"] = openFileDialog1.FileName;
                 txtGPG.Text = openFileDialog1.FileName;
             }
         }
@@ -124,7 +115,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void chkboxRemoteRepo_CheckedChanged(object sender, EventArgs e)
         {
-            frmMain.cfg["UseGitRemote"] = chkboxRemoteRepo.Checked;
+            FrmMain.Cfg["UseGitRemote"] = chkboxRemoteRepo.Checked;
             // Enabling and disabling based on checkbox state
             txtGitUser.ReadOnly = !chkboxRemoteRepo.Checked;
             txtGitPass.ReadOnly = !chkboxRemoteRepo.Checked;
@@ -138,7 +129,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void txtGitUser_Leave(object sender, EventArgs e)
         {
-            frmMain.cfg["GitUser"] = txtGitUser.Text;
+            FrmMain.Cfg["GitUser"] = txtGitUser.Text;
         }
 
         /// <summary>
@@ -148,7 +139,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void txtGitPass_Leave(object sender, EventArgs e)
         {
-            frmMain.cfg["GitPass"] = frmMain.EncryptConfig(txtGitPass.Text,"pass4win");
+            FrmMain.Cfg["GitPass"] = FrmMain.EncryptConfig(txtGitPass.Text,"pass4win");
         }
 
         /// <summary>
@@ -158,7 +149,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void txtGitHost_Leave(object sender, EventArgs e)
         {
-            frmMain.cfg["GitRemote"] = txtGitHost.Text;
+            FrmMain.Cfg["GitRemote"] = txtGitHost.Text;
         }
 
         /// <summary>
@@ -171,7 +162,7 @@ namespace Pass4Win
             if (txtPassFolder.Text == "")
             {
                 errorProvider1.SetError(txtPassFolder, Strings.Error_required_field);
-                if (ValCancel) e.Cancel = true;
+                if (_valCancel) e.Cancel = true;
             }
         }
 
@@ -185,7 +176,7 @@ namespace Pass4Win
             if (txtGPG.Text == "")
             {
                 errorProvider1.SetError(txtGPG, Strings.Error_required_field);
-                if (ValCancel) e.Cancel = true;
+                if (_valCancel) e.Cancel = true;
             }
         }
 
@@ -196,10 +187,10 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void txtGitUser_Validating(object sender, CancelEventArgs e)
         {
-            if (chkboxRemoteRepo.Checked == true && txtGitUser.Text == "")
+            if (chkboxRemoteRepo.Checked && txtGitUser.Text == "")
             {
                 errorProvider1.SetError(txtGitUser, Strings.Error_required_field);
-                if (ValCancel) e.Cancel = true;
+                if (_valCancel) e.Cancel = true;
             }
         }
 
@@ -210,10 +201,10 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void txtGitPass_Validating(object sender, CancelEventArgs e)
         {
-            if (chkboxRemoteRepo.Checked == true && txtGitPass.Text == "")
+            if (chkboxRemoteRepo.Checked && txtGitPass.Text == "")
             {
                 errorProvider1.SetError(txtGitPass, Strings.Error_required_field);
-                if (ValCancel) e.Cancel = true;
+                if (_valCancel) e.Cancel = true;
             }
         }
 
@@ -225,21 +216,21 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void txtGitHost_Validating(object sender, CancelEventArgs e)
         {
-            if (chkboxRemoteRepo.Checked == true && txtGitHost.Text == "")
+            if (chkboxRemoteRepo.Checked && txtGitHost.Text == "")
             {
                 errorProvider1.SetError(txtGitHost, Strings.Error_required_field);
-                if (ValCancel) e.Cancel = true;
+                if (_valCancel) e.Cancel = true;
             }
             else
             {
-                if (chkboxRemoteRepo.Checked == true)
+                if (chkboxRemoteRepo.Checked)
                 {
-                    if (!frmMain.IsGITAlive(txtGitHost.Text) && !frmMain.IsHTTPSAlive(txtGitHost.Text))
+                    if (!FrmMain.IsGitAlive(txtGitHost.Text) && !FrmMain.IsHttpsAlive(txtGitHost.Text))
                     {
-                        if (ValCancel)
+                        if (_valCancel)
                         {
-                            Uri HostTest;
-                            if (!Uri.TryCreate(txtGitHost.Text, UriKind.Absolute, out HostTest))
+                            Uri hostTest;
+                            if (!Uri.TryCreate(txtGitHost.Text, UriKind.Absolute, out hostTest))
                             {
                                 errorProvider1.SetError(txtGitHost, Strings.Error_notvalid_URL);
                                 e.Cancel = true;
@@ -248,11 +239,11 @@ namespace Pass4Win
                         else
                         {
                             errorProvider1.SetError(txtGitHost, Strings.Error_host_unreachable);
-                            Offline = true;
+                            _offline = true;
                         }
                     } else
                     {
-                        Offline = false;
+                        _offline = false;
                     }
                 }
             }
@@ -265,10 +256,10 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void frmConfig_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ValCancel = true;
+            _valCancel = true;
             if (!ValidateChildren()) e.Cancel = true;
             OnSendOffline(null);
-            ValCancel = false;
+            _valCancel = false;
         }
 
         /// <summary>
@@ -278,7 +269,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

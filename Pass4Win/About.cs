@@ -10,27 +10,18 @@
  * A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content
 */
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Pass4Win
 {
-    public partial class frmAbout : Form
+    public partial class FrmAbout : Form
     {
-        public frmAbout()
+        public FrmAbout()
         {
             InitializeComponent();
             
             // Getting actual version
-            txtPassVersion.Text += " " + frmMain.cfg["version"];
+            txtPassVersion.Text += @" " + FrmMain.Cfg["version"];
         }
 
         /// <summary>

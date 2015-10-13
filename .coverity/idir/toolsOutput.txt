@@ -1,0 +1,778 @@
+Starting C:\Users\mikeb\.coverity\coverity-tools-win64-latest\bin\cov-manage-emit.exe --dir "C:\Users\mikeb\Documents\Pass4Win\.coverity\idir" reset-host-name
+Starting C:\Users\mikeb\.coverity\coverity-tools-win64-latest\bin\cov-manage-emit.exe --dir "C:\Users\mikeb\Documents\Pass4Win\.coverity\idir" check-compatible
+Intermediate directory C:/Users/mikeb/Documents/Pass4Win/.coverity/idir is compatible
+Starting C:\Users\mikeb\.coverity\coverity-tools-win64-latest\bin\cov-manage-emit.exe --dir "C:\Users\mikeb\Documents\Pass4Win\.coverity\idir" create
+Starting C:\Users\mikeb\.coverity\coverity-tools-win64-latest\bin\cov-manage-emit.exe --dir "C:\Users\mikeb\Documents\Pass4Win\.coverity\idir" -c "C:\Users\mikeb\.coverity\compilerconfig\coverity_config.xml" replay-from-script -if "C:\Users\mikeb\AppData\Local\Temp\tmpD48F.tmp" -j auto
+Replaying 1 compilation with 4 processs.
+CWD=C:/Users/mikeb/Documents/Pass4Win/Pass4Win
+BEGIN_RESPONSE_FILE_ARGS "C:/Users/mikeb/AppData/Local/Temp/cov-mikeb/8681ce27a77fc21cebfc201311646596/8681ce27a77fc21cebfc201311646596_1_cov.rsp"
+C:\Program Files (x86)\MSBuild\14.0\bin\csc.exe
+/noconfig
+BEGIN_NESTED_RESPONSE_FILE_ARGS "C:/Users/mikeb/AppData/Local/Temp/cov-mikeb/8681ce27a77fc21cebfc201311646596/8681ce27a77fc21cebfc201311646596_2_cov.rsp"
+/noconfig /nowarn:CS4014,1701,1702,2008 /nostdlib+ /platform:anycpu32bitpreferred /errorreport:prompt /warn:4 /define:DEBUG;TRACE /main:Pass4Win.Program /errorendlocation /preferreduilang:en-US /highentropyva+ /reference:C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll /reference:C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll /reference:C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll" /reference:C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll /reference:C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll /reference:C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll" /debug+ /debug:full /filealign:512 /nowin32manifest /optimize- /out:obj\Debug\Pass4Win.exe /ruleset:"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\\Rule Sets\MinimumRecommendedRules.ruleset" /subsystemversion:6.00 /resource:obj\Debug\Pass4Win.FrmConfig.resources /resource:obj\Debug\Pass4Win.FrmAbout.resources /resource:obj\Debug\Pass4Win.Genpass.resources /resource:obj\Debug\Pass4Win.FrmMain.resources /resource:obj\Debug\Pass4Win.FrmKeyManager.resources /resource:obj\Debug\Pass4Win.KeySelect.resources /resource:obj\Debug\Pass4Win.Properties.Resources.resources /resource:obj\Debug\Pass4Win.Strings.resources /target:winexe /utf8output /win32icon:lock.ico Genpass.cs Genpass.Designer.cs pwgen.cs config.cs config.Designer.cs About.cs About.Designer.cs Main.cs Main.Designer.cs KeyMgm.cs KeyMgm.Designer.cs KeySelect.cs KeySelect.Designer.cs Program.cs Properties\AssemblyInfo.cs Strings.Designer.cs Strings.nl.Designer.cs Properties\Resources.Designer.cs Properties\Settings.Designer.cs "C:\Users\mikeb\AppData\Local\Temp\.NETFramework,Version=v4.5.AssemblyAttributes.cs" obj\Debug\\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs obj\Debug\\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs obj\Debug\\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+END_NESTED_RESPONSE_FILE_ARGS "C:/Users/mikeb/AppData/Local/Temp/cov-mikeb/8681ce27a77fc21cebfc201311646596/8681ce27a77fc21cebfc201311646596_2_cov.rsp"
+END_RESPONSE_FILE_ARGS "C:/Users/mikeb/AppData/Local/Temp/cov-mikeb/8681ce27a77fc21cebfc201311646596/8681ce27a77fc21cebfc201311646596_1_cov.rsp"
+C:\Users\mikeb\.coverity\coverity-tools-win64-latest\bin\cov-translate.exe --dir C:\Users\mikeb\Documents\Pass4Win\.coverity\idir --coverity-response-file=C:/Users/mikeb/AppData/Local/Temp/cov-mikeb/8681ce27a77fc21cebfc201311646596/8681ce27a77fc21cebfc201311646596_1_cov.rsp 
+Encountered compiler c:/program files (x86)/msbuild/14.0/bin/csc for the first time, configuring it
+* Configuring c:\program files (x86)\msbuild\14.0\bin\csc as a C# compiler
+[WARNING] Template config template-csc-config-1 already exists for vbcscompiler and will be reused. 
+[WARNING] Template config template-csc-config-2 already exists for csc2 and will be reused. 
+Added template compiler configuration instance C:/Users/mikeb/Documents/Pass4Win/.coverity/idir/emit/DESKTOP-6U34MAO/config/b51f4e2e2e3499df422223cb8313768b/coverity_config.xml
+Configuration read from: C:\Users\mikeb\Documents\Pass4Win\.coverity\idir\emit\DESKTOP-6U34MAO\config\b51f4e2e2e3499df422223cb8313768b\coverity_config.xml
+Node: coverity
+  Node: config
+    Node: include Value: C:\Users\mikeb\Documents\Pass4Win\.coverity\idir\emit\DESKTOP-6U34MAO\config\b51f4e2e2e3499df422223cb8313768b\csc-config-0\coverity_config.xml
+Configuration read from: C:\Users\mikeb\Documents\Pass4Win\.coverity\idir\emit\DESKTOP-6U34MAO\config\b51f4e2e2e3499df422223cb8313768b\csc-config-0\coverity_config.xml
+Node: coverity
+  Node: config
+    Node: build
+      Node: compiler
+        Node: comp_name Value: csc
+        Node: comp_dir Value: c:\program files (x86)\msbuild\14.0\bin
+        Node: comp_translator Value: csc
+        Node: comp_lang Value: C#
+        Node: comp_front_end Value: cov-emit-cs
+        Node: comp_desc Value: Microsoft C# Compiler
+        Node: comp_generic Value: csc
+        Node: id Value: csc-csc-b51f4e2e2e3499df422223cb8313768b-0
+        Node: is_compiler Value: true
+        Node: is_linker Value: false
+      Node: options
+        Node: id Value: csc-csc-b51f4e2e2e3499df422223cb8313768b-0
+        Node: template_config_option_id Value: csc-csc-.*
+        Node: preprocess_switch Value: -E
+        Node: preprocess_output Value: -
+        Node: skip_arg Value: /?
+        Node: skip_arg Value: -?
+        Node: skip_arg_regex_icase Value: [-/]help
+        Node: pre_trans
+          Node: options
+            Node: prepend_arg Value: -coverity_source=csharp
+            Node: intern_trans Value: csc_pre_translate
+        Node: expand
+          Node: options
+            Node: replace_arg_regex
+              Node: replace Value: @[a-zA-Z0-9]+@(.*)
+              Node: with Value: --coverity_resp_file=$1
+            Node: replace_arg_regex
+              Node: replace Value: @+(.*)
+              Node: with Value: --coverity_resp_file=$1
+        Node: begin_command_line_config
+  Node: md5 Value: a59e2e194c4931e6b3d69067022e8dc9
+[STATUS] Compiling 23 C# source files.
+[STATUS] Compiling Genpass.cs, Genpass.Designer.cs, pwgen.cs, config.cs, config.Designer.cs, About.cs, About.Designer.cs, Main.cs, Main.Designer.cs, KeyMgm.cs, KeyMgm.Designer.cs, KeySelect.cs, KeySelect.Designer.cs, Program.cs, Properties\AssemblyInfo.cs, Strings.Designer.cs, Strings.nl.Designer.cs, Properties\Resources.Designer.cs, Properties\Settings.Designer.cs, ..\..\..\AppData\Local\Temp\.NETFramework,Version=v4.5.AssemblyAttributes.cs, obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs, obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs, obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+C:/Users/mikeb/.coverity/coverity-tools-win64-latest/bin/cov-emit-cs.exe --dir=C:\Users\mikeb\Documents\Pass4Win\.coverity\idir --lib . --lib C:\Windows\Microsoft.NET\Framework64\v4.0.30319\ --compiler-dir "c:\program files (x86)\msbuild\14.0\bin" --noconfig --noconfig --define DEBUG --define TRACE --reference C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll --reference C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll --reference C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll" --reference C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll --reference C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll --reference C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll" --out obj\Debug\Pass4Win.exe --nostdlib Genpass.cs Genpass.Designer.cs pwgen.cs config.cs config.Designer.cs About.cs About.Designer.cs Main.cs Main.Designer.cs KeyMgm.cs KeyMgm.Designer.cs KeySelect.cs KeySelect.Designer.cs Program.cs Properties/AssemblyInfo.cs Strings.Designer.cs Strings.nl.Designer.cs Properties/Resources.Designer.cs Properties/Settings.Designer.cs ../../../AppData/Local/Temp/.NETFramework,Version=v4.5.AssemblyAttributes.cs obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs 
+Command line with response file: C:/Users/mikeb/.coverity/coverity-tools-win64-latest/bin/cov-emit-cs.exe @utf8@C:\Users\mikeb\Documents\Pass4Win\.coverity\idir\tmp\cov-emit-cs-ec2a4a7ae4f8123cef16aede506aeafe-0.cmd_args.txt
+Coverity C# Emit version 7.7.0.3 on Windows 8 Professional, 64-bit (build 9200)
+Internal version numbers: 6df42b05c3 p-indio-push-22816.457
+
+CLR system directory: 'C:/WINDOWS/Microsoft.NET/Framework/v4.0.30319'.
+Framework version 4.6.00079.
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Genpass.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Genpass.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\pwgen.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\config.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\config.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\About.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\About.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Main.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Main.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeyMgm.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeyMgm.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeySelect.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeySelect.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Program.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Properties\AssemblyInfo.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Strings.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Strings.nl.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Properties\Resources.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Properties\Settings.Designer.cs
+Source file: C:\Users\mikeb\AppData\Local\Temp\.NETFramework,Version=v4.5.AssemblyAttributes.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+C:\Users\mikeb\Documents\Pass4Win\Pass4Win\config.cs(80): error CS1525: Unexpected symbol `.', expecting `[' or `identifier'
+            eh?.Invoke(this, e);
+C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Main.cs(36): error CS1041: Identifier expected, `static' is a keyword
+using static LibGit2Sharp.Repository;
+C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Main.cs(36): error CS1001: Unexpected symbol `LibGit2Sharp', expecting identifier
+using static LibGit2Sharp.Repository;
+C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeySelect.cs(39): error CS1519: Unexpected symbol `=>' in class, struct, or interface member declaration
+         public string Gpgkey => comboBox1.Text.Split('(')[0];
+C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeySelect.cs(39): error CS1519: Unexpected symbol `(' in class, struct, or interface member declaration
+         public string Gpgkey => comboBox1.Text.Split('(')[0];
+****************************************************************
+NOTE: Entering emit recovery mode because of errors.
+****************************************************************
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\AppData\Local\Temp\.NETFramework,Version=v4.5.AssemblyAttributes.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\About.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\About.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\config.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Genpass.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Genpass.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeyMgm.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeyMgm.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeySelect.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Main.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Program.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Properties\AssemblyInfo.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Properties\Resources.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Properties\Settings.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\pwgen.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Strings.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Strings.nl.Designer.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+WARNING: Resolving of method `Pass4Win.FrmConfig.InitializeComponent()' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.treeView1_AfterSelect(object, System.Windows.Forms.TreeViewEventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.addToolStripMenuItem_Click(object, System.EventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.removeToolStripMenuItem_Click(object, System.EventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.KeySelect.InitializeComponent()' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmMain.InitializeComponent()' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.Program.Main()' failed, skipping emitting method body. 
+WARNING: Compilation errors detected. There is a risk of emit inaccuracies or errors. 
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\AppData\Local\Temp\.NETFramework,Version=v4.5.AssemblyAttributes.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+Handling built AST
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\About.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\About.Designer.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+Handling built AST
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\config.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Genpass.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Genpass.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeyMgm.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+WARNING: Resolving of method `Pass4Win.FrmConfig.InitializeComponent()' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.treeView1_AfterSelect(object, System.Windows.Forms.TreeViewEventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.addToolStripMenuItem_Click(object, System.EventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.removeToolStripMenuItem_Click(object, System.EventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.Decrypt_Callback(GpgApi.GpgInterfaceResult, string, string)' failed, skipping emitting method body. 
+WARNING: Compilation errors detected. There is a risk of emit inaccuracies or errors. 
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\config.Designer.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+WARNING: Resolving of method `Pass4Win.FrmConfig.InitializeComponent()' failed, skipping emitting method body. 
+WARNING: Compilation errors detected. There is a risk of emit inaccuracies or errors. 
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Genpass.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+WARNING: Resolving of method `Pass4Win.Genpass.tbChars_Scroll(object, System.EventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.Genpass.btnCopy_Click(object, System.EventArgs)' failed, skipping emitting method body. 
+WARNING: Compilation errors detected. There is a risk of emit inaccuracies or errors. 
+Handling built AST
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Genpass.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeyMgm.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+WARNING: Resolving of method `Pass4Win.Genpass.InitializeComponent()' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.treeView1_AfterSelect(object, System.Windows.Forms.TreeViewEventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.addToolStripMenuItem_Click(object, System.EventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.removeToolStripMenuItem_Click(object, System.EventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.Decrypt_Callback(GpgApi.GpgInterfaceResult, string, string)' failed, skipping emitting method body. 
+WARNING: Compilation errors detected. There is a risk of emit inaccuracies or errors. 
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Genpass.Designer.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+WARNING: Resolving of method `Pass4Win.Genpass.InitializeComponent()' failed, skipping emitting method body. 
+WARNING: Compilation errors detected. There is a risk of emit inaccuracies or errors. 
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeyMgm.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.treeView1_AfterSelect(object, System.Windows.Forms.TreeViewEventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.addToolStripMenuItem_Click(object, System.EventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.removeToolStripMenuItem_Click(object, System.EventArgs)' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.Decrypt_Callback(GpgApi.GpgInterfaceResult, string, string)' failed, skipping emitting method body. 
+WARNING: Compilation errors detected. There is a risk of emit inaccuracies or errors. 
+Handling built AST
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeyMgm.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeySelect.Designer.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.InitializeComponent()' failed, skipping emitting method body. 
+WARNING: Resolving of method `Pass4Win.KeySelect.InitializeComponent()' failed, skipping emitting method body. 
+WARNING: Compilation errors detected. There is a risk of emit inaccuracies or errors. 
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeyMgm.Designer.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+WARNING: Resolving of method `Pass4Win.FrmKeyManager.InitializeComponent()' failed, skipping emitting method body. 
+WARNING: Compilation errors detected. There is a risk of emit inaccuracies or errors. 
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\KeySelect.Designer.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+WARNING: Resolving of method `Pass4Win.KeySelect.InitializeComponent()' failed, skipping emitting method body. 
+WARNING: Compilation errors detected. There is a risk of emit inaccuracies or errors. 
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Main.Designer.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+WARNING: Resolving of method `Pass4Win.FrmMain.InitializeComponent()' failed, skipping emitting method body. 
+WARNING: Compilation errors detected. There is a risk of emit inaccuracies or errors. 
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+Handling built AST
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+Handling built AST
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Program.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Properties\AssemblyInfo.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Properties\Resources.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Properties\Settings.Designer.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+Handling built AST
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\pwgen.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Strings.Designer.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\Strings.nl.Designer.cs
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\GpgAPI.1.5.0\lib\GpgApi.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\json\Newtonsoft.Json.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Octokit.0.16.0\lib\net45\Octokit.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Deployment.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Security.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.exe
+END
+NOTE: Error and Warning output is suppressed during error recovery
+Handling built AST
+ERROR: Front end exited with errors, but 15 out of 23 source files emitted in recovery mode (17 invocations)
+Determining assemblies to emit
+Decompiling assembly (1 / 20): C:/Users/mikeb/Documents/Pass4Win/packages/Bugsnag.1.2.0.0/lib/Net45/Bugsnag.dll
+Successfully parsed bytecode for 371 of 371 method bodies in reference C:/Users/mikeb/Documents/Pass4Win/packages/Bugsnag.1.2.0.0/lib/Net45/Bugsnag.dll
+Decompiling assembly (2 / 20): C:/Users/mikeb/Documents/Pass4Win/packages/GpgAPI.1.5.0/lib/GpgApi.dll
+Successfully parsed bytecode for 464 of 464 method bodies in reference C:/Users/mikeb/Documents/Pass4Win/packages/GpgAPI.1.5.0/lib/GpgApi.dll
+Decompiling assembly (3 / 20): C:/Users/mikeb/Documents/Pass4Win/packages/LibGit2Sharp.0.21.0.176/lib/net40/LibGit2Sharp.dll
+Successfully parsed bytecode for 2534 of 2534 method bodies in reference C:/Users/mikeb/Documents/Pass4Win/packages/LibGit2Sharp.0.21.0.176/lib/net40/LibGit2Sharp.dll
+Decompiling assembly (4 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/Microsoft.CSharp.dll
+Skipped parsing method bodies for shipped assembly C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/Microsoft.CSharp.dll
+Decompiling assembly (5 / 20): C:/Users/mikeb/Documents/Pass4Win/Pass4Win/json/Newtonsoft.Json.dll
+Successfully parsed bytecode for 3292 of 3292 method bodies in reference C:/Users/mikeb/Documents/Pass4Win/Pass4Win/json/Newtonsoft.Json.dll
+Decompiling assembly (6 / 20): C:/Users/mikeb/Documents/Pass4Win/packages/Octokit.0.16.0/lib/net45/Octokit.dll
+Successfully parsed bytecode for 3708 of 3708 method bodies in reference C:/Users/mikeb/Documents/Pass4Win/packages/Octokit.0.16.0/lib/net45/Octokit.dll
+Decompiling assembly (7 / 20): C:/Users/mikeb/Documents/Pass4Win/packages/Sharp-Config.1.0.0/lib/SimpleConfig.dll
+Successfully parsed bytecode for 6 of 6 method bodies in reference C:/Users/mikeb/Documents/Pass4Win/packages/Sharp-Config.1.0.0/lib/SimpleConfig.dll
+Decompiling assembly (8 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Configuration.dll
+Skipped parsing method bodies for shipped assembly C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Configuration.dll
+Decompiling assembly (9 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Core.dll
+Skipped parsing method bodies for shipped assembly C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Core.dll
+Decompiling assembly (10 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Data.DataSetExtensions.dll
+Decompiling assembly (11 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Data.dll
+Skipped parsing method bodies for shipped assembly C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Data.dll
+Decompiling assembly (12 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Deployment.dll
+Skipped parsing method bodies for shipped assembly C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Deployment.dll
+Decompiling assembly (13 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Drawing.dll
+Skipped parsing method bodies for shipped assembly C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Drawing.dll
+Decompiling assembly (14 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Net.Http.dll
+Decompiling assembly (15 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Security.dll
+Skipped parsing method bodies for shipped assembly C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Security.dll
+Decompiling assembly (16 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Windows.Forms.dll
+Skipped parsing method bodies for shipped assembly C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Windows.Forms.dll
+Decompiling assembly (17 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Xml.Linq.dll
+Decompiling assembly (18 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Xml.dll
+Skipped parsing method bodies for shipped assembly C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.XML.dll
+Decompiling assembly (19 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.dll
+Skipped parsing method bodies for shipped assembly C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.dll
+Decompiling assembly (20 / 20): C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/mscorlib.dll
+Skipped parsing method bodies for shipped assembly C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/mscorlib.dll
+cov-emit-cs took 49s
+
+Compilation successful
+Failed to compile 8 files
+Compiled 15 files successfully.
+Starting C:\Users\mikeb\.coverity\coverity-tools-win64-latest\bin\cov-manage-emit.exe --dir "C:\Users\mikeb\Documents\Pass4Win\.coverity\idir" -c "C:\Users\mikeb\.coverity\compilerconfig\coverity_config.xml" replay-from-script -if "C:\Users\mikeb\AppData\Local\Temp\tmp9784.tmp" -j auto
+Replaying 1 compilation with 4 processs.
+CWD=C:/Users/mikeb/Documents/Pass4Win/Pass4Win.UnitTests
+BEGIN_RESPONSE_FILE_ARGS "C:/Users/mikeb/AppData/Local/Temp/cov-mikeb/b55d119272b3ef930213ce075485d9ca/b55d119272b3ef930213ce075485d9ca_1_cov.rsp"
+C:\Program Files (x86)\MSBuild\14.0\bin\csc.exe
+/noconfig
+BEGIN_NESTED_RESPONSE_FILE_ARGS "C:/Users/mikeb/AppData/Local/Temp/cov-mikeb/b55d119272b3ef930213ce075485d9ca/b55d119272b3ef930213ce075485d9ca_2_cov.rsp"
+/noconfig /nowarn:1701,1702,2008 /nostdlib+ /errorreport:prompt /warn:4 /define:DEBUG;TRACE /errorendlocation /preferreduilang:en-US /highentropyva+ /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll" /reference:"C:\Program Files (x86)\NUnit 2.6.4\bin\framework\nunit.framework.dll" /reference:C:\Users\mikeb\Documents\Pass4Win\Pass4Win\bin\Debug\Pass4Win.exe /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\Pass4Win.UnitTests.dll /ruleset:"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\\Rule Sets\MinimumRecommendedRules.ruleset" /subsystemversion:6.00 /target:library /utf8output pwgen.unittest.cs Properties\AssemblyInfo.cs "C:\Users\mikeb\AppData\Local\Temp\.NETFramework,Version=v4.5.AssemblyAttributes.cs" obj\Debug\\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs obj\Debug\\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs obj\Debug\\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+END_NESTED_RESPONSE_FILE_ARGS "C:/Users/mikeb/AppData/Local/Temp/cov-mikeb/b55d119272b3ef930213ce075485d9ca/b55d119272b3ef930213ce075485d9ca_2_cov.rsp"
+END_RESPONSE_FILE_ARGS "C:/Users/mikeb/AppData/Local/Temp/cov-mikeb/b55d119272b3ef930213ce075485d9ca/b55d119272b3ef930213ce075485d9ca_1_cov.rsp"
+C:\Users\mikeb\.coverity\coverity-tools-win64-latest\bin\cov-translate.exe --dir C:\Users\mikeb\Documents\Pass4Win\.coverity\idir --coverity-response-file=C:/Users/mikeb/AppData/Local/Temp/cov-mikeb/b55d119272b3ef930213ce075485d9ca/b55d119272b3ef930213ce075485d9ca_1_cov.rsp 
+Using cached template compiler configuration instance C:/Users/mikeb/Documents/Pass4Win/.coverity/idir/emit/DESKTOP-6U34MAO/config/b51f4e2e2e3499df422223cb8313768b/coverity_config.xml
+[STATUS] Compiling 6 C# source files.
+[STATUS] Compiling pwgen.unittest.cs, Properties\AssemblyInfo.cs, ..\..\..\AppData\Local\Temp\.NETFramework,Version=v4.5.AssemblyAttributes.cs, obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs, obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs, obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+C:/Users/mikeb/.coverity/coverity-tools-win64-latest/bin/cov-emit-cs.exe --dir=C:\Users\mikeb\Documents\Pass4Win\.coverity\idir --lib . --lib C:\Windows\Microsoft.NET\Framework64\v4.0.30319\ --compiler-dir "c:\program files (x86)\msbuild\14.0\bin" --noconfig --noconfig --define DEBUG --define TRACE --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll" --reference "C:\Program Files (x86)\NUnit 2.6.4\bin\framework\nunit.framework.dll" --reference C:\Users\mikeb\Documents\Pass4Win\Pass4Win\bin\Debug\Pass4Win.exe --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll" --reference "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll" --out obj\Debug\Pass4Win.UnitTests.dll --nostdlib pwgen.unittest.cs Properties/AssemblyInfo.cs ../../../AppData/Local/Temp/.NETFramework,Version=v4.5.AssemblyAttributes.cs obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs 
+Command line with response file: C:/Users/mikeb/.coverity/coverity-tools-win64-latest/bin/cov-emit-cs.exe @utf8@C:\Users\mikeb\Documents\Pass4Win\.coverity\idir\tmp\cov-emit-cs-cd9b2406b54837b7b57b098defb0273c-0.cmd_args.txt
+Coverity C# Emit version 7.7.0.3 on Windows 8 Professional, 64-bit (build 9200)
+Internal version numbers: 6df42b05c3 p-indio-push-22816.457
+
+CLR system directory: 'C:/WINDOWS/Microsoft.NET/Framework/v4.0.30319'.
+Framework version 4.6.00079.
+Using Mono FE
+
+BEGIN cov-emit-cs read
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win.UnitTests\pwgen.unittest.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win.UnitTests\Properties\AssemblyInfo.cs
+Source file: C:\Users\mikeb\AppData\Local\Temp\.NETFramework,Version=v4.5.AssemblyAttributes.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win.UnitTests\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win.UnitTests\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+Source file: C:\Users\mikeb\Documents\Pass4Win\Pass4Win.UnitTests\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll
+Referenced assembly: C:\Program Files (x86)\NUnit 2.6.4\bin\framework\nunit.framework.dll
+Referenced assembly: C:\Users\mikeb\Documents\Pass4Win\Pass4Win\bin\Debug\Pass4Win.exe
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll
+Referenced assembly: C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll
+Compiler output file: obj/Debug/Pass4Win.UnitTests.dll
+END
+Handling built AST
+Determining assemblies to emit
+Assembly already emitted: C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/Microsoft.CSharp.dll
+Assembly already emitted: C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/mscorlib.dll
+Assembly already seen as compiler output: C:/Users/mikeb/Documents/Pass4Win/Pass4Win/bin/Debug/Pass4Win.exe
+Assembly already emitted: C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Core.dll
+Assembly already emitted: C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Data.DataSetExtensions.dll
+Assembly already emitted: C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Data.dll
+Assembly already emitted: C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.dll
+Assembly already emitted: C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Net.Http.dll
+Assembly already emitted: C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Xml.dll
+Assembly already emitted: C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Xml.Linq.dll
+Decompiling assembly (1 / 1): C:/Program Files (x86)/NUnit 2.6.4/bin/framework/nunit.framework.dll
+Successfully parsed bytecode for 1451 of 1451 method bodies in reference C:/Program Files (x86)/NUnit 2.6.4/bin/framework/nunit.framework.dll
+cov-emit-cs took 2s
+
+Compilation successful
+Compiled 6 files successfully.
+Starting C:\Users\mikeb\.coverity\coverity-tools-win64-latest\bin\cov-manage-emit.exe --dir "C:\Users\mikeb\Documents\Pass4Win\.coverity\idir" list-json
+[  {    "id" : 2,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/About.cs",    "primaryFileSizeInBytes" : 1308,    "primaryFileHash" : "b8aec3e5c7739b1eb392bb4ecb83e119",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 3,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/About.Designer.cs",    "primaryFileSizeInBytes" : 2490,    "primaryFileHash" : "4648521257a7e816adde5066e03cb3e2",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 4,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Genpass.cs",    "primaryFileSizeInBytes" : 787,    "primaryFileHash" : "2414f0422daf8fd0bda5e6c4873f5832",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 5,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/KeyMgm.cs",    "primaryFileSizeInBytes" : 9841,    "primaryFileHash" : "8042bb5bb29662786bf5d3f88a2e6bd3",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 6,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 7,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 8,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 9,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Program.cs",    "primaryFileSizeInBytes" : 444,    "primaryFileHash" : "482777b0965334e8d32cec1984fbf853",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 10,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Properties/AssemblyInfo.cs",    "primaryFileSizeInBytes" : 1393,    "primaryFileHash" : "8d5bb4c3d54d5d39f996ffff07b660cb",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 11,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Properties/Resources.Designer.cs",    "primaryFileSizeInBytes" : 3223,    "primaryFileHash" : "de051ad7f10382bc721f8bf97c7113b1",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 12,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Properties/Settings.Designer.cs",    "primaryFileSizeInBytes" : 3709,    "primaryFileHash" : "b15515381e2066ba1952af3d7d7482ff",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 13,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/pwgen.cs",    "primaryFileSizeInBytes" : 8925,    "primaryFileHash" : "9b563199b9988d320d156a1381fc4e8d",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 14,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Strings.Designer.cs",    "primaryFileSizeInBytes" : 12438,    "primaryFileHash" : "992772a4eb7a79132a91b9bc094aeae1",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 15,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Strings.nl.Designer.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 16,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/config.cs",    "primaryFileSizeInBytes" : 9930,    "primaryFileHash" : "e530394edeb539982b6f600661c06d3b",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 17,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/config.Designer.cs",    "primaryFileSizeInBytes" : 14225,    "primaryFileHash" : "efc44ece9eccb71170ceaf5ea97f20b9",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 18,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Genpass.Designer.cs",    "primaryFileSizeInBytes" : 3367,    "primaryFileHash" : "dc460312abf0caece1d3324a608cfa36",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 19,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/KeyMgm.Designer.cs",    "primaryFileSizeInBytes" : 4329,    "primaryFileHash" : "feef485c52621a6817c16a2b992f7079",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 20,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/KeySelect.cs",    "primaryFileSizeInBytes" : 1493,    "primaryFileHash" : "3e59f38a3660e8a5a45f6e2ca46e560c",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 21,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/KeySelect.Designer.cs",    "primaryFileSizeInBytes" : 2595,    "primaryFileHash" : "1bac3697e4051b9678e6828cdb77458a",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 22,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Main.cs",    "primaryFileSizeInBytes" : 46741,    "primaryFileHash" : "cb47b0f35b1b0d80d08733c35c37bd84",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 23,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Main.Designer.cs",    "primaryFileSizeInBytes" : 21827,    "primaryFileHash" : "77fa0ab0c52da7370241056beea61294",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 24,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/packages/Bugsnag.1.2.0.0/lib/Net45/Bugsnag.dll",    "primaryFileSizeInBytes" : 47616,    "primaryFileHash" : "cdc6fb540f3c9e12e7ae889e64370344",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 25,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/packages/GpgAPI.1.5.0/lib/GpgApi.dll",    "primaryFileSizeInBytes" : 58880,    "primaryFileHash" : "6885060c1593e097b5a028dcc5935edd",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 26,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/packages/LibGit2Sharp.0.21.0.176/lib/net40/LibGit2Sharp.dll",    "primaryFileSizeInBytes" : 339968,    "primaryFileHash" : "5777cdb892c7cb8a80dbe2536450dd0f",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 27,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/Microsoft.CSharp.dll",    "primaryFileSizeInBytes" : 49168,    "primaryFileHash" : "9c3580476d029c8c2e1935a1d6b62dd3",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 28,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/json/Newtonsoft.Json.dll",    "primaryFileSizeInBytes" : 520192,    "primaryFileHash" : "efbef2ecc24d3663cdb25785b2174517",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 29,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/packages/Octokit.0.16.0/lib/net45/Octokit.dll",    "primaryFileSizeInBytes" : 437760,    "primaryFileHash" : "a04c8926500341537225f7864cde78fd",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 30,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/packages/Sharp-Config.1.0.0/lib/SimpleConfig.dll",    "primaryFileSizeInBytes" : 5632,    "primaryFileHash" : "30aeb631dd0ab3b4911d2017cbb746f4",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 31,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Configuration.dll",    "primaryFileSizeInBytes" : 93200,    "primaryFileHash" : "a43581c9f6a47390282c137202560a63",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 32,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Core.dll",    "primaryFileSizeInBytes" : 235008,    "primaryFileHash" : "5d5e5060b316b1232608823b3fb98fc0",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 33,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Data.DataSetExtensions.dll",    "primaryFileSizeInBytes" : 27192,    "primaryFileHash" : "8280e07eb6271428a1fd3485128257ac",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 34,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Data.dll",    "primaryFileSizeInBytes" : 1164272,    "primaryFileHash" : "97e1f02a05d142dbdefa44e86b179db8",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 35,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Deployment.dll",    "primaryFileSizeInBytes" : 553496,    "primaryFileHash" : "f307e12fa4351856a3453dbd19183e54",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 36,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Drawing.dll",    "primaryFileSizeInBytes" : 189448,    "primaryFileHash" : "88bcdc3ac7368e7e4411ed9bdcf9dfdf",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 37,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Net.Http.dll",    "primaryFileSizeInBytes" : 82944,    "primaryFileHash" : "9dea2a058d48823e19fbf7cf5480a718",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 38,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Security.dll",    "primaryFileSizeInBytes" : 71696,    "primaryFileHash" : "5dc514ae965d02388c35a10fdaadbdde",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 39,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Windows.Forms.dll",    "primaryFileSizeInBytes" : 1507344,    "primaryFileHash" : "734c0ed7dcfb445d30e802f45fcaf0ab",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 40,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Xml.Linq.dll",    "primaryFileSizeInBytes" : 43008,    "primaryFileHash" : "e5aa519b7ce0484f79d14de572c7b475",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 41,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.XML.dll",    "primaryFileSizeInBytes" : 920552,    "primaryFileHash" : "df0dae4947028b91d7308b5845fe159e",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 42,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.dll",    "primaryFileSizeInBytes" : 1442776,    "primaryFileHash" : "7cc8cbafb8efebc758a3909d8b938c4d",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 43,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/mscorlib.dll",    "primaryFileSizeInBytes" : 2564592,    "primaryFileHash" : "69ddba147d315791c35cf866d5e7ca37",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 44,    "primaryFilename" : "C:/Users/mikeb/AppData/Local/Temp/.NETFramework,Version=v4.5.AssemblyAttributes.cs",    "primaryFileSizeInBytes" : 210,    "primaryFileHash" : "0b83a766456480fd6d01c0deb9326b75",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 45,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win.UnitTests/pwgen.unittest.cs",    "primaryFileSizeInBytes" : 650,    "primaryFileHash" : "394ba6daacb750983d02a2eb88a03640",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 46,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win.UnitTests/Properties/AssemblyInfo.cs",    "primaryFileSizeInBytes" : 1405,    "primaryFileHash" : "3e8cc91e140439da19db230932daca9b",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 47,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win.UnitTests/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 48,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win.UnitTests/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 49,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win.UnitTests/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 50,    "primaryFilename" : "C:/Program Files (x86)/NUnit 2.6.4/bin/framework/nunit.framework.dll",    "primaryFileSizeInBytes" : 151552,    "primaryFileHash" : "fe23d6db907a918e6886d8edecd9ff34",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  }]Starting C:\Users\mikeb\.coverity\coverity-tools-win64-latest\bin\cov-manage-emit.exe --dir "C:\Users\mikeb\Documents\Pass4Win\.coverity\idir" list-json
+[  {    "id" : 2,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/About.cs",    "primaryFileSizeInBytes" : 1308,    "primaryFileHash" : "b8aec3e5c7739b1eb392bb4ecb83e119",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 3,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/About.Designer.cs",    "primaryFileSizeInBytes" : 2490,    "primaryFileHash" : "4648521257a7e816adde5066e03cb3e2",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 4,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Genpass.cs",    "primaryFileSizeInBytes" : 787,    "primaryFileHash" : "2414f0422daf8fd0bda5e6c4873f5832",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 5,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/KeyMgm.cs",    "primaryFileSizeInBytes" : 9841,    "primaryFileHash" : "8042bb5bb29662786bf5d3f88a2e6bd3",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 6,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 7,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 8,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 9,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Program.cs",    "primaryFileSizeInBytes" : 444,    "primaryFileHash" : "482777b0965334e8d32cec1984fbf853",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 10,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Properties/AssemblyInfo.cs",    "primaryFileSizeInBytes" : 1393,    "primaryFileHash" : "8d5bb4c3d54d5d39f996ffff07b660cb",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 11,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Properties/Resources.Designer.cs",    "primaryFileSizeInBytes" : 3223,    "primaryFileHash" : "de051ad7f10382bc721f8bf97c7113b1",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 12,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Properties/Settings.Designer.cs",    "primaryFileSizeInBytes" : 3709,    "primaryFileHash" : "b15515381e2066ba1952af3d7d7482ff",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 13,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/pwgen.cs",    "primaryFileSizeInBytes" : 8925,    "primaryFileHash" : "9b563199b9988d320d156a1381fc4e8d",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 14,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Strings.Designer.cs",    "primaryFileSizeInBytes" : 12438,    "primaryFileHash" : "992772a4eb7a79132a91b9bc094aeae1",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 15,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Strings.nl.Designer.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 16,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/config.cs",    "primaryFileSizeInBytes" : 9930,    "primaryFileHash" : "e530394edeb539982b6f600661c06d3b",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 17,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/config.Designer.cs",    "primaryFileSizeInBytes" : 14225,    "primaryFileHash" : "efc44ece9eccb71170ceaf5ea97f20b9",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 18,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Genpass.Designer.cs",    "primaryFileSizeInBytes" : 3367,    "primaryFileHash" : "dc460312abf0caece1d3324a608cfa36",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 19,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/KeyMgm.Designer.cs",    "primaryFileSizeInBytes" : 4329,    "primaryFileHash" : "feef485c52621a6817c16a2b992f7079",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 20,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/KeySelect.cs",    "primaryFileSizeInBytes" : 1493,    "primaryFileHash" : "3e59f38a3660e8a5a45f6e2ca46e560c",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 21,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/KeySelect.Designer.cs",    "primaryFileSizeInBytes" : 2595,    "primaryFileHash" : "1bac3697e4051b9678e6828cdb77458a",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 22,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Main.cs",    "primaryFileSizeInBytes" : 46741,    "primaryFileHash" : "cb47b0f35b1b0d80d08733c35c37bd84",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 23,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/Main.Designer.cs",    "primaryFileSizeInBytes" : 21827,    "primaryFileHash" : "77fa0ab0c52da7370241056beea61294",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : false  },  {    "id" : 24,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/packages/Bugsnag.1.2.0.0/lib/Net45/Bugsnag.dll",    "primaryFileSizeInBytes" : 47616,    "primaryFileHash" : "cdc6fb540f3c9e12e7ae889e64370344",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 25,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/packages/GpgAPI.1.5.0/lib/GpgApi.dll",    "primaryFileSizeInBytes" : 58880,    "primaryFileHash" : "6885060c1593e097b5a028dcc5935edd",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 26,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/packages/LibGit2Sharp.0.21.0.176/lib/net40/LibGit2Sharp.dll",    "primaryFileSizeInBytes" : 339968,    "primaryFileHash" : "5777cdb892c7cb8a80dbe2536450dd0f",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 27,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/Microsoft.CSharp.dll",    "primaryFileSizeInBytes" : 49168,    "primaryFileHash" : "9c3580476d029c8c2e1935a1d6b62dd3",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 28,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win/json/Newtonsoft.Json.dll",    "primaryFileSizeInBytes" : 520192,    "primaryFileHash" : "efbef2ecc24d3663cdb25785b2174517",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 29,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/packages/Octokit.0.16.0/lib/net45/Octokit.dll",    "primaryFileSizeInBytes" : 437760,    "primaryFileHash" : "a04c8926500341537225f7864cde78fd",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 30,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/packages/Sharp-Config.1.0.0/lib/SimpleConfig.dll",    "primaryFileSizeInBytes" : 5632,    "primaryFileHash" : "30aeb631dd0ab3b4911d2017cbb746f4",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 31,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Configuration.dll",    "primaryFileSizeInBytes" : 93200,    "primaryFileHash" : "a43581c9f6a47390282c137202560a63",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 32,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Core.dll",    "primaryFileSizeInBytes" : 235008,    "primaryFileHash" : "5d5e5060b316b1232608823b3fb98fc0",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 33,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Data.DataSetExtensions.dll",    "primaryFileSizeInBytes" : 27192,    "primaryFileHash" : "8280e07eb6271428a1fd3485128257ac",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 34,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Data.dll",    "primaryFileSizeInBytes" : 1164272,    "primaryFileHash" : "97e1f02a05d142dbdefa44e86b179db8",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 35,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Deployment.dll",    "primaryFileSizeInBytes" : 553496,    "primaryFileHash" : "f307e12fa4351856a3453dbd19183e54",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 36,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Drawing.dll",    "primaryFileSizeInBytes" : 189448,    "primaryFileHash" : "88bcdc3ac7368e7e4411ed9bdcf9dfdf",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 37,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Net.Http.dll",    "primaryFileSizeInBytes" : 82944,    "primaryFileHash" : "9dea2a058d48823e19fbf7cf5480a718",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 38,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Security.dll",    "primaryFileSizeInBytes" : 71696,    "primaryFileHash" : "5dc514ae965d02388c35a10fdaadbdde",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 39,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Windows.Forms.dll",    "primaryFileSizeInBytes" : 1507344,    "primaryFileHash" : "734c0ed7dcfb445d30e802f45fcaf0ab",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 40,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Xml.Linq.dll",    "primaryFileSizeInBytes" : 43008,    "primaryFileHash" : "e5aa519b7ce0484f79d14de572c7b475",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 41,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.XML.dll",    "primaryFileSizeInBytes" : 920552,    "primaryFileHash" : "df0dae4947028b91d7308b5845fe159e",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 42,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.dll",    "primaryFileSizeInBytes" : 1442776,    "primaryFileHash" : "7cc8cbafb8efebc758a3909d8b938c4d",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 43,    "primaryFilename" : "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/mscorlib.dll",    "primaryFileSizeInBytes" : 2564592,    "primaryFileHash" : "69ddba147d315791c35cf866d5e7ca37",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 44,    "primaryFilename" : "C:/Users/mikeb/AppData/Local/Temp/.NETFramework,Version=v4.5.AssemblyAttributes.cs",    "primaryFileSizeInBytes" : 210,    "primaryFileHash" : "0b83a766456480fd6d01c0deb9326b75",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 45,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win.UnitTests/pwgen.unittest.cs",    "primaryFileSizeInBytes" : 650,    "primaryFileHash" : "394ba6daacb750983d02a2eb88a03640",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 46,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win.UnitTests/Properties/AssemblyInfo.cs",    "primaryFileSizeInBytes" : 1405,    "primaryFileHash" : "3e8cc91e140439da19db230932daca9b",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 47,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win.UnitTests/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 48,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win.UnitTests/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 49,    "primaryFilename" : "C:/Users/mikeb/Documents/Pass4Win/Pass4Win.UnitTests/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs",    "primaryFileSizeInBytes" : 0,    "primaryFileHash" : "7dc97c7b89fd4edd63b0fc09f4254962",    "language" : "C# source",    "userLanguage" : "C#",    "hasASTs" : true  },  {    "id" : 50,    "primaryFilename" : "C:/Program Files (x86)/NUnit 2.6.4/bin/framework/nunit.framework.dll",    "primaryFileSizeInBytes" : 151552,    "primaryFileHash" : "fe23d6db907a918e6886d8edecd9ff34",    "language" : ".NET bytecode",    "userLanguage" : "C#",    "hasASTs" : true  }]

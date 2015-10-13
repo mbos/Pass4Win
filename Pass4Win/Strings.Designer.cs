@@ -268,6 +268,33 @@ namespace Pass4Win {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string InputBox_Show_Cancel {
+            get {
+                return ResourceManager.GetString("InputBox_Show_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        internal static string InputBox_Show_OK {
+            get {
+                return ResourceManager.GetString("InputBox_Show_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation Error.
+        /// </summary>
+        internal static string InputBox_Show_Validation_Error {
+            get {
+                return ResourceManager.GetString("InputBox_Show_Validation_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ready.
         /// </summary>
         internal static string Ready {

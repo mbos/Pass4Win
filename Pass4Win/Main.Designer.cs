@@ -1,6 +1,6 @@
 ﻿namespace Pass4Win
 {
-    partial class frmMain
+    partial class FrmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.statusPass = new System.Windows.Forms.StatusStrip();
             this.statusTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusPB = new System.Windows.Forms.ToolStripProgressBar();
@@ -328,7 +328,7 @@
             this.Controls.Add(this.statusPass);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "frmMain";
+            this.Name = "FrmMain";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.statusPass.ResumeLayout(false);

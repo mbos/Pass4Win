@@ -1,6 +1,6 @@
 ﻿namespace Pass4Win
 {
-    partial class frmAbout
+    partial class FrmAbout
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAbout));
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.txtPassVersion = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -52,7 +52,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.txtPassVersion);
             this.Controls.Add(this.richTextBox1);
-            this.Name = "frmAbout";
+            this.Name = "FrmAbout";
             this.ResumeLayout(false);
             this.PerformLayout();
 

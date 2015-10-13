@@ -14,31 +14,27 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
 
 namespace Pass4Win
 {
 
-    public class pwgen
+    public class Pwgen
     {
         // Define default min and max password lengths.
-        private static int DEFAULT_MIN_PASSWORD_LENGTH = 12;
-        private static int DEFAULT_MAX_PASSWORD_LENGTH = 16;
+        private static int _defaultMinPasswordLength = 12;
+        private static int _defaultMaxPasswordLength = 16;
 
         // Define characters, omitting confusing ones (o0I1)
-        private static string PASSWORD_CHARS_LCASE = "abcdefgijkmnopqrstwxyz";
-        private static string PASSWORD_CHARS_UCASE = "ABCDEFGHJKLMNPQRSTWXYZ";
-        private static string PASSWORD_CHARS_NUMERIC = "23456789";
-        private static string PASSWORD_CHARS_SPECIAL = "*$-+?_&=!%{}/";
+        private static string _passwordCharsLcase = "abcdefgijkmnopqrstwxyz";
+        private static string _passwordCharsUcase = "ABCDEFGHJKLMNPQRSTWXYZ";
+        private static string _passwordCharsNumeric = "23456789";
+        private static string _passwordCharsSpecial = "*$-+?_&=!%{}/";
 
         public static string Generate()
         {
-            return Generate(DEFAULT_MIN_PASSWORD_LENGTH,
-                            DEFAULT_MAX_PASSWORD_LENGTH);
+            return Generate(_defaultMinPasswordLength,
+                            _defaultMaxPasswordLength);
         }
 
         /// <summary>
@@ -84,10 +80,10 @@ namespace Pass4Win
             // array, but doing so will weaken the password strength.
             char[][] charGroups = new char[][]
                 {
-                PASSWORD_CHARS_LCASE.ToCharArray(),
-                PASSWORD_CHARS_UCASE.ToCharArray(),
-                PASSWORD_CHARS_NUMERIC.ToCharArray(),
-                PASSWORD_CHARS_SPECIAL.ToCharArray()
+                _passwordCharsLcase.ToCharArray(),
+                _passwordCharsUcase.ToCharArray(),
+                _passwordCharsNumeric.ToCharArray(),
+                _passwordCharsSpecial.ToCharArray()
                 };
 
             // Use this array to track the number of unused characters in each
@@ -120,25 +116,9 @@ namespace Pass4Win
             Random random = new Random(seed);
 
             // This array will hold password characters.
-            char[] password = null;
 
             // Allocate appropriate memory for the password.
-            if (minLength < maxLength)
-                password = new char[random.Next(minLength, maxLength + 1)];
-            else
-                password = new char[minLength];
-
-            // Index of the next character to be added to password.
-            int nextCharIdx;
-
-            // Index of the next character group to be processed.
-            int nextGroupIdx;
-
-            // Index which will be used to track not processed character groups.
-            int nextLeftGroupsOrderIdx;
-
-            // Index of the last non-processed character in a group.
-            int lastCharIdx;
+            var password = minLength < maxLength ? new char[random.Next(minLength, maxLength + 1)] : new char[minLength];
 
             // Index of the last non-processed group.
             int lastLeftGroupsOrderIdx = leftGroupsOrder.Length - 1;
@@ -151,6 +131,7 @@ namespace Pass4Win
                 // group list. To allow a special character to appear in the
                 // first position, increment the second parameter of the Next
                 // function call by one, i.e. lastLeftGroupsOrderIdx + 1.
+                int nextLeftGroupsOrderIdx;
                 if (lastLeftGroupsOrderIdx == 0)
                     nextLeftGroupsOrderIdx = 0;
                 else
@@ -159,17 +140,14 @@ namespace Pass4Win
 
                 // Get the actual index of the character group, from which we will
                 // pick the next character.
-                nextGroupIdx = leftGroupsOrder[nextLeftGroupsOrderIdx];
+                var nextGroupIdx = leftGroupsOrder[nextLeftGroupsOrderIdx];
 
                 // Get the index of the last unprocessed characters in this group.
-                lastCharIdx = charsLeftInGroup[nextGroupIdx] - 1;
+                var lastCharIdx = charsLeftInGroup[nextGroupIdx] - 1;
 
                 // If only one unprocessed character is left, pick it; otherwise,
                 // get a random character from the unused character list.
-                if (lastCharIdx == 0)
-                    nextCharIdx = 0;
-                else
-                    nextCharIdx = random.Next(0, lastCharIdx + 1);
+                var nextCharIdx = lastCharIdx == 0 ? 0 : random.Next(0, lastCharIdx + 1);
 
                 // Add this character to the password.
                 password[i] = charGroups[nextGroupIdx][nextCharIdx];
