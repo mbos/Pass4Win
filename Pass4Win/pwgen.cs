@@ -96,7 +96,6 @@ namespace Pass4Win
         /// random and it will fall with the range determined by the
         /// function parameters.
         /// </remarks>
-        [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1515:SingleLineCommentMustBePrecededByBlankLine", Justification = "Reviewed. Suppression is OK here.")]
         public static string Generate(int minLength, int maxLength)
         {
             // Make sure that input parameters are valid.
