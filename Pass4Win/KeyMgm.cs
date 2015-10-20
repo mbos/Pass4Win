@@ -10,18 +10,26 @@
  * A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content
 */
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using GpgApi;
-using LibGit2Sharp;
-
 namespace Pass4Win
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+
+    using GpgApi;
+
+    using LibGit2Sharp;
+
+    /// <summary>
+    /// The form Key manager
+    /// </summary>
     public partial class FrmKeyManager : Form
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FrmKeyManager"/> class.
+        /// </summary>
         public FrmKeyManager()
         {
             InitializeComponent();
@@ -37,22 +45,15 @@ namespace Pass4Win
         /// <param name="rootDirectoryInfo">Which directory</param>
         private void ListDirectory(TreeView treeView, DirectoryInfo rootDirectoryInfo)
         {
+            // Get the TreeView ready for node creation.
+            treeView.BeginUpdate();
             treeView.Nodes.Clear();
-            treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
-        }
+            FileSystemInterface fsi = new FileSystemInterface(rootDirectoryInfo.FullName);
+            TreeNode[] nodes = fsi.UpdateDirectoryTree(rootDirectoryInfo);
+            treeView.Nodes.AddRange(nodes);
 
-        /// <summary>
-        /// Recursive function used by ListDirectory
-        /// </summary>
-        /// <param name="directoryInfo"></param>
-        /// <returns></returns>
-        private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
-        {
-            var directoryNode = new TreeNode(directoryInfo.Name);
-            foreach (var directory in directoryInfo.GetDirectories())
-                if (!directory.Name.StartsWith(".gi"))
-                    directoryNode.Nodes.Add(CreateDirectoryNode(directory));
-            return directoryNode;
+            // Notify the TreeView to resume painting.
+            treeView.EndUpdate();
         }
 
         /// <summary>
@@ -62,8 +63,9 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void TreeView1AfterSelect(object sender, TreeViewEventArgs e)
         {
-            string tmpFile = Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
-            if (File.Exists(tmpFile)) {
+            string tmpFile = treeView1.SelectedNode.Tag + "\\.gpg-id";
+            if (File.Exists(tmpFile))
+            {
                 listBox1.Items.Clear();
                 using (StreamReader r = new StreamReader(tmpFile))
                 {
@@ -79,7 +81,6 @@ namespace Pass4Win
             {
                 listBox1.Items.Clear();
                 listBox1.Items.Add(Strings.Error_keys_set);
-
             }
         }
 
@@ -94,12 +95,15 @@ namespace Pass4Win
             if (newKeySelect.ShowDialog() == DialogResult.OK)
             {
                 if (listBox1.Items[0].ToString() == Strings.Error_keys_set)
+                {
                     listBox1.Items.Clear();
+                }
                 listBox1.Items.Add(newKeySelect.Gpgkey);
                 string tmpFile = Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
                 using (StreamWriter w = new StreamWriter(tmpFile))
                 {
-                    foreach(var line in listBox1.Items){
+                    foreach (var line in listBox1.Items)
+                    {
                         w.WriteLine(line.ToString());
                     }
                 }
@@ -120,17 +124,16 @@ namespace Pass4Win
         /// <summary>
         /// Ensures the files in a given directory are encrypted with all the current keys.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">DirectoyInfo</param>
         private void ScanDirectory(DirectoryInfo path)
         {
             foreach (var directory in path.GetDirectories())
             {
                 if (!File.Exists(directory.FullName + "\\" + ".gpg-id"))
                 {
-                    foreach (var ffile in directory.GetFiles())
+                    foreach (var ffile in directory.GetFiles().Where(ffile => !ffile.Name.StartsWith(".")))
                     {
-                        if (!ffile.Name.StartsWith("."))
-                            Recrypt(ffile.FullName);
+                        this.Recrypt(ffile.FullName);
                     }
                 }
                 if (!directory.Name.StartsWith("."))
@@ -169,10 +172,9 @@ namespace Pass4Win
                 }
             DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath);
 
-            foreach (var ffile in path.GetFiles())
+            foreach (var ffile in path.GetFiles().Where(ffile => !ffile.Name.StartsWith(".")))
             {
-                if (!ffile.Name.StartsWith("."))
-                    Recrypt(ffile.FullName);
+                this.Recrypt(ffile.FullName);
             }
 
             ScanDirectory(path);
@@ -238,12 +240,6 @@ namespace Pass4Win
                 File.Delete(path);
                 File.Move(tmpFile2, path);
             }
-            else
-            {
-                // shit happened
-            }
         }
-
     }
-
 }

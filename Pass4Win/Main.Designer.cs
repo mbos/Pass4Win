@@ -291,6 +291,7 @@
             // 
             // listFileView
             // 
+            this.listFileView.ContextMenuStrip = this.dataMenu;
             this.listFileView.FormattingEnabled = true;
             resources.ApplyResources(this.listFileView, "listFileView");
             this.listFileView.Name = "listFileView";
