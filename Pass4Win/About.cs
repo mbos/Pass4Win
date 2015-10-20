@@ -29,7 +29,7 @@ namespace Pass4Win
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void richTextBox1_LinkClicked(object sender, LinkClickedEventArgs e)
+        private void RichTextBox1LinkClicked(object sender, LinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(e.LinkText);
         }

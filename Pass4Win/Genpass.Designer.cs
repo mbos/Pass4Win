@@ -47,7 +47,7 @@
             resources.ApplyResources(this.btnCopy, "btnCopy");
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.UseVisualStyleBackColor = true;
-            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            this.btnCopy.Click += new System.EventHandler(this.BtnCopyClick);
             // 
             // tbChars
             // 
@@ -56,7 +56,7 @@
             this.tbChars.Minimum = 8;
             this.tbChars.Name = "tbChars";
             this.tbChars.Value = 8;
-            this.tbChars.Scroll += new System.EventHandler(this.tbChars_Scroll);
+            this.tbChars.Scroll += new System.EventHandler(this.TbCharsScroll);
             // 
             // lblChars
             // 

@@ -198,7 +198,7 @@
     <value>370, 32</value>
   </data>
   <data name="txtPassDetail.Size" type="System.Drawing.Size, System.Drawing">
-    <value>311, 255</value>
+    <value>311, 251</value>
   </data>
   <data name="txtPassDetail.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -257,27 +257,6 @@
   <data name="&gt;&gt;dataMenu.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="dataPass.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 31</value>
-  </data>
-  <data name="dataPass.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 256</value>
-  </data>
-  <data name="dataPass.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;dataPass.Name" xml:space="preserve">
-    <value>dataPass</value>
-  </data>
-  <data name="&gt;&gt;dataPass.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dataPass.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;dataPass.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnMakeVisible.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -304,7 +283,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnMakeVisible.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <metadata name="notifyIcon1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>659, 17</value>
@@ -6692,7 +6671,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;toolStripSearch.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <metadata name="TextDelay.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1029, 17</value>
@@ -6701,7 +6680,7 @@
     <value>13, 31</value>
   </data>
   <data name="dirTreeView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 256</value>
+    <value>170, 251</value>
   </data>
   <data name="dirTreeView.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -6716,7 +6695,31 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;dirTreeView.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
+  </data>
+  <data name="listFileView.HorizontalScrollbar" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="listFileView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>190, 32</value>
+  </data>
+  <data name="listFileView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 251</value>
+  </data>
+  <data name="listFileView.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;listFileView.Name" xml:space="preserve">
+    <value>listFileView</value>
+  </data>
+  <data name="&gt;&gt;listFileView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;listFileView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;listFileView.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

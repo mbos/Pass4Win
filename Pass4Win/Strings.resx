@@ -232,4 +232,14 @@
   <data name="InputBox_Show_Validation_Error" xml:space="preserve">
     <value>Validation Error</value>
   </data>
+  <data name="Info_add_dialog" xml:space="preserve">
+    <value>New File</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="FrmMain_DecryptPass_Empty_file" xml:space="preserve">
+    <value>Empty file</value>
+  </data>
+  <data name="FrmMain_RenameToolStripMenuItemClick_Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
 </root>

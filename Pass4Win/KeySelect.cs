@@ -23,7 +23,7 @@ namespace Pass4Win
             InitializeComponent();
         }
 
-        private void KeySelect_Load(object sender, EventArgs e)
+        private void KeySelectLoad(object sender, EventArgs e)
         {
             GpgInterface.ExePath = FrmMain.Cfg["GPGEXE"];
             GpgListPublicKeys publicKeys = new GpgListPublicKeys();
@@ -38,7 +38,7 @@ namespace Pass4Win
 
          public string Gpgkey => comboBox1.Text.Split('(')[0];
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void BtnOkClick(object sender, EventArgs e)
         {
 
         }

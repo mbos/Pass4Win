@@ -60,7 +60,7 @@ namespace Pass4Win
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private void TreeView1AfterSelect(object sender, TreeViewEventArgs e)
         {
             string tmpFile = Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
             if (File.Exists(tmpFile)) {
@@ -88,7 +88,7 @@ namespace Pass4Win
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AddToolStripMenuItemClick(object sender, EventArgs e)
         {
             KeySelect newKeySelect = new KeySelect();
             if (newKeySelect.ShowDialog() == DialogResult.OK)
@@ -145,7 +145,7 @@ namespace Pass4Win
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RemoveToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (listBox1.Items[0].ToString() != Strings.Error_keys_set)
                 if (listBox1.Items.Count > 1)
@@ -189,7 +189,7 @@ namespace Pass4Win
             {
                 // The current thread is blocked until the decryption is finished.
                 GpgInterfaceResult result = decrypt.Execute();
-                Decrypt_Callback(result, tmpFile, path);
+                this.DecryptCallback(result, tmpFile, path);
             }
         }
 
@@ -199,7 +199,7 @@ namespace Pass4Win
         /// <param name="result"></param>
         /// <param name="tmpFile"></param>
         /// <param name="path"></param>
-        private void Decrypt_Callback(GpgInterfaceResult result, string tmpFile, string path)
+        private void DecryptCallback(GpgInterfaceResult result, string tmpFile, string path)
         {
             if (result.Status == GpgInterfaceStatus.Success)
             {
@@ -215,7 +215,7 @@ namespace Pass4Win
                 string tmpFile2 = Path.GetTempFileName();
                 GpgEncrypt encrypt = new GpgEncrypt(tmpFile, tmpFile2, false, false, null, recipients, CipherAlgorithm.None);
                 GpgInterfaceResult encResult = encrypt.Execute();
-                Encrypt_Callback(encResult, tmpFile, tmpFile2, path);
+                this.EncryptCallback(encResult, tmpFile, tmpFile2, path);
             }
             else
             {
@@ -230,7 +230,7 @@ namespace Pass4Win
         /// <param name="tmpFile"></param>
         /// <param name="tmpFile2"></param>
         /// <param name="path"></param>
-        public void Encrypt_Callback(GpgInterfaceResult result, string tmpFile, string tmpFile2, string path)
+        public void EncryptCallback(GpgInterfaceResult result, string tmpFile, string tmpFile2, string path)
         {
             if (result.Status == GpgInterfaceStatus.Success)
             {

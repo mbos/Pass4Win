@@ -13,28 +13,56 @@
  * A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content
  */
 
-using System;
-using System.Security.Cryptography;
-
 namespace Pass4Win
 {
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Security.Cryptography;
 
+    /// <summary>
+    /// Password generation
+    /// </summary>
     public class Pwgen
     {
-        // Define default min and max password lengths.
-        private static int _defaultMinPasswordLength = 12;
-        private static int _defaultMaxPasswordLength = 16;
+        /// <summary>
+        /// The default min password length.
+        /// </summary>
+        private static int defaultMinPasswordLength = 12;
 
-        // Define characters, omitting confusing ones (o0I1)
-        private static string _passwordCharsLcase = "abcdefgijkmnopqrstwxyz";
-        private static string _passwordCharsUcase = "ABCDEFGHJKLMNPQRSTWXYZ";
-        private static string _passwordCharsNumeric = "23456789";
-        private static string _passwordCharsSpecial = "*$-+?_&=!%{}/";
+        /// <summary>
+        /// The default max password length.
+        /// </summary>
+        private static int defaultMaxPasswordLength = 16;
 
+        /// <summary>
+        /// Lowercase chars omitting o
+        /// </summary>
+        private static string passwordCharsLcase = "abcdefgijkmnopqrstwxyz";
+
+        /// <summary>
+        /// Uppercase chars omitting I
+        /// </summary>
+        private static string passwordCharsUcase = "ABCDEFGHJKLMNPQRSTWXYZ";
+
+        /// <summary>
+        /// Numeric chars omitting 01
+        /// </summary>
+        private static string passwordCharsNumeric = "23456789";
+
+        /// <summary>
+        /// Special chars
+        /// </summary>
+        private static string passwordCharsSpecial = "*$-+?_&=!%{}/";
+
+        /// <summary>
+        /// Generates a random password between the default min and max values.
+        /// </summary>
+        /// <returns>
+        /// Password <see cref="string"/>.
+        /// </returns>
         public static string Generate()
         {
-            return Generate(_defaultMinPasswordLength,
-                            _defaultMaxPasswordLength);
+            return Generate(defaultMinPasswordLength, defaultMaxPasswordLength);
         }
 
         /// <summary>
@@ -68,22 +96,24 @@ namespace Pass4Win
         /// random and it will fall with the range determined by the
         /// function parameters.
         /// </remarks>
-        public static string Generate(int minLength,
-                                      int maxLength)
+        [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1515:SingleLineCommentMustBePrecededByBlankLine", Justification = "Reviewed. Suppression is OK here.")]
+        public static string Generate(int minLength, int maxLength)
         {
             // Make sure that input parameters are valid.
             if (minLength <= 0 || maxLength <= 0 || minLength > maxLength)
+            {
                 return null;
+            }
 
             // Create a local array containing supported password characters
             // grouped by types. You can remove character groups from this
             // array, but doing so will weaken the password strength.
             char[][] charGroups = new char[][]
                 {
-                _passwordCharsLcase.ToCharArray(),
-                _passwordCharsUcase.ToCharArray(),
-                _passwordCharsNumeric.ToCharArray(),
-                _passwordCharsSpecial.ToCharArray()
+                passwordCharsLcase.ToCharArray(),
+                passwordCharsUcase.ToCharArray(),
+                passwordCharsNumeric.ToCharArray(),
+                passwordCharsSpecial.ToCharArray()
                 };
 
             // Use this array to track the number of unused characters in each
@@ -92,14 +122,18 @@ namespace Pass4Win
 
             // Initially, all characters in each group are not used.
             for (int i = 0; i < charsLeftInGroup.Length; i++)
+            {
                 charsLeftInGroup[i] = charGroups[i].Length;
+            }
 
             // Use this array to track (iterate through) unused character groups.
             int[] leftGroupsOrder = new int[charGroups.Length];
 
             // Initially, all character groups are not used.
             for (int i = 0; i < leftGroupsOrder.Length; i++)
+            {
                 leftGroupsOrder[i] = i;
+            }
 
             // Use a 4-byte array to fill it with random bytes and convert it then
             // to an integer value.
@@ -133,10 +167,13 @@ namespace Pass4Win
                 // function call by one, i.e. lastLeftGroupsOrderIdx + 1.
                 int nextLeftGroupsOrderIdx;
                 if (lastLeftGroupsOrderIdx == 0)
+                {
                     nextLeftGroupsOrderIdx = 0;
+                }
                 else
-                    nextLeftGroupsOrderIdx = random.Next(0,
-                                                         lastLeftGroupsOrderIdx);
+                {
+                    nextLeftGroupsOrderIdx = random.Next(0, lastLeftGroupsOrderIdx);
+                }
 
                 // Get the actual index of the character group, from which we will
                 // pick the next character.
@@ -154,8 +191,9 @@ namespace Pass4Win
 
                 // If we processed the last character in this group, start over.
                 if (lastCharIdx == 0)
-                    charsLeftInGroup[nextGroupIdx] =
-                                              charGroups[nextGroupIdx].Length;
+                {
+                    charsLeftInGroup[nextGroupIdx] = charGroups[nextGroupIdx].Length;
+                }
                 // There are more unprocessed characters left.
                 else
                 {
@@ -169,6 +207,7 @@ namespace Pass4Win
                                     charGroups[nextGroupIdx][nextCharIdx];
                         charGroups[nextGroupIdx][nextCharIdx] = temp;
                     }
+
                     // Decrement the number of unprocessed characters in
                     // this group.
                     charsLeftInGroup[nextGroupIdx]--;
@@ -176,7 +215,10 @@ namespace Pass4Win
 
                 // If we processed the last group, start all over.
                 if (lastLeftGroupsOrderIdx == 0)
+                {
                     lastLeftGroupsOrderIdx = leftGroupsOrder.Length - 1;
+                }
+
                 // There are more unprocessed groups left.
                 else
                 {

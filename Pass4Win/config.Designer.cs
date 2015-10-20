@@ -57,8 +57,8 @@
             this.errorProvider1.SetIconPadding(this.txtPassFolder, ((int)(resources.GetObject("txtPassFolder.IconPadding"))));
             this.txtPassFolder.Name = "txtPassFolder";
             this.txtPassFolder.ReadOnly = true;
-            this.txtPassFolder.Click += new System.EventHandler(this.txtPassFolder_Click);
-            this.txtPassFolder.Validating += new System.ComponentModel.CancelEventHandler(this.txtPassFolder_Validating);
+            this.txtPassFolder.Click += new System.EventHandler(this.TxtPassFolderClick);
+            this.txtPassFolder.Validating += new System.ComponentModel.CancelEventHandler(this.TxtPassFolderValidating);
             // 
             // label1
             // 
@@ -67,7 +67,7 @@
             this.errorProvider1.SetIconAlignment(this.label1, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label1.IconAlignment"))));
             this.errorProvider1.SetIconPadding(this.label1, ((int)(resources.GetObject("label1.IconPadding"))));
             this.label1.Name = "label1";
-            this.label1.Click += new System.EventHandler(this.txtPassFolder_Click);
+            this.label1.Click += new System.EventHandler(this.TxtPassFolderClick);
             // 
             // openFileDialog1
             // 
@@ -86,7 +86,7 @@
             this.errorProvider1.SetIconAlignment(this.label2, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label2.IconAlignment"))));
             this.errorProvider1.SetIconPadding(this.label2, ((int)(resources.GetObject("label2.IconPadding"))));
             this.label2.Name = "label2";
-            this.label2.Click += new System.EventHandler(this.txtGPG_Click);
+            this.label2.Click += new System.EventHandler(this.TxtGpgClick);
             // 
             // txtGPG
             // 
@@ -96,8 +96,8 @@
             this.errorProvider1.SetIconPadding(this.txtGPG, ((int)(resources.GetObject("txtGPG.IconPadding"))));
             this.txtGPG.Name = "txtGPG";
             this.txtGPG.ReadOnly = true;
-            this.txtGPG.Click += new System.EventHandler(this.txtGPG_Click);
-            this.txtGPG.Validating += new System.ComponentModel.CancelEventHandler(this.txtGPG_Validating);
+            this.txtGPG.Click += new System.EventHandler(this.TxtGpgClick);
+            this.txtGPG.Validating += new System.ComponentModel.CancelEventHandler(this.TxtGpgValidating);
             // 
             // label3
             // 
@@ -115,7 +115,7 @@
             this.errorProvider1.SetIconPadding(this.chkboxRemoteRepo, ((int)(resources.GetObject("chkboxRemoteRepo.IconPadding"))));
             this.chkboxRemoteRepo.Name = "chkboxRemoteRepo";
             this.chkboxRemoteRepo.UseVisualStyleBackColor = true;
-            this.chkboxRemoteRepo.CheckedChanged += new System.EventHandler(this.chkboxRemoteRepo_CheckedChanged);
+            this.chkboxRemoteRepo.CheckedChanged += new System.EventHandler(this.ChkboxRemoteRepoCheckedChanged);
             // 
             // label4
             // 
@@ -133,8 +133,8 @@
             this.errorProvider1.SetIconPadding(this.txtGitUser, ((int)(resources.GetObject("txtGitUser.IconPadding"))));
             this.txtGitUser.Name = "txtGitUser";
             this.txtGitUser.ReadOnly = true;
-            this.txtGitUser.Leave += new System.EventHandler(this.txtGitUser_Leave);
-            this.txtGitUser.Validating += new System.ComponentModel.CancelEventHandler(this.txtGitUser_Validating);
+            this.txtGitUser.Leave += new System.EventHandler(this.TxtGitUserLeave);
+            this.txtGitUser.Validating += new System.ComponentModel.CancelEventHandler(this.TxtGitUserValidating);
             // 
             // txtGitPass
             // 
@@ -144,8 +144,8 @@
             this.errorProvider1.SetIconPadding(this.txtGitPass, ((int)(resources.GetObject("txtGitPass.IconPadding"))));
             this.txtGitPass.Name = "txtGitPass";
             this.txtGitPass.ReadOnly = true;
-            this.txtGitPass.Leave += new System.EventHandler(this.txtGitPass_Leave);
-            this.txtGitPass.Validating += new System.ComponentModel.CancelEventHandler(this.txtGitPass_Validating);
+            this.txtGitPass.Leave += new System.EventHandler(this.TxtGitPassLeave);
+            this.txtGitPass.Validating += new System.ComponentModel.CancelEventHandler(this.TxtGitPassValidating);
             // 
             // label5
             // 
@@ -163,8 +163,8 @@
             this.errorProvider1.SetIconPadding(this.txtGitHost, ((int)(resources.GetObject("txtGitHost.IconPadding"))));
             this.txtGitHost.Name = "txtGitHost";
             this.txtGitHost.ReadOnly = true;
-            this.txtGitHost.Leave += new System.EventHandler(this.txtGitHost_Leave);
-            this.txtGitHost.Validating += new System.ComponentModel.CancelEventHandler(this.txtGitHost_Validating);
+            this.txtGitHost.Leave += new System.EventHandler(this.TxtGitHostLeave);
+            this.txtGitHost.Validating += new System.ComponentModel.CancelEventHandler(this.TxtGitHostValidating);
             // 
             // label6
             // 
@@ -187,7 +187,7 @@
             this.errorProvider1.SetIconPadding(this.btnSave, ((int)(resources.GetObject("btnSave.IconPadding"))));
             this.btnSave.Name = "btnSave";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
             // 
             // FrmConfig
             // 
@@ -212,7 +212,7 @@
             this.Name = "FrmConfig";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmConfig_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmConfigFormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

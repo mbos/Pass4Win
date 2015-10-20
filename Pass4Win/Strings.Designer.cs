@@ -205,6 +205,33 @@ namespace Pass4Win {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Empty file.
+        /// </summary>
+        internal static string FrmMain_DecryptPass_Empty_file {
+            get {
+                return ResourceManager.GetString("FrmMain_DecryptPass_Empty_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        internal static string FrmMain_RenameToolStripMenuItemClick_Rename {
+            get {
+                return ResourceManager.GetString("FrmMain_RenameToolStripMenuItemClick_Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New File.
+        /// </summary>
+        internal static string Info_add_dialog {
+            get {
+                return ResourceManager.GetString("Info_add_dialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to pull from Git server.
         /// </summary>
         internal static string Info_git_error {

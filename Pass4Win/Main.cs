@@ -14,7 +14,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -44,19 +43,21 @@ namespace Pass4Win
 {
     public partial class FrmMain : Form
     {
+        /// <summary>
+        /// Global variable for filesystem interface
+        /// </summary>
+        private readonly FileSystemInterface fsi;
         // timer for clearing clipboard
-        private static Timer _timer;
+        private static Timer clipboardTimer;
         // Setting up config second parameter should be false for normal install and true for portable
         public static Config Cfg = new Config("Pass4Win", false, true);
-        // Used for class access to the data
-        private readonly DataTable _dt = new DataTable();
         // UI Trayicon toggle
-        private readonly bool _enableTray;
+        private readonly bool enableTray;
         // Remote status of GIT
-        private bool _gitRepoOffline = true;
+        private bool gitRepoOffline = true;
         // Class access to the tempfile
-        private string _tmpfile;
-        private readonly DataTable _treeDt = new DataTable();
+        private string tmpfile;
+
 
         /// <summary>
         ///     Inits the repo, gpg etc
@@ -70,7 +71,7 @@ namespace Pass4Win
             // ReSharper disable once UnusedVariable
             var bugsnag = new BaseClient("23814316a6ecfe8ff344b6a467f07171");
 
-            _enableTray = false;
+            this.enableTray = false;
 
             // Getting actual version
             var assembly = Assembly.GetExecutingAssembly();
@@ -91,7 +92,7 @@ namespace Pass4Win
                     // this will fail, I know ugly hack
                 }
             }
-            catch
+            catch (Exception)
             {
                 Cfg["FirstRun"] = true;
                 var config = new FrmConfig();
@@ -119,11 +120,11 @@ namespace Pass4Win
                                     }
                                 });
                         }
-                        catch
+                        catch (Exception)
                         {
                             MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
-                            toolStripOffline.Visible = true;
+                            this.toolStripOffline.Visible = true;
                         }
                     }
                     else
@@ -185,20 +186,13 @@ namespace Pass4Win
             // Setting the exe location for the GPG Dll
             GpgInterface.ExePath = Cfg["GPGEXE"];
 
-            // Setting up datagrid
-            _dt.Columns.Add("colPath", typeof (string));
-            _dt.Columns.Add("colText", typeof (string));
+            // init FileSystemInterface class
+            fsi = new FileSystemInterface(Cfg["PassDirectory"]);
 
-            _treeDt.Columns.Add("colPath", typeof (string));
-            _treeDt.Columns.Add("colText", typeof (string));
-
-            ListDirectory(new DirectoryInfo(Cfg["PassDirectory"]), "");
-            FillDirectoryTree(dirTreeView, Cfg["PassDirectory"]);
-
-            dataPass.DataSource = _dt.DefaultView;
-            dataPass.Columns[0].Visible = false;
-
-            _enableTray = true;
+            // Fill tree
+            CreateNodes();
+    
+            this.enableTray = true;
         }
 
         public override sealed string Text
@@ -234,25 +228,10 @@ namespace Pass4Win
             }
         }
 
-
-        /// <summary>
-        ///     Decrypts current selection and cleans up the detail view
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataPass_SelectionChanged(object sender, EventArgs e)
+        private void CopyToolStripMenuItemClick(object sender, EventArgs e)
         {
-            if (dataPass.CurrentCell != null)
-                decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
-
-            btnMakeVisible.Visible = true;
-            txtPassDetail.Visible = false;
-        }
-
-        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dataPass.CurrentCell != null)
-                decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+            if (listFileView.SelectedItems.Count != 0)
+                this.DecryptPass(listFileView.SelectedItem.ToString());
         }
 
         /// <summary>
@@ -260,7 +239,7 @@ namespace Pass4Win
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void txtPassDetail_Leave(object sender, EventArgs e)
+        private void TxtPassDetailLeave(object sender, EventArgs e)
         {
             if (txtPassDetail.ReadOnly == false)
             {
@@ -269,7 +248,7 @@ namespace Pass4Win
                 btnMakeVisible.Visible = true;
                 txtPassDetail.BackColor = Color.LightGray;
                 // read .gpg-id
-                var gpgfile = Path.GetDirectoryName(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+                var gpgfile = Path.GetDirectoryName(listFileView.SelectedItem.ToString());
                 gpgfile += "\\.gpg-id";
                 // check if .gpg-id exists otherwise get the root .gpg-id
                 if (!File.Exists(gpgfile))
@@ -324,11 +303,8 @@ namespace Pass4Win
 
                 var encrypt = new GpgEncrypt(tmpFile, tmpFile2, false, false, null, recipients, CipherAlgorithm.None);
                 var encResult = encrypt.Execute();
-                Encrypt_Callback(encResult, tmpFile, tmpFile2,
-                    dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+                this.EncryptCallback(encResult, tmpFile, tmpFile2, listFileView.SelectedItem.ToString());
             }
-
-            dataPass.Enabled = true;
         }
 
         /// <summary>
@@ -336,18 +312,22 @@ namespace Pass4Win
         /// </summary>
         /// <param name="path"></param>
         /// <param name="clear"></param>
-        private void decrypt_pass(string path, bool clear = true)
+        private void DecryptPass(string path, bool clear = true)
         {
             var f = new FileInfo(path);
-            if (f.Length > 0)
+            if (f.Exists && f.Length > 0)
             {
-                _tmpfile = Path.GetTempFileName();
-                var decrypt = new GpgDecrypt(path, _tmpfile);
+                this.tmpfile = Path.GetTempFileName();
+                var decrypt = new GpgDecrypt(path, this.tmpfile);
                 {
                     // The current thread is blocked until the decryption is finished.
                     var result = decrypt.Execute();
-                    Decrypt_Callback(result, clear);
+                    this.DecryptCallback(result, clear);
                 }
+            }
+            else
+            {
+                txtPassDetail.Text = Strings.FrmMain_DecryptPass_Empty_file;
             }
         }
 
@@ -358,7 +338,7 @@ namespace Pass4Win
         /// <param name="tmpFile"></param>
         /// <param name="tmpFile2"></param>
         /// <param name="path"></param>
-        public void Encrypt_Callback(GpgInterfaceResult result, string tmpFile, string tmpFile2, string path)
+        public void EncryptCallback(GpgInterfaceResult result, string tmpFile, string tmpFile2, string path)
         {
             if (result.Status == GpgInterfaceStatus.Success)
             {
@@ -373,7 +353,7 @@ namespace Pass4Win
                     // Commit
                     repo.Commit("password changes", new Signature("pass4win", "pass4win", DateTimeOffset.Now),
                         new Signature("pass4win", "pass4win", DateTimeOffset.Now));
-                    if (Cfg["UseGitRemote"] == true && _gitRepoOffline == false)
+                    if (Cfg["UseGitRemote"] == true && this.gitRepoOffline == false)
                     {
                         toolStripOffline.Visible = false;
                         var remote = repo.Network.Remotes["origin"];
@@ -402,12 +382,12 @@ namespace Pass4Win
         /// </summary>
         /// <param name="result"></param>
         /// <param name="clear"></param>
-        private void Decrypt_Callback(GpgInterfaceResult result, bool clear)
+        private void DecryptCallback(GpgInterfaceResult result, bool clear)
         {
             if (result.Status == GpgInterfaceStatus.Success)
             {
-                txtPassDetail.Text = File.ReadAllText(_tmpfile);
-                File.Delete(_tmpfile);
+                txtPassDetail.Text = File.ReadAllText(this.tmpfile);
+                File.Delete(this.tmpfile);
                 // copy to clipboard
                 if (txtPassDetail.Text != "")
                 {
@@ -421,7 +401,7 @@ namespace Pass4Win
                         statusPB.Visible = true;
                         statusTxt.Text = Strings.Statusbar_countdown + @" ";
                         //Create the timer
-                        _timer = new Timer(ClearClipboard, null, 0, 1000);
+                        clipboardTimer = new Timer(ClearClipboard, null, 0, 1000);
                     }
                 }
             }
@@ -466,12 +446,12 @@ namespace Pass4Win
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EditToolStripMenuItemClick(object sender, EventArgs e)
         {
             // dispose timer thread and clear ui.
             KillTimer();
             // make control editable, give focus and content
-            decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(), false);
+            this.DecryptPass(listFileView.SelectedItem.ToString(), false);
             txtPassDetail.ReadOnly = false;
             txtPassDetail.Visible = true;
             btnMakeVisible.Visible = false;
@@ -484,39 +464,38 @@ namespace Pass4Win
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RenameToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // rename the entry
-            InputBoxValidation validation = delegate(string val)
+            SaveFileDialog newFileDialog = new SaveFileDialog
+                                               {
+                                                   AddExtension = true,
+                                                   AutoUpgradeEnabled = true,
+                                                   CreatePrompt = false,
+                                                   DefaultExt = "gpg",
+                                                   InitialDirectory = Cfg["PassDirectory"],
+                                                   Title = Strings.FrmMain_RenameToolStripMenuItemClick_Rename
+                                               };
+            if (newFileDialog.ShowDialog() == DialogResult.Cancel)
             {
-                if (val == "")
-                    return Strings.Error_not_empty;
-                if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
-                    return Strings.Error_valid_filename;
-                if (File.Exists(Cfg["PassDirectory"] + "\\" + @val + ".gpg"))
-                    return Strings.Error_already_exists;
-                return "";
-            };
+                return;
+            }
 
-            var value = dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[1].Value.ToString();
-            if (InputBox.Show(Strings.Input_new_name, Strings.Input_new_name_label, ref value, validation) ==
-                DialogResult.OK)
-            {
-                // parse path
-                string tmpPath = Cfg["PassDirectory"] + "\\" + @value + ".gpg";
-                // ReSharper disable once AssignNullToNotNullAttribute
-                Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
-                File.Copy(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString(), tmpPath);
-                using (var repo = new Repository(Cfg["PassDirectory"]))
+            string tmpFileName = newFileDialog.FileName;
+            newFileDialog.Dispose();
+
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Directory.CreateDirectory(path: Path.GetDirectoryName(tmpFileName));
+            File.Copy(dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg", tmpFileName);
+            using (var repo = new Repository(Cfg["PassDirectory"]))
                 {
                     // add the file
-                    repo.Remove(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
-                    repo.Stage(tmpPath);
+                    repo.Remove(listFileView.SelectedItem.ToString());
+                    repo.Stage(tmpFileName);
                     // Commit
                     repo.Commit("password moved", new Signature("pass4win", "pass4win", DateTimeOffset.Now),
                         new Signature("pass4win", "pass4win", DateTimeOffset.Now));
 
-                    if (Cfg["UseGitRemote"] == true && _gitRepoOffline == false)
+                    if (Cfg["UseGitRemote"] == true && this.gitRepoOffline == false)
                     {
                         //push
                         toolStripOffline.Visible = false;
@@ -532,9 +511,8 @@ namespace Pass4Win
                         var pushRefSpec = @"refs/heads/master";
                         repo.Network.Push(remote, pushRefSpec, options);
                     }
-                }
-                ResetDatagrid();
             }
+            this.CreateNodes();
         }
 
         /// <summary>
@@ -542,18 +520,18 @@ namespace Pass4Win
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DeleteToolStripMenuItemClick(object sender, EventArgs e)
         {
             // remove from git
             using (var repo = new Repository(Cfg["PassDirectory"]))
             {
                 // remove the file
-                repo.Remove(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
+                repo.Remove(dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg");
                 // Commit
                 repo.Commit("password removed", new Signature("pass4win", "pass4win", DateTimeOffset.Now),
                     new Signature("pass4win", "pass4win", DateTimeOffset.Now));
 
-                if (Cfg["UseGitRemote"] == true && _gitRepoOffline == false)
+                if (Cfg["UseGitRemote"] == true && this.gitRepoOffline == false)
                 {
                     // push
                     toolStripOffline.Visible = false;
@@ -570,7 +548,7 @@ namespace Pass4Win
                     repo.Network.Push(remote, pushRefSpec, options);
                 }
             }
-            ResetDatagrid();
+            this.CreateNodes();
         }
 
         /// <summary>
@@ -594,141 +572,51 @@ namespace Pass4Win
             }
         }
 
-        /// <summary>
-        ///     reset the datagrid (clear & Fill)
-        /// </summary>
-        private void ResetDatagrid()
+        private void CreateNodes()
         {
-            _dt.Clear();
-            ProcessDirectory(Cfg["PassDirectory"]);
-            ListDirectory(new DirectoryInfo(Cfg["PassDirectory"]), "");
+            // Get the TreeView ready for node creation.
+            dirTreeView.BeginUpdate();
+            dirTreeView.Nodes.Clear();
+
+            TreeNode[] nodes = fsi.UpdateDirectoryTree(new DirectoryInfo(Cfg["PassDirectory"]));
+            dirTreeView.Nodes.AddRange(nodes);
+
+            // Notify the TreeView to resume painting.
+            dirTreeView.EndUpdate();
+            dirTreeView.SelectedNode = FindTreeNodeText(dirTreeView.Nodes, Path.GetFileName(Cfg["PassDirectory"]));
+            FillFileList(Cfg["PassDirectory"]);
         }
 
-        /// <summary>
-        ///     Fill the datagrid
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="prefix"></param>
-        private void ListDirectory(DirectoryInfo path, string prefix)
+        private TreeNode FindTreeNodeText(TreeNodeCollection nodes, string findText)
         {
-            foreach (var directory in path.GetDirectories())
+            TreeNode foundNode = null;
+            for (int i = 0; i < nodes.Count && foundNode == null; i++)
             {
-                if (!directory.Name.StartsWith("."))
+                if (nodes[i].Text.Remove(findText.Length) == findText)
                 {
-                    string tmpPrefix;
-                    if (prefix != "")
-                    {
-                        tmpPrefix = prefix + "\\" + directory;
-                    }
-                    else
-                    {
-                        tmpPrefix = prefix + directory;
-                    }
-                    ListDirectory(directory, tmpPrefix);
+                    foundNode = nodes[i];
+                    break;
                 }
+                if (nodes[i].Nodes.Count > 0)
+                    foundNode = FindTreeNodeText(nodes[i].Nodes, findText);
             }
-
-            foreach (var ffile in path.GetFiles())
-                if (!ffile.Name.StartsWith("."))
-                {
-                    if (ffile.Extension.ToLower() == ".gpg")
-                    {
-                        var newItemRow = _dt.NewRow();
-
-                        newItemRow["colPath"] = ffile.FullName;
-                        if (prefix != "")
-                            newItemRow["colText"] = prefix + "\\" + Path.GetFileNameWithoutExtension(ffile.Name);
-                        else
-                            newItemRow["colText"] = Path.GetFileNameWithoutExtension(ffile.Name);
-
-                        _dt.Rows.Add(newItemRow);
-                    }
-                }
-
-            // rebuild autocomplete
-            var postSource = _dt
-                .AsEnumerable()
-                .Select(x => x.Field<string>("colText"))
-                .ToArray();
-
-            var collection = new AutoCompleteStringCollection();
-            collection.AddRange(postSource);
-            toolStriptextSearch.AutoCompleteCustomSource = collection;
+            return foundNode;
         }
 
-        private void FillDirectoryTree(TreeView treeView, string path)
-        {
-            treeView.Nodes.Clear();
-            var rootDirectoryInfo = new DirectoryInfo(path);
-            treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
-        }
-
-        private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
-        {
-            var dirFileCount = directoryInfo.EnumerateFiles().Count();
-            var nodeName = new StringBuilder();
-            nodeName.Append(directoryInfo.Name);
-            if (dirFileCount > 0)
-            {
-                nodeName.AppendFormat(" ({0})", dirFileCount);
-            }
-
-            var directoryNode = new TreeNode(nodeName.ToString()) {Tag = directoryInfo.FullName};
-            foreach (var directory in directoryInfo.GetDirectories())
-            {
-                if (!directory.Name.StartsWith("."))
-                {
-                    directoryNode.Nodes.Add(CreateDirectoryNode(directory));
-                }
-            }
-
-            return directoryNode;
-        }
-
-        private void dirTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void DirTreeViewNodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             var tv = sender as TreeView;
             if (tv != null)
             {
-                var dirInfo = new DirectoryInfo(tv.SelectedNode.Tag.ToString());
-                _treeDt.Clear();
+                toolStriptextSearch.TextChanged -= this.ToolStriptextSearchTextChanged;
+                toolStriptextSearch.Clear();
+                toolStriptextSearch.TextChanged += this.ToolStriptextSearchTextChanged;
 
-                foreach (var file in dirInfo.GetFiles())
-                {
-                    if (!file.Name.StartsWith("."))
-                    {
-                        if (file.Extension.ToLower() == ".gpg")
-                        {
-                            var newItemRow = _treeDt.NewRow();
-
-                            newItemRow["colPath"] = file.FullName;
-                            newItemRow["colText"] = Path.GetFileNameWithoutExtension(file.Name);
-
-                            _treeDt.Rows.Add(newItemRow);
-                        }
-                    }
-                }
-            }
-            dataPass.DataSource = _treeDt;
-        }
-
-        /// <summary>
-        ///     cleanup script to remove empty directories from the password store
-        /// </summary>
-        /// <param name="startLocation"></param>
-        private static void ProcessDirectory(string startLocation)
-        {
-            foreach (var directory in Directory.GetDirectories(startLocation))
-            {
-                ProcessDirectory(directory);
-                if (Directory.GetFiles(directory).Length == 0 && Directory.GetDirectories(directory).Length == 0)
-                {
-                    Directory.Delete(directory, false);
-                }
+                FillFileList(tv.SelectedNode.Tag.ToString());
             }
         }
 
-        private void btnMakeVisible_Click(object sender, EventArgs e)
+        private void BtnMakeVisibleClick(object sender, EventArgs e)
         {
             btnMakeVisible.Visible = false;
             txtPassDetail.Visible = true;
@@ -739,9 +627,9 @@ namespace Pass4Win
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void frmMain_Resize(object sender, EventArgs e)
+        private void FrmMainResize(object sender, EventArgs e)
         {
-            if (FormWindowState.Minimized == WindowState && _enableTray)
+            if (FormWindowState.Minimized == WindowState && this.enableTray)
             {
                 notifyIcon1.Visible = true;
                 notifyIcon1.ShowBalloonTip(500);
@@ -760,7 +648,7 @@ namespace Pass4Win
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Config_SendOffline(object sender, EventArgs e)
+        private void ConfigSendOffline(object sender, EventArgs e)
         {
             var child = sender as FrmConfig;
             if (child != null)
@@ -773,16 +661,12 @@ namespace Pass4Win
             }
         }
 
-        public void btnAbout_Click(object sender, EventArgs e)
-        {
-        }
-
         /// <summary>
         ///     Offline -> Online helper
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripOffline_Click(object sender, EventArgs e)
+        private void ToolStripOfflineClick(object sender, EventArgs e)
         {
             CheckOnline();
         }
@@ -796,14 +680,14 @@ namespace Pass4Win
                 if (IsGitAlive(Cfg["GitRemote"]) || IsHttpsAlive(Cfg["GitRemote"]))
                 {
                     // looks good, let's try
-                    _gitRepoOffline = false;
+                    this.gitRepoOffline = false;
                 }
 
                 // Do a fetch to get the latest repo.
                 if (!GitFetch())
                 {
                     // nope not online
-                    _gitRepoOffline = true;
+                    this.gitRepoOffline = true;
                     MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
@@ -861,7 +745,7 @@ namespace Pass4Win
                     client.Close();
                     return true;
                 }
-                catch
+                catch (Exception)
                 {
                     client.Close();
                     return false;
@@ -892,7 +776,7 @@ namespace Pass4Win
                         client.Close();
                         return true;
                     }
-                    catch
+                    catch (Exception)
                     {
                         client.Close();
                         return false;
@@ -909,7 +793,7 @@ namespace Pass4Win
         /// <returns></returns>
         public bool GitFetch()
         {
-            if (Cfg["UseGitRemote"] == true && _gitRepoOffline == false)
+            if (Cfg["UseGitRemote"] == true && this.gitRepoOffline == false)
             {
                 toolStripOffline.Visible = false;
                 using (var repo = new Repository(Cfg["PassDirectory"]))
@@ -934,7 +818,7 @@ namespace Pass4Win
                     {
                         repo.Network.Pull(signature, pullOptions);
                     }
-                    catch
+                    catch (Exception)
                     {
                         return false;
                     }
@@ -943,24 +827,41 @@ namespace Pass4Win
             return true;
         }
 
-        private void openSystrayMenuItem_Click(object sender, EventArgs e)
+        private void FillFileList(string path)
+        {
+            listFileView.Items.Clear();
+            var myList = fsi.UpdateDirectoryList(new DirectoryInfo(path));
+            foreach (var row in myList)
+            {
+                listFileView.Items.Add(row);
+            }
+            
+            // Setting up GUI
+            listFileView.SelectedIndex = 0;
+            this.DecryptPass(dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg");
+
+            btnMakeVisible.Visible = true;
+            txtPassDetail.Visible = false;
+        }
+
+        private void OpenSystrayMenuItemClick(object sender, EventArgs e)
         {
             Show();
             WindowState = FormWindowState.Normal;
         }
 
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void NotifyIcon1MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Show();
             WindowState = FormWindowState.Normal;
         }
 
-        private void quitSystrayMenuItem_Click(object sender, EventArgs e)
+        private void QuitSystrayMenuItemClick(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void FrmMainFormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
@@ -969,104 +870,76 @@ namespace Pass4Win
             }
         }
 
-        private void ToolStripbtnAdd_Click(object sender, EventArgs e)
+        private void ToolStripbtnAddClick(object sender, EventArgs e)
         {
-            // get the new entryname
-            InputBoxValidation validation = delegate(string val)
+            SaveFileDialog newFileDialog = new SaveFileDialog
+                                               {
+                                                   AddExtension = true,
+                                                   AutoUpgradeEnabled = true,
+                                                   CreatePrompt = false,
+                                                   DefaultExt = "gpg",
+                                                   InitialDirectory = Cfg["PassDirectory"],
+                                                   Title = Strings.Info_add_dialog
+                                               };
+            if (newFileDialog.ShowDialog() == DialogResult.Cancel)
             {
-                if (val == "")
-                    return "Value cannot be empty.";
-                if (new Regex(@"[a-zA-Z0-9-\\_]+/g").IsMatch(val))
-                    return Strings.Error_valid_filename;
-                if (File.Exists(Cfg["PassDirectory"] + "\\" + @val + ".gpg"))
-                    return Strings.Error_already_exists;
-                return "";
-            };
-
-            var value = "";
-            if (InputBox.Show(Strings.Input_new_name, Strings.Input_new_name_label, ref value, validation) ==
-                DialogResult.OK)
-            {
-                // parse path
-                string tmpPath = Cfg["PassDirectory"] + "\\" + @value + ".gpg";
-                // ReSharper disable once AssignNullToNotNullAttribute
-                Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
-                using (File.Create(tmpPath))
-                {
-                }
-
-                ResetDatagrid();
-                // set the selected item.
-                foreach (DataGridViewRow row in dataPass.Rows)
-                {
-                    if (row.Cells[1].Value.ToString().Equals(value))
-                    {
-                        dataPass.CurrentCell = row.Cells[1];
-                        row.Selected = true;
-                        dataPass.FirstDisplayedScrollingRowIndex = row.Index;
-                        break;
-                    }
-                }
-                // add to git
-                using (var repo = new Repository(Cfg["PassDirectory"]))
-                {
-                    // Stage the file
-                    repo.Stage(tmpPath);
-                }
-                // dispose timer thread and clear ui.
-                KillTimer();
-                // Set the text detail to the correct state
-                txtPassDetail.Text = "";
-                txtPassDetail.ReadOnly = false;
-                txtPassDetail.BackColor = Color.White;
-                txtPassDetail.Visible = true;
-                btnMakeVisible.Visible = false;
-
-                txtPassDetail.Focus();
+                return;
             }
+
+            string tmpFileName = newFileDialog.FileName;
+            newFileDialog.Dispose();
+
+            using (File.Create(tmpFileName))
+            {
+
+            }
+
+            // add to git
+            using (var repo = new Repository(Cfg["PassDirectory"]))
+            {
+                // Stage the file
+                repo.Stage(tmpFileName);
+            }
+            // dispose timer thread and clear ui.
+            KillTimer();
+            this.CreateNodes();
         }
 
-        private void toolStripbtnKey_Click(object sender, EventArgs e)
+        private void ToolStripbtnKeyClick(object sender, EventArgs e)
         {
             var keyManager = new FrmKeyManager();
             keyManager.Show();
         }
 
-        private void toolStripbtnConfig_Click(object sender, EventArgs e)
+        private void ToolStripbtnConfigClick(object sender, EventArgs e)
         {
             var config = new FrmConfig();
-            config.SendOffline += Config_SendOffline;
+            config.SendOffline += this.ConfigSendOffline;
             config.Show();
         }
 
-        private void toolStripbtnAbout_Click(object sender, EventArgs e)
+        private void ToolStripbtnAboutClick(object sender, EventArgs e)
         {
             var about = new FrmAbout();
             about.Show();
         }
 
-        private void toolStripbtnQuit_Click(object sender, EventArgs e)
+        private void ToolStripbtnQuitClick(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void toolStriptextSearch_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
-                if (_dt.DefaultView.Count != 0)
-                    decrypt_pass(dataPass.Rows[dataPass.CurrentCell.RowIndex].Cells[0].Value.ToString());
-        }
-
-        private void toolStriptextSearch_TextChanged(object sender, EventArgs e)
+        private void ToolStriptextSearchTextChanged(object sender, EventArgs e)
         {
             TextDelay.Stop();
             TextDelay.Start();
         }
 
-        private void TextDelay_Tick(object sender, EventArgs e)
+        private void TextDelayTick(object sender, EventArgs e)
         {
-            _dt.DefaultView.RowFilter = "colText LIKE '%" + toolStriptextSearch.Text + "%'";
-            if (_dt.DefaultView.Count == 0)
+            TextDelay.Stop();
+            fsi.Search(toolStriptextSearch.Text);
+            if (fsi.SearchList.Count == 0)
             {
                 txtPassDetail.Clear();
                 // dispose timer thread and clear ui.
@@ -1077,11 +950,27 @@ namespace Pass4Win
             else
             {
                 // making sure the menu works
-                dataMenu.Enabled = true;
+
+                // TODO: Clean up path like: c:\pass4win\blaat\test.gpg -> blaat\test.gpg
+                // TODO: Select pass4win in the tree
+                listFileView.Items.Clear();
+                foreach (var row in fsi.SearchList)
+                {
+                    string tmpstring = row.Replace(Cfg["PassDirectory"] + "\\", "");
+                    listFileView.Items.Add(tmpstring.Replace(".gpg", ""));
+                }
+
+                // setting up GUI
+                listFileView.SelectedIndex = 0;
+                dirTreeView.SelectedNode = FindTreeNodeText(dirTreeView.Nodes, Path.GetFileName(Cfg["PassDirectory"]));
+
+                this.DecryptPass(dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg");
+                btnMakeVisible.Visible = true;
+                txtPassDetail.Visible = false;
             }
         }
 
-        private void toolStripBtnGenPass_Click(object sender, EventArgs e)
+ private void ToolStripBtnGenPassClick(object sender, EventArgs e)
         {
             KillTimer();
 
@@ -1090,7 +979,7 @@ namespace Pass4Win
             frmGenpass.Show();
         }
 
-        private void copyPassDetailMenuItem_Click(object sender, EventArgs e)
+        private void CopyPassDetailMenuItemClick(object sender, EventArgs e)
         {
             Clipboard.SetText(txtPassDetail.SelectedText);
             KillTimer();
@@ -1098,27 +987,21 @@ namespace Pass4Win
 
         private void KillTimer()
         {
-            _timer?.Dispose();
+            clipboardTimer?.Dispose();
             statusPB.Visible = false;
             statusTxt.Text = Strings.Ready;
         }
 
-        private void passDetailMenu_Opening(object sender, CancelEventArgs e)
+        private void PassDetailMenuOpening(object sender, CancelEventArgs e)
         {
             copyPassDetailMenuItem.Enabled = !string.IsNullOrEmpty(txtPassDetail.SelectedText);
         }
 
-        private void toolStriptextSearch_Enter(object sender, EventArgs e)
-        {
-            dataPass.DataSource = _dt.DefaultView;
-        }
-
-        private void toolStripUpdateButton_Click(object sender, EventArgs e)
+        private void ToolStripUpdateButtonClick(object sender, EventArgs e)
         {
             toolStripStatusLabel1.Text = Strings.Info_git_pull;
             if (GitFetch())
             {
-                FillDirectoryTree(dirTreeView, Cfg["PassDirectory"]);
                 toolStripStatusLabel1.Text = DateTime.Now.ToShortTimeString() + @": " + Strings.Info_git_succes;
             }
             else
@@ -1127,83 +1010,14 @@ namespace Pass4Win
                 MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-    }
 
-    /// <summary>
-    ///     Generic input box
-    /// </summary>
-    public class InputBox
-    {
-        public static DialogResult Show(string title, string promptText, ref string value)
+        private void ListFileViewMouseClick(object sender, MouseEventArgs e)
         {
-            return Show(title, promptText, ref value, null);
-        }
+            if (listFileView.SelectedItems.Count != 0)
+                this.DecryptPass(dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg");
 
-        public static DialogResult Show(string title, string promptText, ref string value,
-            InputBoxValidation validation)
-        {
-            var form = new Form();
-            var label = new Label();
-            var textBox = new TextBox();
-            var buttonOk = new Button();
-            var buttonCancel = new Button();
-
-            form.Text = title;
-            label.Text = promptText;
-            textBox.Text = value;
-
-            buttonOk.Text = Strings.InputBox_Show_OK;
-            buttonCancel.Text = Strings.InputBox_Show_Cancel;
-            buttonOk.DialogResult = DialogResult.OK;
-            buttonCancel.DialogResult = DialogResult.Cancel;
-
-            label.SetBounds(9, 20, 372, 13);
-            textBox.SetBounds(12, 36, 372, 20);
-            buttonOk.SetBounds(228, 72, 75, 23);
-            buttonCancel.SetBounds(309, 72, 75, 23);
-
-            label.AutoSize = true;
-            textBox.Anchor = textBox.Anchor | AnchorStyles.Right;
-            buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-
-            form.ClientSize = new Size(396, 107);
-            form.Controls.AddRange(new Control[] {label, textBox, buttonOk, buttonCancel});
-            form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
-            form.FormBorderStyle = FormBorderStyle.FixedDialog;
-            form.StartPosition = FormStartPosition.CenterScreen;
-            form.MinimizeBox = false;
-            form.MaximizeBox = false;
-            form.AcceptButton = buttonOk;
-            form.CancelButton = buttonCancel;
-            if (validation != null)
-            {
-                form.FormClosing += delegate(object sender, FormClosingEventArgs e)
-                {
-                    if (form.DialogResult == DialogResult.OK)
-                    {
-                        var errorText = validation(textBox.Text);
-                        if (e.Cancel == (errorText != ""))
-                        {
-                            MessageBox.Show(form, errorText, Strings.InputBox_Show_Validation_Error,
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            textBox.Focus();
-                        }
-                    }
-                };
-            }
-
-            form.Shown += delegate
-            {
-                form.TopMost = true;
-                form.Activate();
-            };
-
-            var dialogResult = form.ShowDialog();
-            value = textBox.Text;
-            return dialogResult;
+            btnMakeVisible.Visible = true;
+            txtPassDetail.Visible = false;
         }
     }
-
-    public delegate string InputBoxValidation(string errorMessage);
 }
