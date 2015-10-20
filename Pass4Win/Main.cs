@@ -23,7 +23,6 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bugsnag.Clients;
@@ -34,7 +33,6 @@ using SharpConfig;
 // ReSharper disable once RedundantUsingDirective
 using static LibGit2Sharp.Repository;
 using Application = System.Windows.Forms.Application;
-using Label = System.Windows.Forms.Label;
 using Repository = LibGit2Sharp.Repository;
 using Signature = LibGit2Sharp.Signature;
 using Timer = System.Threading.Timer;
@@ -81,8 +79,11 @@ namespace Pass4Win
 
             Text = @"Pass4Win " + Strings.Version + @" " + Cfg["version"];
 
+
             // checking for update this an async operation
+#pragma warning disable 4014
             LatestPass4WinRelease();
+#pragma warning restore 4014
 
             // Do we have a valid password store and settings
             try
@@ -949,10 +950,6 @@ namespace Pass4Win
             }
             else
             {
-                // making sure the menu works
-
-                // TODO: Clean up path like: c:\pass4win\blaat\test.gpg -> blaat\test.gpg
-                // TODO: Select pass4win in the tree
                 listFileView.Items.Clear();
                 foreach (var row in fsi.SearchList)
                 {

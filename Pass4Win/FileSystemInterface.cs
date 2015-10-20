@@ -70,7 +70,7 @@ namespace Pass4Win
         }
 
         /// <summary>
-        /// The recurse rows.
+        /// Rebuilds the directory tree
         /// </summary>
         /// <param name="path">
         /// The path.
