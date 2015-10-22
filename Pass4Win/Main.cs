@@ -55,15 +55,12 @@ namespace Pass4Win
         private bool gitRepoOffline = true;
         // Class access to the tempfile
         private string tmpfile;
-
-
         /// <summary>
         ///     Inits the repo, gpg etc
         /// </summary>
         public FrmMain()
         {
             InitializeComponent();
-
             toolStripStatusLabel1.Text = "";
 
             // ReSharper disable once UnusedVariable
@@ -552,6 +549,17 @@ namespace Pass4Win
             this.CreateNodes();
         }
 
+
+        private void ClipBoardClearThread()
+        {
+            Clipboard.Clear();
+            statusPB.Visible = false;
+            statusTxt.Text = Strings.Ready;
+            statusPB.Value = 0;
+            btnMakeVisible.Visible = true;
+            txtPassDetail.Visible = false;
+        }
+
         /// <summary>
         ///     clear the clipboard and make txt invisible
         /// </summary>
@@ -560,16 +568,25 @@ namespace Pass4Win
         {
             if (statusPB.Value == 45)
             {
-                BeginInvoke((Action) (Clipboard.Clear));
-                BeginInvoke((Action) (() => statusPB.Visible = false));
-                BeginInvoke((Action) (() => statusTxt.Text = Strings.Ready));
-                BeginInvoke((Action) (() => statusPB.Value = 0));
-                BeginInvoke((Action) (() => btnMakeVisible.Visible = true));
-                BeginInvoke((Action) (() => txtPassDetail.Visible = false));
+                if (InvokeRequired)
+                {
+                    Invoke(new MethodInvoker(ClipBoardClearThread));
+                }
+                else
+                {
+                    ClipBoardClearThread();
+                }
             }
             else if (statusTxt.Text != Strings.Ready)
             {
-                BeginInvoke((Action) (() => statusPB.PerformStep()));
+                if (InvokeRequired)
+                {
+                    Invoke(new MethodInvoker(statusPB.PerformStep));
+                }
+                else
+                {
+                    statusPB.PerformStep();
+                }
             }
         }
 
