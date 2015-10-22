@@ -14,6 +14,8 @@ I'm using GpgAPI (https://gpgapi.codeplex.com/) for interfacing with GnuPG. And 
 Feel free to use the add issue button, feedback, bugreports, it's all very welcome!
 If you wish to donate feel free, you can do so with bitcoin 184CdvL6i9sDoEpMNST6J71cepjr7nkaHg. If you don't wish to donate feel free  also :-)
 
+If you want news about release date's etc. Follow @Pass4Win (https://twitter.com/Pass4Win) on twitter I'll try to keep you all up to date.
+
 Regards,
 
 Mike
