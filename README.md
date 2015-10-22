@@ -16,6 +16,8 @@ If you wish to donate feel free, you can do so with bitcoin 184CdvL6i9sDoEpMNST6
 
 If you want news about release date's etc. Follow @Pass4Win (https://twitter.com/Pass4Win) on twitter I'll try to keep you all up to date.
 
+There's a Gitter page https://gitter.im/mbos/Pass4Win where you can ask questions etc.
+
 Regards,
 
 Mike
