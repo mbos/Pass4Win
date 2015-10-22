@@ -1,6 +1,7 @@
 # Pass4Win
 
 [![Join the chat at https://gitter.im/mbos/Pass4Win](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mbos/Pass4Win?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Windows version of Pass (http://www.passwordstore.org/) in the sense that the store (password structure) is and should be exactly the same between the two programs.
 
 If you want Pass4Win in your language, that's now quite possible with the help of Crowdin (http://crowdin.com/). Drop me an e-mail and I'll invite you as translator. Currently Pass4Win is localized in English and Dutch.
@@ -17,8 +18,6 @@ Feel free to use the add issue button, feedback, bugreports, it's all very welco
 If you wish to donate feel free, you can do so with bitcoin 184CdvL6i9sDoEpMNST6J71cepjr7nkaHg. If you don't wish to donate feel free  also :-)
 
 If you want news about release date's etc. Follow @Pass4Win (https://twitter.com/Pass4Win) on twitter I'll try to keep you all up to date.
-
-There's a Gitter page https://gitter.im/mbos/Pass4Win where you can ask questions etc.
 
 Regards,
 
