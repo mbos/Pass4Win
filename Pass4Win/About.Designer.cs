@@ -46,7 +46,7 @@
             resources.ApplyResources(this.txtPassVersion, "txtPassVersion");
             this.txtPassVersion.Name = "txtPassVersion";
             // 
-            // frmAbout
+            // FrmAbout
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

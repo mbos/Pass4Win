@@ -188,13 +188,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Strings.nl.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.nl.resx</DependentUpon>
-    </Compile>
+    <EmbeddedResource Include="About.it.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="About.nl.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config.it.resx">
+      <DependentUpon>config.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="config.nl.resx">
       <DependentUpon>config.cs</DependentUpon>
@@ -205,21 +206,32 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Genpass.it.resx">
+      <DependentUpon>Genpass.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Genpass.nl.resx">
       <DependentUpon>Genpass.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Genpass.resx">
       <DependentUpon>Genpass.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="KeyMgm.it.resx">
+      <DependentUpon>KeyMgm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="KeyMgm.nl.resx">
       <DependentUpon>KeyMgm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KeySelect.it.resx">
+      <DependentUpon>KeySelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="KeySelect.nl.resx">
       <DependentUpon>KeySelect.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Main.it.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.nl.resx">
       <DependentUpon>Main.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
@@ -240,10 +252,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Strings.nl.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.nl.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Strings.it.resx" />
+    <EmbeddedResource Include="Strings.nl.resx" />
     <EmbeddedResource Include="Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>

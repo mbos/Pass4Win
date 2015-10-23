@@ -209,4 +209,37 @@
     <value>versie</value>
     <comment>main.cs</comment>
   </data>
+  <data name="Info_git_error" xml:space="preserve">
+    <value>Pull van Git server is mislukt</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Info_git_pull" xml:space="preserve">
+    <value>Pulling van Git server</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Info_git_succes" xml:space="preserve">
+    <value>Pull van Git server gelukt</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="InputBox_Show_OK" xml:space="preserve">
+    <value>OK</value>
+    <comment>Main.cs</comment>
+  </data>
+  <data name="InputBox_Show_Cancel" xml:space="preserve">
+    <value>Annuleren</value>
+    <comment>Main.cs</comment>
+  </data>
+  <data name="InputBox_Show_Validation_Error" xml:space="preserve">
+    <value>Validatiefout</value>
+  </data>
+  <data name="Info_add_dialog" xml:space="preserve">
+    <value>Nieuw bestand</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="FrmMain_DecryptPass_Empty_file" xml:space="preserve">
+    <value>Leeg bestand</value>
+  </data>
+  <data name="FrmMain_RenameToolStripMenuItemClick_Rename" xml:space="preserve">
+    <value>Hernoemen</value>
+  </data>
 </root>
