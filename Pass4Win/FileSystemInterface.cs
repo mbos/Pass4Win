@@ -12,15 +12,15 @@
 
 
 
+
 namespace Pass4Win
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Windows.Forms;
-    using Microsoft.VisualBasic;
-    using Microsoft.VisualBasic.CompilerServices;
 
     /// <summary>
     /// Class to interface with the file system ie read directories and file operations
@@ -66,7 +66,7 @@ namespace Pass4Win
             this.SearchList.Clear();
             foreach (FileInfo tmpFileInfo in new DirectoryInfo(this.passWordStore).GetFiles("*.gpg", SearchOption.AllDirectories))
             {
-                if (Operators.LikeString(tmpFileInfo.Name, searchtext, CompareMethod.Text))
+                if(Regex.IsMatch(tmpFileInfo.Name, WildcardToRegex(searchtext), RegexOptions.IgnoreCase))
                 {
                     this.SearchList.Add(tmpFileInfo.FullName);
                 }
@@ -118,6 +118,14 @@ namespace Pass4Win
         public List<string> UpdateDirectoryList(DirectoryInfo directoryInfo)
         {
             return (from ffile in directoryInfo.GetFiles() where !ffile.Name.StartsWith(".") where ffile.Extension.ToLower() == ".gpg" select Path.GetFileNameWithoutExtension(ffile.Name)).ToList();
+        }
+
+        private string WildcardToRegex(string pattern)
+        {
+            return "^" + Regex.Escape(pattern)
+                              .Replace(@"\*", ".*")
+                              .Replace(@"\?", ".")
+                       + "$";
         }
     }
 }

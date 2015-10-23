@@ -95,5 +95,41 @@ namespace Pass4Win.Tests
                 File.Delete(caseSensitiveFile);
             }
         }
+
+        /// <summary>
+        /// Tests for wildcard searching for files in a given directory
+        /// </summary>
+        [Test()]
+        public void WildCardFileSearch()
+        {
+            string fileName = "caseSensitiveFile.gpg";
+            string caseSensitiveFile = Application.LocalUserAppDataPath + "\\" + fileName;
+            try
+            {
+                FileInfo fileInfo = new FileInfo(caseSensitiveFile);
+                using (File.Create(Path.Combine(caseSensitiveFile)))
+                {
+                }
+
+                FileSystemInterface fsi = new FileSystemInterface(Application.LocalUserAppDataPath);
+                fsi.Search("*.*");
+
+                Assert.AreEqual(1, fsi.SearchList.Count);
+                foreach (var row in fsi.SearchList)
+                {
+                    Assert.IsNotNull(row);
+                    FileInfo tmpFileInfo = new FileInfo(row);
+                    Assert.True(tmpFileInfo.Exists);
+                }
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+            finally
+            {
+                File.Delete(caseSensitiveFile);
+            }
+        }
     }
 }
