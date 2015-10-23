@@ -814,8 +814,13 @@ namespace Pass4Win
             if (Cfg["UseGitRemote"] == true && this.gitRepoOffline == false)
             {
                 toolStripOffline.Visible = false;
+
+                if (!Repository.IsValid(Cfg["PassDirectory"]))
+                    return false;
+
                 using (var repo = new Repository(Cfg["PassDirectory"]))
                 {
+                    
                     var signature = new Signature("pass4win", "pull@pass4win.com",
                         new DateTimeOffset(2011, 06, 16, 10, 58, 27, TimeSpan.FromHours(2)));
                     var fetchOptions = new FetchOptions
