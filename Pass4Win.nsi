@@ -16,7 +16,7 @@
 !define UPDATEURL "https://github.com/mbos/Pass4Win" # "Product Updates" link
 !define ABOUTURL "https://github.com/mbos/Pass4Win" # "Publisher" link
 # This is the size (in kB) of all the files copied into "Program Files"
-!define INSTALLSIZE 4353
+!define INSTALLSIZE 7381
 
 #SilentInstall silent
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
@@ -47,19 +47,43 @@ ${EndIf}
  Function .onInit
   setShellVarContext all
   !insertmacro VerifyUserIsAdmin
-FunctionEnd
+  ReadRegStr $R0 HKLM \
+  "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" \
+  "UninstallString"
+  StrCmp $R0 "" done
+  ClearErrors
+  HideWindow
+  ClearErrors
+  ExecWait '$R0 _?=$INSTDIR /S'
+  BringToFront
+
+  IfErrors no_remove_uninstaller done
+  no_remove_uninstaller:
  
+done:
+ 
+FunctionEnd
+
+
 section "install"
   # Files for the install directory - to build the installer, these should be in the same directory as the install script (this file)
   setOutPath $INSTDIR
   # Files added here should be removed by the uninstaller (see section "uninstall")
   file "${src_dir}\Pass4Win\bin\Release\Pass4Win.exe"
+  file "${src_dir}\Pass4Win\bin\Release\Pass4Win.exe.config"
 
   SetOutPath "$INSTDIR\NativeBinaries\x86"
   file "${src_dir}\Pass4Win\bin\Release\NativeBinaries\x86\git2-e0902fb.dll"
 
   SetOutPath "$INSTDIR\NativeBinaries\amd64"
   file "${src_dir}\Pass4Win\bin\Release\NativeBinaries\amd64\git2-e0902fb.dll"  
+
+  # Localezation
+  SetOutPath "$INSTDIR\nl"
+  file "${src_dir}\Pass4Win\bin\Release\nl\Pass4Win.resources.dll"
+  SetOutPath "$INSTDIR\it"
+  file "${src_dir}\Pass4Win\bin\Release\it\Pass4Win.resources.dll"
+   
  
   # Uninstaller - See function un.onInit and section "uninstall" for configuration
   writeUninstaller "$INSTDIR\uninstall.exe"
@@ -119,6 +143,11 @@ section "uninstall"
   RMDir $INSTDIR\NativeBinaries\amd64
 
   RMDir $INSTDIR\NativeBinaries
+
+  Delete $INSTDIR\nl\Pass4Win.resources.dll
+  RMDir $INSTDIR\nl
+  Delete $INSTDIR\it\Pass4Win.resources.dll
+  RMDir $INSTDIR\it
 
   # Always delete uninstaller as the last action
   delete $INSTDIR\uninstall.exe
