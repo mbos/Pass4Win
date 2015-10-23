@@ -10,6 +10,8 @@
  * A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content
 */
 
+
+
 namespace Pass4Win
 {
     using System.Collections.Generic;
@@ -17,6 +19,8 @@ namespace Pass4Win
     using System.Linq;
     using System.Text;
     using System.Windows.Forms;
+    using Microsoft.VisualBasic;
+    using Microsoft.VisualBasic.CompilerServices;
 
     /// <summary>
     /// Class to interface with the file system ie read directories and file operations
@@ -62,7 +66,7 @@ namespace Pass4Win
             this.SearchList.Clear();
             foreach (FileInfo tmpFileInfo in new DirectoryInfo(this.passWordStore).GetFiles("*.gpg", SearchOption.AllDirectories))
             {
-                if (tmpFileInfo.Name.Contains(searchtext))
+                if (Operators.LikeString(tmpFileInfo.Name, searchtext, CompareMethod.Text))
                 {
                     this.SearchList.Add(tmpFileInfo.FullName);
                 }
