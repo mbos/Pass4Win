@@ -10,12 +10,16 @@
  * A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content
 */
 
+
+
+
 namespace Pass4Win
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Windows.Forms;
 
     /// <summary>
@@ -62,7 +66,7 @@ namespace Pass4Win
             this.SearchList.Clear();
             foreach (FileInfo tmpFileInfo in new DirectoryInfo(this.passWordStore).GetFiles("*.gpg", SearchOption.AllDirectories))
             {
-                if (tmpFileInfo.Name.Contains(searchtext))
+                if(Regex.IsMatch(tmpFileInfo.Name, WildcardToRegex(searchtext), RegexOptions.IgnoreCase))
                 {
                     this.SearchList.Add(tmpFileInfo.FullName);
                 }
@@ -114,6 +118,14 @@ namespace Pass4Win
         public List<string> UpdateDirectoryList(DirectoryInfo directoryInfo)
         {
             return (from ffile in directoryInfo.GetFiles() where !ffile.Name.StartsWith(".") where ffile.Extension.ToLower() == ".gpg" select Path.GetFileNameWithoutExtension(ffile.Name)).ToList();
+        }
+
+        private string WildcardToRegex(string pattern)
+        {
+            return "^" + Regex.Escape(pattern)
+                              .Replace(@"\*", ".*")
+                              .Replace(@"\?", ".")
+                       + "$";
         }
     }
 }
