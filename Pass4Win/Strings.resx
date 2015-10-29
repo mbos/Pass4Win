@@ -242,4 +242,10 @@
   <data name="FrmMain_RenameToolStripMenuItemClick_Rename" xml:space="preserve">
     <value>Rename</value>
   </data>
+  <data name="FrmMain_EncryptCallback_Commit_failed_" xml:space="preserve">
+    <value>Commit failed.</value>
+  </data>
+  <data name="FrmMain_EncryptCallback_Push_to_remote_repo_failed_" xml:space="preserve">
+    <value>Push to remote repo failed.</value>
+  </data>
 </root>

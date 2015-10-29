@@ -225,7 +225,7 @@ namespace Pass4Win
             {
                 if (chkboxRemoteRepo.Checked)
                 {
-                    if (!FrmMain.IsGitAlive(txtGitHost.Text) && !FrmMain.IsHttpsAlive(txtGitHost.Text))
+                    if (!GitHandling.CheckConnection(txtGitHost.Text))
                     {
                         if (this.valCancel)
                         {

@@ -66,10 +66,14 @@ namespace Pass4Win
             this.SearchList.Clear();
             foreach (FileInfo tmpFileInfo in new DirectoryInfo(this.passWordStore).GetFiles("*.gpg", SearchOption.AllDirectories))
             {
-                if(Regex.IsMatch(tmpFileInfo.Name, WildcardToRegex(searchtext), RegexOptions.IgnoreCase))
+                if(Regex.IsMatch(tmpFileInfo.Name, this.WildcardToRegex(searchtext), RegexOptions.IgnoreCase))
                 {
                     this.SearchList.Add(tmpFileInfo.FullName);
                 }
+            }
+            if (SearchList.Count == 0)
+            {
+                this.SearchList.Add("No Value");
             }
         }
 
@@ -117,7 +121,22 @@ namespace Pass4Win
         /// </returns>
         public List<string> UpdateDirectoryList(DirectoryInfo directoryInfo)
         {
-            return (from ffile in directoryInfo.GetFiles() where !ffile.Name.StartsWith(".") where ffile.Extension.ToLower() == ".gpg" select Path.GetFileNameWithoutExtension(ffile.Name)).ToList();
+            List<string> list = new List<string>();
+            foreach (var ffile in directoryInfo.GetFiles())
+            {
+                if (!ffile.Name.StartsWith("."))
+                {
+                    if (ffile.Extension.ToLower() == ".gpg")
+                    {
+                        list.Add(Path.GetFileNameWithoutExtension(ffile.Name));
+                    }
+                }
+            }
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            return list;
         }
 
         private string WildcardToRegex(string pattern)

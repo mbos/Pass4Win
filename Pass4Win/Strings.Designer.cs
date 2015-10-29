@@ -214,6 +214,24 @@ namespace Pass4Win {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Commit failed..
+        /// </summary>
+        internal static string FrmMain_EncryptCallback_Commit_failed_ {
+            get {
+                return ResourceManager.GetString("FrmMain_EncryptCallback_Commit_failed_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Push to remote repo failed..
+        /// </summary>
+        internal static string FrmMain_EncryptCallback_Push_to_remote_repo_failed_ {
+            get {
+                return ResourceManager.GetString("FrmMain_EncryptCallback_Push_to_remote_repo_failed_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rename.
         /// </summary>
         internal static string FrmMain_RenameToolStripMenuItemClick_Rename {

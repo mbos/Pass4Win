@@ -150,6 +150,7 @@
     <Compile Include="Genpass.Designer.cs">
       <DependentUpon>Genpass.cs</DependentUpon>
     </Compile>
+    <Compile Include="GitHandling.cs" />
     <Compile Include="pwgen.cs" />
     <Compile Include="config.cs">
       <SubType>Form</SubType>
