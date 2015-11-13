@@ -44,6 +44,7 @@ namespace Pass4Win
                 FrmMain.Cfg["GitUser"] = "";
                 FrmMain.Cfg["GitPass"] = "";
                 FrmMain.Cfg["GitRemote"] = "";
+                FrmMain.Cfg["FirstRun"] = false;
             }
         }
 
