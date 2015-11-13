@@ -12,7 +12,6 @@
 
 // ReSharper disable once RedundantUsingDirective
 
-using static LibGit2Sharp.Repository;
 
 namespace Pass4Win
 {
@@ -24,7 +23,6 @@ namespace Pass4Win
     using System.IO;
     using System.Linq;
     using System.Net.Mail;
-    using System.Net.Sockets;
     using System.Reflection;
     using System.Security.Cryptography;
     using System.Text;
@@ -32,18 +30,11 @@ namespace Pass4Win
     using System.Windows.Forms;
 
     using Bugsnag.Clients;
-
     using GpgApi;
-
-    using LibGit2Sharp;
-
     using Octokit;
-
     using SharpConfig;
-
     using Application = System.Windows.Forms.Application;
     using Repository = LibGit2Sharp.Repository;
-    using Signature = LibGit2Sharp.Signature;
     using Timer = System.Threading.Timer;
 
     public partial class FrmMain : Form
@@ -429,6 +420,7 @@ namespace Pass4Win
         /// <returns></returns>
         public static string DecryptConfig(string cipher, string salt)
         {
+            if (string.IsNullOrEmpty(cipher)) return string.Empty;
             var cipherBytes = Convert.FromBase64String(cipher);
             var saltBytes = Encoding.Unicode.GetBytes(salt);
             var passwordBytes = ProtectedData.Unprotect(cipherBytes, saltBytes, DataProtectionScope.CurrentUser);
