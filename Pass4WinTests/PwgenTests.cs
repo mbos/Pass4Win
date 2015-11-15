@@ -8,15 +8,17 @@
     [TestFixture()]
     public class PwgenTests
     {
-        /// <summary>
-        /// Tests generation of small and very large length
-        /// </summary>
+      
         [Test()]
-        public void PwgenTest()
+        public void GeneratePasswordWithTenCharactersTest()
         {
             string result = Pwgen.Generate(10);
             Assert.AreEqual(result.Length, 10);
+        }
 
+        [Test()]
+        public void GeneratePasswordWithEightyCharactersTest()
+        {
             string result2 = Pwgen.Generate(80);
             Assert.AreEqual(result2.Length, 80);
         }

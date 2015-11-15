@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2105 by Mike Bos
+ * Copyright (C) 2015 by Mike Bos
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation;
  * either version 3 of the License, or any later version.
@@ -11,17 +11,21 @@
 */
 
 using System.Windows.Forms;
+using SharpConfig;
 
 namespace Pass4Win
 {
     public partial class FrmAbout : Form
     {
-        public FrmAbout()
+        private readonly Config _config;
+
+        public FrmAbout(Config config)
         {
+            _config = config;
             InitializeComponent();
             
             // Getting actual version
-            txtPassVersion.Text += @" " + FrmMain.Cfg["version"];
+            txtPassVersion.Text += @" " + _config["version"];
         }
 
         /// <summary>

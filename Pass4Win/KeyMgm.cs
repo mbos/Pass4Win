@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2105 by Mike Bos
+ * Copyright (C) 2015 by Mike Bos
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation;
  * either version 3 of the License, or any later version.
@@ -9,6 +9,8 @@
  *
  * A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content
 */
+
+using SharpConfig;
 
 namespace Pass4Win
 {
@@ -27,15 +29,22 @@ namespace Pass4Win
     /// </summary>
     public partial class FrmKeyManager : Form
     {
+        private readonly FileSystemInterface _fileSystemInterface;
+        private readonly Config _config;
+        private readonly KeySelect _keySelect;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FrmKeyManager"/> class.
         /// </summary>
-        public FrmKeyManager()
+        public FrmKeyManager(FileSystemInterface fileSystemInterface, Config config, KeySelect keySelect)
         {
+            _fileSystemInterface = fileSystemInterface;
+            _config = config;
+            _keySelect = keySelect;
             InitializeComponent();
-            GpgInterface.ExePath = FrmMain.Cfg["GPGEXE"];
+            GpgInterface.ExePath = _config["GPGEXE"];
 
-            ListDirectory(treeView1, new DirectoryInfo(FrmMain.Cfg["PassDirectory"]));
+            ListDirectory(treeView1);
         }
 
         /// <summary>
@@ -43,13 +52,12 @@ namespace Pass4Win
         /// </summary>
         /// <param name="treeView">Which treeview to fill</param>
         /// <param name="rootDirectoryInfo">Which directory</param>
-        private void ListDirectory(TreeView treeView, DirectoryInfo rootDirectoryInfo)
+        private void ListDirectory(TreeView treeView)
         {
             // Get the TreeView ready for node creation.
             treeView.BeginUpdate();
             treeView.Nodes.Clear();
-            FileSystemInterface fsi = new FileSystemInterface(rootDirectoryInfo.FullName);
-            TreeNode[] nodes = fsi.UpdateDirectoryTree(rootDirectoryInfo);
+            TreeNode[] nodes = _fileSystemInterface.UpdateDirectoryTree();
             treeView.Nodes.AddRange(nodes);
 
             // Notify the TreeView to resume painting.
@@ -91,15 +99,14 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void AddToolStripMenuItemClick(object sender, EventArgs e)
         {
-            KeySelect newKeySelect = new KeySelect();
-            if (newKeySelect.ShowDialog() == DialogResult.OK)
+            if (_keySelect.ShowDialog() == DialogResult.OK)
             {
                 if (listBox1.Items[0].ToString() == Strings.Error_keys_set)
                 {
                     listBox1.Items.Clear();
                 }
-                listBox1.Items.Add(newKeySelect.Gpgkey);
-                string tmpFile = Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
+                listBox1.Items.Add(_keySelect.Gpgkey);
+                string tmpFile = Path.GetDirectoryName(_config["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
                 using (StreamWriter w = new StreamWriter(tmpFile))
                 {
                     foreach (var line in listBox1.Items)
@@ -108,7 +115,7 @@ namespace Pass4Win
                     }
                 }
 
-                DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath);
+                DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(_config["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath);
 
                 foreach (var ffile in path.GetFiles())
                 {
@@ -118,7 +125,7 @@ namespace Pass4Win
                 
                 ScanDirectory(path);
             }
-            newKeySelect.Close(); 
+            _keySelect.Close(); 
         }
 
         /// <summary>
@@ -155,7 +162,7 @@ namespace Pass4Win
                 {
                     listBox1.Items.Remove(listBox1.SelectedItem);
                     listBox1.Refresh();
-                    string tmpFile = Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
+                    string tmpFile = Path.GetDirectoryName(_config["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath + "\\.gpg-id";
                     File.Delete(tmpFile);
                     using (StreamWriter w = new StreamWriter(tmpFile))
                     {
@@ -164,13 +171,13 @@ namespace Pass4Win
                             w.WriteLine(line.ToString());
                         }
                     }
-                    using (var repo = new Repository(FrmMain.Cfg["PassDirectory"]))
+                    using (var repo = new Repository(_config["PassDirectory"]))
                     {
                         repo.Stage(tmpFile);
                         repo.Commit("gpgid changed", new Signature("pass4win", "pass4win", DateTimeOffset.Now), new Signature("pass4win", "pass4win", DateTimeOffset.Now));
                     }
                 }
-            DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(FrmMain.Cfg["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath);
+            DirectoryInfo path = new DirectoryInfo(Path.GetDirectoryName(_config["PassDirectory"]) + "\\" + treeView1.SelectedNode.FullPath);
 
             foreach (var ffile in path.GetFiles().Where(ffile => !ffile.Name.StartsWith(".")))
             {
