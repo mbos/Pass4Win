@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2105 by Mike Bos
+ * Copyright (C) 2015 by Mike Bos
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation;
  * either version 3 of the License, or any later version.
@@ -11,7 +11,8 @@
 */
 
 
-
+using Autofac;
+using SharpConfig;
 
 namespace Pass4Win
 {
@@ -27,10 +28,8 @@ namespace Pass4Win
     /// </summary>
     public class FileSystemInterface
     {
-        /// <summary>
-        /// Holder for the Password Store location
-        /// </summary>
-        private readonly string passWordStore;
+        private readonly Config _config;
+        private readonly IDirectoryProvider _directoryProvider;
 
         /// <summary>
         /// Gets the Search list
@@ -40,19 +39,17 @@ namespace Pass4Win
         /// <summary>
         /// Initializes a new instance of the <see cref="FileSystemInterface"/> class.
         /// </summary>
-        /// <param name="passWordStore">
-        /// The password store location
-        /// </param>
-        public FileSystemInterface(string passWordStore)
+        /// <param name="config"></param>
+        /// <param name="directoryProvider"></param>
+        public FileSystemInterface(Config config, IDirectoryProvider directoryProvider)
         {
-            this.passWordStore = passWordStore;
-            this.SearchList = new List<string> { "No", "Value" };
+            _config = config;
+            _directoryProvider = directoryProvider;
 
-            //// Setting up the path to the password store
-            DirectoryInfo storePath = new DirectoryInfo(passWordStore);
+            SearchList = new List<string> { "No", "Value" };
 
             //// Filling the Directory and search datatable
-            this.UpdateDirectoryList(storePath);
+            this.UpdateDirectoryList(directoryProvider);
         }
 
         /// <summary>
@@ -64,11 +61,11 @@ namespace Pass4Win
         public void Search(string searchtext)
         {
             this.SearchList.Clear();
-            foreach (FileInfo tmpFileInfo in new DirectoryInfo(this.passWordStore).GetFiles("*.gpg", SearchOption.AllDirectories))
+            foreach (var file in _directoryProvider.GetFiles("*.gpg", SearchOption.AllDirectories))
             {
-                if(Regex.IsMatch(tmpFileInfo.Name, this.WildcardToRegex(searchtext), RegexOptions.IgnoreCase))
+                if(Regex.IsMatch(file.Name, this.WildcardToRegex(searchtext), RegexOptions.IgnoreCase))
                 {
-                    this.SearchList.Add(tmpFileInfo.FullName);
+                    this.SearchList.Add(file.FullName);
                 }
             }
             if (SearchList.Count == 0)
@@ -86,8 +83,13 @@ namespace Pass4Win
         /// <returns>
         /// The <see cref="TreeNode"/>.
         /// </returns>
-        public TreeNode[] UpdateDirectoryTree(DirectoryInfo path)
+        public TreeNode[] UpdateDirectoryTree(IDirectoryProvider path = null)
         {
+            if (path == null)
+            {
+                path = _directoryProvider;
+            }
+
             List<TreeNode> nodeList = new List<TreeNode>();
 
             var nodeName = new StringBuilder();
@@ -99,7 +101,7 @@ namespace Pass4Win
             {
                 if (!directory.Name.StartsWith("."))
                 {
-                    var childNodes = this.UpdateDirectoryTree(directory);
+                    var childNodes = UpdateDirectoryTree(directory);
                     node.Nodes.AddRange(childNodes);
                 }
             }
@@ -119,7 +121,7 @@ namespace Pass4Win
         /// <returns>
         /// Returns a list with text, fullname, path
         /// </returns>
-        public List<string> UpdateDirectoryList(DirectoryInfo directoryInfo)
+        public List<string> UpdateDirectoryList(IDirectoryProvider directoryInfo)
         {
             List<string> list = new List<string>();
             foreach (var ffile in directoryInfo.GetFiles())

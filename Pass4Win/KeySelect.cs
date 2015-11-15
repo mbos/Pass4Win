@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2105 by Mike Bos
+ * Copyright (C) 2015 by Mike Bos
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation;
  * either version 3 of the License, or any later version.
@@ -13,19 +13,23 @@
 using System;
 using System.Windows.Forms;
 using GpgApi;
+using SharpConfig;
 
 namespace Pass4Win
 {
     public partial class KeySelect : Form
     {
-        public KeySelect()
+        private readonly Config _config;
+
+        public KeySelect(Config config)
         {
+            _config = config;
             InitializeComponent();
         }
 
         private void KeySelectLoad(object sender, EventArgs e)
         {
-            GpgInterface.ExePath = FrmMain.Cfg["GPGEXE"];
+            GpgInterface.ExePath = _config["GPGEXE"];
             GpgListPublicKeys publicKeys = new GpgListPublicKeys();
             publicKeys.Execute();
             foreach (Key key in publicKeys.Keys)

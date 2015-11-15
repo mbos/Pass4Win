@@ -1,23 +1,46 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Autofac;
+using SharpConfig;
 
 namespace Pass4Win
 {
-    static class Program
+    internal static class Program
     {
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static ILifetimeScope Scope { get; private set; }
+
+        [DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
 
         /// <summary>
-        /// The main entry point for the application.
+        ///     The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
-            if (Environment.OSVersion.Version.Major >= 6) { SetProcessDPIAware(); }
+            RegisterTypes();
+            if (Environment.OSVersion.Version.Major >= 6)
+            {
+                SetProcessDPIAware();
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMain());
+            Application.Run(Scope.Resolve<FrmMain>());
+        }
+
+        private static void RegisterTypes()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<FrmMain>().InstancePerLifetimeScope().AsSelf();
+            builder.RegisterInstance(new Config("Pass4Win", false, true)).AsSelf();
+            builder.RegisterType<FrmKeyManager>().AsSelf();
+            builder.RegisterType<FrmConfig>().AsSelf();
+            builder.RegisterType<KeySelect>().AsSelf();
+            builder.RegisterType<FrmAbout>().AsSelf();
+            builder.RegisterType<FileSystemInterface>().AsSelf();
+            builder.RegisterType<DirectoryProvider>().As<IDirectoryProvider>();
+            Scope = builder.Build().BeginLifetimeScope();
         }
     }
 }

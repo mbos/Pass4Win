@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2105 by Mike Bos
+ * Copyright (C) 2015 by Mike Bos
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation;
  * either version 3 of the License, or any later version.
@@ -13,38 +13,42 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using SharpConfig;
 
 namespace Pass4Win
 {
     public partial class FrmConfig : Form
     {
-        public FrmConfig()
+        private readonly Config _config;
+
+        public FrmConfig(Config config)
         {
+            _config = config;
             InitializeComponent();     
 
             // fill in the blanks
-            if (FrmMain.Cfg["FirstRun"] == false)
+            if (_config["FirstRun"] == false)
             {
                 // set config values
-                txtPassFolder.Text = FrmMain.Cfg["PassDirectory"];
-                txtGPG.Text = FrmMain.Cfg["GPGEXE"];
-                chkboxRemoteRepo.Checked = FrmMain.Cfg["UseGitRemote"];
-                txtGitUser.Text = FrmMain.Cfg["GitUser"];
-                txtGitPass.Text = FrmMain.Cfg["GitPass"];
-                txtGitHost.Text = FrmMain.Cfg["GitRemote"];
+                txtPassFolder.Text = _config["PassDirectory"];
+                txtGPG.Text = _config["GPGEXE"];
+                chkboxRemoteRepo.Checked = _config["UseGitRemote"];
+                txtGitUser.Text = _config["GitUser"];
+                txtGitPass.Text = _config["GitPass"];
+                txtGitHost.Text = _config["GitRemote"];
 
                 // set access
                 txtGitUser.ReadOnly = !chkboxRemoteRepo.Checked;
                 txtGitPass.ReadOnly = !chkboxRemoteRepo.Checked;
                 txtGitHost.ReadOnly = !chkboxRemoteRepo.Checked;
-                FrmMain.Cfg["FirstRun"] = false;
+                _config["FirstRun"] = false;
             } else
             {
-                FrmMain.Cfg["UseGitRemote"] = false;
-                FrmMain.Cfg["GitUser"] = "";
-                FrmMain.Cfg["GitPass"] = "";
-                FrmMain.Cfg["GitRemote"] = "";
-                FrmMain.Cfg["FirstRun"] = false;
+                _config["UseGitRemote"] = false;
+                _config["GitUser"] = "";
+                _config["GitPass"] = "";
+                _config["GitRemote"] = "";
+                _config["FirstRun"] = false;
             }
         }
 
@@ -90,7 +94,7 @@ namespace Pass4Win
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                FrmMain.Cfg["PassDirectory"] = folderBrowserDialog1.SelectedPath;
+                _config["PassDirectory"] = folderBrowserDialog1.SelectedPath;
                 txtPassFolder.Text = folderBrowserDialog1.SelectedPath;
             }
         }
@@ -104,7 +108,7 @@ namespace Pass4Win
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                FrmMain.Cfg["GPGEXE"] = openFileDialog1.FileName;
+                _config["GPGEXE"] = openFileDialog1.FileName;
                 txtGPG.Text = openFileDialog1.FileName;
             }
         }
@@ -116,7 +120,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void ChkboxRemoteRepoCheckedChanged(object sender, EventArgs e)
         {
-            FrmMain.Cfg["UseGitRemote"] = chkboxRemoteRepo.Checked;
+            _config["UseGitRemote"] = chkboxRemoteRepo.Checked;
             // Enabling and disabling based on checkbox state
             txtGitUser.ReadOnly = !chkboxRemoteRepo.Checked;
             txtGitPass.ReadOnly = !chkboxRemoteRepo.Checked;
@@ -130,7 +134,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void TxtGitUserLeave(object sender, EventArgs e)
         {
-            FrmMain.Cfg["GitUser"] = txtGitUser.Text;
+            _config["GitUser"] = txtGitUser.Text;
         }
 
         /// <summary>
@@ -140,7 +144,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void TxtGitPassLeave(object sender, EventArgs e)
         {
-            FrmMain.Cfg["GitPass"] = FrmMain.EncryptConfig(txtGitPass.Text,"pass4win");
+            _config["GitPass"] = FrmMain.EncryptConfig(txtGitPass.Text,"pass4win");
         }
 
         /// <summary>
@@ -150,7 +154,7 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void TxtGitHostLeave(object sender, EventArgs e)
         {
-            FrmMain.Cfg["GitRemote"] = txtGitHost.Text;
+            _config["GitRemote"] = txtGitHost.Text;
         }
 
         /// <summary>

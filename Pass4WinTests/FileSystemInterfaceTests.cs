@@ -1,135 +1,164 @@
-﻿
+﻿using System.Collections.Generic;
+using System.IO;
+using Autofac;
+using Moq;
+using NUnit.Framework;
+using Pass4Win;
 
-namespace Pass4Win.Tests
+namespace Pass4WinTests
 {
-    using System;
-    using System.IO;
-    using System.Windows.Forms;
-
-    using NUnit.Framework;
-
-    /// <summary>
-    /// The pwgen tests.
-    /// </summary>
-    [TestFixture()]
+    [TestFixture]
     public class FileSystemInterfaceTests
     {
-        /// <summary>
-        /// Tests creating of directory tree nodes
-        /// </summary>
-        [Test()]
-        public void DirectoryTest()
+        [SetUp]
+        public void BeforeTest()
         {
-
-            FileSystemInterface fsi = new FileSystemInterface(Application.LocalUserAppDataPath);
-            TreeNode[] nodes = fsi.UpdateDirectoryTree(new DirectoryInfo(Application.LocalUserAppDataPath));
-            Assert.IsNotNull(nodes);
+            Setup.InitializeContainer();
         }
-        
-        /// <summary>
-        /// Tests creating a list files from a given directory
-        /// </summary>
-        [Test()]
-        public void FileTest()
+       
+        [Test]
+        public void FindMixedCaseFileWIthLowerCaseSearch()
         {
-
-            FileSystemInterface fsi = new FileSystemInterface(Application.LocalUserAppDataPath);
-            var myList = fsi.UpdateDirectoryList(new DirectoryInfo(Application.LocalUserAppDataPath));
-            foreach (var row in myList)
+            var fileNameToFind = "caseSensitiveFile.gpg";
+            var anotherFile = "somefile.gpg";
+            var fileMockOne = new Mock<IFileProvider>();
+            var fileMockTwo = new Mock<IFileProvider>();
+            fileMockOne.SetupAllProperties();
+            fileMockOne.Object.Name = fileNameToFind;
+            fileMockOne.Object.FullName = fileNameToFind;
+            fileMockTwo.SetupAllProperties();
+            fileMockTwo.Object.Name = anotherFile;
+            fileMockTwo.Object.FullName = anotherFile;
+            var fileProviderMockList = new List<IFileProvider>
             {
-                Assert.IsNotNull(row);
-                FileInfo tmpFileInfo = new FileInfo(row);
-                Assert.True(tmpFileInfo.Exists);
-            }
+                fileMockOne.Object,
+                fileMockTwo.Object
+            };
+
+            var directoryProviderMock = Setup.Scope.Resolve<Mock<IDirectoryProvider>>();
+            directoryProviderMock.Setup(
+                m => m.GetFiles(It.IsAny<string>(), It.Is<SearchOption>(so => so == SearchOption.AllDirectories)))
+                .Returns(fileProviderMockList.ToArray());
+            var fsi = Setup.Scope.Resolve<FileSystemInterface>();
+            fsi.Search(fileNameToFind.ToLower());
+            Assert.AreEqual(1, fsi.SearchList.Count);
+            Assert.AreEqual(fileNameToFind, fsi.SearchList[0]);
         }
 
-        /// <summary>
-        /// Tests searching for files in a given directory
-        /// </summary>
-        [Test()]
-        public void FileSearch()
+        [Test]
+        public void FindMixedCaseFileWithMixedCaseSearch()
         {
+            var fileNameToFind = "caseSensitiveFile.gpg";
+            var anotherFile = "somefile.gpg";
+            var fileMockOne = new Mock<IFileProvider>();
+            var fileMockTwo = new Mock<IFileProvider>();
+            fileMockOne.SetupAllProperties();
+            fileMockOne.Object.Name = fileNameToFind;
+            fileMockOne.Object.FullName = fileNameToFind;
+            fileMockTwo.SetupAllProperties();
+            fileMockTwo.Object.Name = anotherFile;
+            fileMockTwo.Object.FullName = anotherFile;
+            var fileProviderMockList = new List<IFileProvider>
+            {
+                fileMockOne.Object,
+                fileMockTwo.Object
+            };
 
-            FileSystemInterface fsi = new FileSystemInterface(Application.LocalUserAppDataPath);
+            var directoryProviderMock = Setup.Scope.Resolve<Mock<IDirectoryProvider>>();
+            directoryProviderMock.Setup(
+                m => m.GetFiles(It.IsAny<string>(), It.Is<SearchOption>(so => so == SearchOption.AllDirectories)))
+                .Returns(fileProviderMockList.ToArray());
+            var fsi = Setup.Scope.Resolve<FileSystemInterface>();
+            fsi.Search(fileNameToFind);
+            Assert.AreEqual(1, fsi.SearchList.Count);
+            Assert.AreEqual(fileNameToFind, fsi.SearchList[0]);
+        }
+
+        [Test]
+        public void FindAllFilesWithWildcardSearch()
+        {
+            var file = "caseSensitiveFile.gpg";
+            var anotherFile = "somefile.gpg";
+            var fileMockOne = new Mock<IFileProvider>();
+            var fileMockTwo = new Mock<IFileProvider>();
+            fileMockOne.SetupAllProperties();
+            fileMockOne.Object.Name = file;
+            fileMockOne.Object.FullName = file;
+            fileMockTwo.SetupAllProperties();
+            fileMockTwo.Object.Name = anotherFile;
+            fileMockTwo.Object.FullName = anotherFile;
+            var fileProviderMockList = new List<IFileProvider>
+            {
+                fileMockOne.Object,
+                fileMockTwo.Object
+            };
+
+            var directoryProviderMock = Setup.Scope.Resolve<Mock<IDirectoryProvider>>();
+            directoryProviderMock.Setup(
+                m => m.GetFiles(It.IsAny<string>(), It.Is<SearchOption>(so => so == SearchOption.AllDirectories)))
+                .Returns(fileProviderMockList.ToArray());
+            var fsi = Setup.Scope.Resolve<FileSystemInterface>();
             fsi.Search("*.*");
-            foreach (var row in fsi.SearchList)
-            {
-                Assert.IsNotNull(row);
-                FileInfo tmpFileInfo = new FileInfo(row);
-                Assert.True(tmpFileInfo.Exists);
-            }
+            Assert.AreEqual(2, fsi.SearchList.Count);
+            Assert.AreEqual(file, fsi.SearchList[0]);
+            Assert.AreEqual(anotherFile, fsi.SearchList[1]);
         }
 
         /// <summary>
-        /// Tests for case-sensitive searching for files in a given directory
+        ///     Tests creating of directory tree nodes
         /// </summary>
-        [Test()]
-        public void CaseSensitiveFileSearch()
+        [Test]
+        public void CreateDirectoryTreeNodes()
         {
-            string fileName = "caseSensitiveFile.gpg";
-            string caseSensitiveFile = Application.LocalUserAppDataPath + "\\" + fileName;
-            try
-            {
-                FileInfo fileInfo = new FileInfo(caseSensitiveFile);
-                using (File.Create(Path.Combine(caseSensitiveFile)))
+            var directoryOne = new Mock<IDirectoryProvider>();
+            directoryOne.SetupAllProperties();
+            directoryOne.Object.FullName = "directoryone";
+            directoryOne.Object.Name = "directoryone";
+            directoryOne.Setup(m => m.GetDirectories()).Returns(new List<IDirectoryProvider>());
+            Setup.Scope.Resolve<Mock<IDirectoryProvider>>()
+                .Setup(m => m.GetDirectories())
+                .Returns(new List<IDirectoryProvider>
                 {
-                }
+                    directoryOne.Object
+                });
 
-                FileSystemInterface fsi = new FileSystemInterface(Application.LocalUserAppDataPath);
-                fsi.Search(fileName.ToLower());
-
-                Assert.AreEqual(1, fsi.SearchList.Count);
-                foreach (var row in fsi.SearchList)
-                {
-                    Assert.IsNotNull(row);
-                    FileInfo tmpFileInfo = new FileInfo(row);
-                    Assert.True(tmpFileInfo.Exists);
-                }
-            }
-            catch (Exception e)
-            {
-                Assert.Fail(e.Message);
-            }
-            finally
-            {
-                File.Delete(caseSensitiveFile);
-            }
+            var fsi = Setup.Scope.Resolve<FileSystemInterface>();
+            var nodes = fsi.UpdateDirectoryTree();
+            Assert.IsNotNull(nodes);
+            Assert.AreEqual(1, nodes.Length);
         }
 
         /// <summary>
-        /// Tests for wildcard searching for files in a given directory
+        ///     Tests creating a list files from a given directory
         /// </summary>
-        [Test()]
-        public void WildCardFileSearch()
+        [Test]
+        public void GetFileList()
         {
-            string fileName = "caseSensitiveFile.gpg";
-            string caseSensitiveFile = Application.LocalUserAppDataPath + "\\" + fileName;
-            try
+            var file = "afile.gpg";
+            var anotherFile = "somefile.gpg";
+            var fileMockOne = new Mock<IFileProvider>();
+            var fileMockTwo = new Mock<IFileProvider>();
+            fileMockOne.SetupAllProperties();
+            fileMockOne.Object.Name = file;
+            fileMockOne.Object.FullName = file;
+            fileMockOne.Object.Extension = ".gpg";
+            fileMockTwo.SetupAllProperties();
+            fileMockTwo.Object.Name = anotherFile;
+            fileMockTwo.Object.FullName = anotherFile;
+            fileMockTwo.Object.Extension = ".gpg";
+            var fileProviderMockList = new List<IFileProvider>
             {
-                FileInfo fileInfo = new FileInfo(caseSensitiveFile);
-                using (File.Create(Path.Combine(caseSensitiveFile)))
-                {
-                }
+                fileMockOne.Object,
+                fileMockTwo.Object
+            };
 
-                FileSystemInterface fsi = new FileSystemInterface(Application.LocalUserAppDataPath);
-                fsi.Search("*.*");
-
-                Assert.AreEqual(1, fsi.SearchList.Count);
-                foreach (var row in fsi.SearchList)
-                {
-                    Assert.IsNotNull(row);
-                    FileInfo tmpFileInfo = new FileInfo(row);
-                    Assert.True(tmpFileInfo.Exists);
-                }
-            }
-            catch (Exception e)
-            {
-                Assert.Fail(e.Message);
-            }
-            finally
-            {
-                File.Delete(caseSensitiveFile);
-            }
+            var directoryProviderMock = Setup.Scope.Resolve<Mock<IDirectoryProvider>>();
+            directoryProviderMock.Setup(
+                m => m.GetFiles())
+                .Returns(fileProviderMockList.ToArray());
+            var fsi = Setup.Scope.Resolve<FileSystemInterface>();
+            var list = fsi.UpdateDirectoryList(directoryProviderMock.Object);
+            Assert.AreEqual(2, list.Count);
         }
     }
 }

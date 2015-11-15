@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2105 by Mike Bos
+ * Copyright (C) 2015 by Mike Bos
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation;
  * either version 3 of the License, or any later version.
@@ -12,6 +12,8 @@
 
 // ReSharper disable once RedundantUsingDirective
 
+
+using Autofac;
 
 namespace Pass4Win
 {
@@ -43,12 +45,14 @@ namespace Pass4Win
         ///     Global variable for filesystem interface
         /// </summary>
         private readonly FileSystemInterface fsi;
+        private readonly KeySelect _keySelect;
+        private readonly Config _config;
 
         // timer for clearing clipboard
         private static Timer clipboardTimer;
 
         // Setting up config second parameter should be false for normal install and true for portable
-        public static Config Cfg = new Config("Pass4Win", false, true);
+        //public static Config _config = new Config("Pass4Win", false, true);
 
         // UI Trayicon toggle
         private readonly bool enableTray;
@@ -65,8 +69,11 @@ namespace Pass4Win
         /// <summary>
         ///     Inits the repo, gpg etc
         /// </summary>
-        public FrmMain()
+        public FrmMain(FileSystemInterface fileSystemInterface, KeySelect keySelect, Config config)
         {
+            fsi = fileSystemInterface;
+            _keySelect = keySelect;
+            _config = config;
             InitializeComponent();
             toolStripStatusLabel1.Text = "";
 
@@ -79,9 +86,9 @@ namespace Pass4Win
             var assembly = Assembly.GetExecutingAssembly();
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             var version = fvi.FileVersion;
-            Cfg["version"] = version.Remove(5, 2);
+            _config["version"] = version.Remove(5, 2);
 
-            Text = @"Pass4Win " + Strings.Version + @" " + Cfg["version"];
+            Text = @"Pass4Win " + Strings.Version + @" " + _config["version"];
 
             // checking for update this an async operation
 #pragma warning disable 4014
@@ -91,55 +98,53 @@ namespace Pass4Win
             // Do we have a valid password store and settings
             try
             {
-                if (Cfg["PassDirectory"] == "")
+                if (_config["PassDirectory"] == "")
                 {
                     // this will fail, I know ugly hack
                 }
             }
             catch (Exception)
             {
-                Cfg["FirstRun"] = true;
-                var config = new FrmConfig();
-                config.ShowDialog();
+                _config["FirstRun"] = true;
+                Program.Scope.Resolve<FrmConfig>().ShowDialog();
             }
 
             // making new git object
-            GitRepo = new GitHandling(Cfg["PassDirectory"], Cfg["GitRemote"]);
+            GitRepo = new GitHandling(_config["PassDirectory"], _config["GitRemote"]);
 
             //checking git status
-            if (Cfg["UseGitRemote"] == true)
+            if (_config["UseGitRemote"] == true)
             { 
                 if (GitRepo.ConnectToRepo())
                 {
                     this.gitRepoOffline = false;
                     toolStripOffline.Visible = false;
-                    if (!GitRepo.Fetch(Cfg["GitUser"], DecryptConfig(Cfg["GitPass"], "pass4win")))
+                    if (!GitRepo.Fetch(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
                     {
                         // Something failed which shouldn't fail, rechecking online status
                         CheckOnline(false);
                     }
                 }
             }
-            else if (!GitRepo.GitClone(Cfg["GitUser"], DecryptConfig(Cfg["GitPass"], "pass4win")))
+            else if (!GitRepo.GitClone(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
             {
-                Repository.Init(Cfg["PassDirectory"], false);
+                Repository.Init(_config["PassDirectory"], false);
                 toolStripOffline.Visible = true;
             }
 
             // Init GPG if needed
-            string gpgfile = Cfg["PassDirectory"];
+            string gpgfile = _config["PassDirectory"];
             gpgfile += "\\.gpg-id";
             // Check if we need to init the directory
             if (!File.Exists(gpgfile))
             {
                 // ReSharper disable once AssignNullToNotNullAttribute
                 Directory.CreateDirectory(Path.GetDirectoryName(gpgfile));
-                var newKeySelect = new KeySelect();
-                if (newKeySelect.ShowDialog() == DialogResult.OK)
+                if (_keySelect.ShowDialog() == DialogResult.OK)
                 {
                     using (var w = new StreamWriter(gpgfile))
                     {
-                        w.Write(newKeySelect.Gpgkey);
+                        w.Write(_keySelect.Gpgkey);
                     }
 
                     if (!GitRepo.Commit(gpgfile))
@@ -154,16 +159,13 @@ namespace Pass4Win
                 }
                 else
                 {
-                    newKeySelect.Close();
+                    _keySelect.Close();
                     MessageBox.Show(Strings.Error_nokey, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Environment.Exit(1);
                 }
             }
             // Setting the exe location for the GPG Dll
-            GpgInterface.ExePath = Cfg["GPGEXE"];
-
-            // init FileSystemInterface class
-            fsi = new FileSystemInterface(Cfg["PassDirectory"]);
+            GpgInterface.ExePath = _config["GPGEXE"];
 
             // Fill tree
             CreateNodes();
@@ -197,7 +199,7 @@ namespace Pass4Win
             var newversion = releases[0].TagName.Remove(0, 8);
 
             // if diff warn and redirect
-            if (Cfg["version"] != newversion)
+            if (_config["version"] != newversion)
             {
                 var result = MessageBox.Show(
                     Strings.Info_new_version,
@@ -239,7 +241,7 @@ namespace Pass4Win
                 // check if .gpg-id exists otherwise get the root .gpg-id
                 if (!File.Exists(gpgfile))
                 {
-                    gpgfile = Cfg["PassDirectory"];
+                    gpgfile = _config["PassDirectory"];
                     gpgfile += "\\.gpg-id";
                 }
                 var gpgRec = new List<string>();
@@ -346,13 +348,13 @@ namespace Pass4Win
                 }
 
                 // Check if we want to sync with remote
-                if (Cfg["UseGitRemote"] == false || this.gitRepoOffline)
+                if (_config["UseGitRemote"] == false || this.gitRepoOffline)
                 {
                     return;
                 }
 
                 // sync with remote
-                if (!GitRepo.Push(Cfg["GitUser"], DecryptConfig(Cfg["GitPass"], "pass4win")))
+                if (!GitRepo.Push(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
                 {
                     MessageBox.Show(
                         Strings.FrmMain_EncryptCallback_Push_to_remote_repo_failed_,
@@ -459,7 +461,7 @@ namespace Pass4Win
                                         AutoUpgradeEnabled = true,
                                         CreatePrompt = false,
                                         DefaultExt = "gpg",
-                                        InitialDirectory = Cfg["PassDirectory"],
+                                        InitialDirectory = _config["PassDirectory"],
                                         Title = Strings.FrmMain_RenameToolStripMenuItemClick_Rename
                                     };
             if (newFileDialog.ShowDialog() == DialogResult.Cancel)
@@ -488,14 +490,14 @@ namespace Pass4Win
             }
 
             // Check if we want to sync with remote
-            if (Cfg["UseGitRemote"] == false || this.gitRepoOffline)
+            if (_config["UseGitRemote"] == false || this.gitRepoOffline)
             {
                 this.CreateNodes();
                 return;
             }
 
             // sync with remote
-            if (!GitRepo.Push(Cfg["GitUser"], DecryptConfig(Cfg["GitPass"], "pass4win")))
+            if (!GitRepo.Push(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
             {
                 MessageBox.Show(
                     Strings.FrmMain_EncryptCallback_Push_to_remote_repo_failed_,
@@ -527,14 +529,14 @@ namespace Pass4Win
             }
 
             // Check if we want to sync with remote
-            if (Cfg["UseGitRemote"] == false || this.gitRepoOffline)
+            if (_config["UseGitRemote"] == false || this.gitRepoOffline)
             {
                 this.CreateNodes();
                 return;
             }
 
             // sync with remote
-            if (!GitRepo.Push(Cfg["GitUser"], DecryptConfig(Cfg["GitPass"], "pass4win")))
+            if (!GitRepo.Push(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
             {
                 MessageBox.Show(
                     Strings.FrmMain_EncryptCallback_Push_to_remote_repo_failed_,
@@ -592,13 +594,13 @@ namespace Pass4Win
             dirTreeView.BeginUpdate();
             dirTreeView.Nodes.Clear();
 
-            var nodes = fsi.UpdateDirectoryTree(new DirectoryInfo(Cfg["PassDirectory"]));
+            var nodes = fsi.UpdateDirectoryTree(new DirectoryProvider(_config));
             dirTreeView.Nodes.AddRange(nodes);
 
             // Notify the TreeView to resume painting.
             dirTreeView.EndUpdate();
-            dirTreeView.SelectedNode = FindTreeNodeText(dirTreeView.Nodes, Path.GetFileName(Cfg["PassDirectory"]));
-            FillFileList(Cfg["PassDirectory"]);
+            dirTreeView.SelectedNode = FindTreeNodeText(dirTreeView.Nodes, Path.GetFileName(_config["PassDirectory"]));
+            FillFileList(_config["PassDirectory"]);
         }
 
         private TreeNode FindTreeNodeText(TreeNodeCollection nodes, string findText)
@@ -689,17 +691,17 @@ namespace Pass4Win
         private void CheckOnline(bool silent = false)
         {
             // Is remote on in the config
-            if (Cfg["UseGitRemote"])
+            if (_config["UseGitRemote"])
             {
                 // Check if the remote is there
-                if (GitHandling.CheckConnection(Cfg["GitRemote"]))
+                if (GitHandling.CheckConnection(_config["GitRemote"]))
                 {
                     // looks good, let's try
                     this.gitRepoOffline = false;
                 }
 
                 // Do a fetch to get the latest repo.
-                if (!GitRepo.Fetch(Cfg["GitUser"], DecryptConfig(Cfg["GitPass"], "pass4win")))
+                if (!GitRepo.Fetch(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
                 {
                     // nope not online
                     this.gitRepoOffline = true;
@@ -710,7 +712,7 @@ namespace Pass4Win
                     // We're online
                     toolStripOffline.Visible = false;
                     // sync with remote
-                    if (!GitRepo.Push(Cfg["GitUser"], DecryptConfig(Cfg["GitPass"], "pass4win")))
+                    if (!GitRepo.Push(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
                     {
                         MessageBox.Show(
                             Strings.FrmMain_EncryptCallback_Push_to_remote_repo_failed_,
@@ -738,7 +740,7 @@ namespace Pass4Win
         private void FillFileList(string path)
         {
             listFileView.Items.Clear();
-            var myList = fsi.UpdateDirectoryList(new DirectoryInfo(path));
+            var myList = fsi.UpdateDirectoryList(new DirectoryProvider(new DirectoryInfo(path)));
             if (myList == null)
             {
                 listFileView.Items.Add("Empty directory");
@@ -796,7 +798,7 @@ namespace Pass4Win
                                         AutoUpgradeEnabled = true,
                                         CreatePrompt = false,
                                         DefaultExt = "gpg",
-                                        InitialDirectory = Cfg["PassDirectory"],
+                                        InitialDirectory = _config["PassDirectory"],
                                         Title = Strings.Info_add_dialog
                                     };
             if (newFileDialog.ShowDialog() == DialogResult.Cancel)
@@ -829,21 +831,19 @@ namespace Pass4Win
 
         private void ToolStripbtnKeyClick(object sender, EventArgs e)
         {
-            var keyManager = new FrmKeyManager();
-            keyManager.Show();
+            Program.Scope.Resolve<FrmKeyManager>().Show();
         }
 
         private void ToolStripbtnConfigClick(object sender, EventArgs e)
         {
-            var config = new FrmConfig();
-            config.SendOffline += this.ConfigSendOffline;
-            config.Show();
+            var frmConfig = Program.Scope.Resolve<FrmConfig>();
+            frmConfig.SendOffline += this.ConfigSendOffline;
+            frmConfig.Show();
         }
 
         private void ToolStripbtnAboutClick(object sender, EventArgs e)
         {
-            var about = new FrmAbout();
-            about.Show();
+            Program.Scope.Resolve<FrmAbout>().Show();
         }
 
         private void ToolStripbtnQuitClick(object sender, EventArgs e)
@@ -874,13 +874,13 @@ namespace Pass4Win
                 listFileView.Items.Clear();
                 foreach (var row in fsi.SearchList)
                 {
-                    string tmpstring = row.Replace(Cfg["PassDirectory"] + "\\", "");
+                    string tmpstring = row.Replace(_config["PassDirectory"] + "\\", "");
                     listFileView.Items.Add(tmpstring.Replace(".gpg", ""));
                 }
 
                 // setting up GUI
                 listFileView.SelectedIndex = 0;
-                dirTreeView.SelectedNode = FindTreeNodeText(dirTreeView.Nodes, Path.GetFileName(Cfg["PassDirectory"]));
+                dirTreeView.SelectedNode = FindTreeNodeText(dirTreeView.Nodes, Path.GetFileName(_config["PassDirectory"]));
 
                 this.DecryptPass(dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg");
                 btnMakeVisible.Visible = true;
@@ -918,7 +918,7 @@ namespace Pass4Win
         private void ToolStripUpdateButtonClick(object sender, EventArgs e)
         {
             toolStripStatusLabel1.Text = Strings.Info_git_pull;
-            if (GitRepo.Fetch(Cfg["GitUser"], DecryptConfig(Cfg["GitPass"], "pass4win")))
+            if (GitRepo.Fetch(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
             {
                 toolStripStatusLabel1.Text = DateTime.Now.ToShortTimeString() + @": " + Strings.Info_git_succes;
             }
