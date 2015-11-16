@@ -51,7 +51,6 @@ namespace Pass4Win
         /// Filles the treenode.
         /// </summary>
         /// <param name="treeView">Which treeview to fill</param>
-        /// <param name="rootDirectoryInfo">Which directory</param>
         private void ListDirectory(TreeView treeView)
         {
             // Get the TreeView ready for node creation.

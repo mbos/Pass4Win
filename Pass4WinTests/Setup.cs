@@ -1,11 +1,13 @@
-﻿using System.IO;
-using Autofac;
-using Moq;
-using Pass4Win;
-using SharpConfig;
+﻿
 
 namespace Pass4WinTests
 {
+    using System.IO;
+    using Autofac;
+    using Moq;
+    using Pass4Win;
+    using SharpConfig;
+
     static class Setup
     {
         static internal ILifetimeScope Scope { get; set; }

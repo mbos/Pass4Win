@@ -13,8 +13,6 @@
 // ReSharper disable once RedundantUsingDirective
 
 
-using Autofac;
-
 namespace Pass4Win
 {
     using System;
@@ -31,6 +29,7 @@ namespace Pass4Win
     using System.Threading.Tasks;
     using System.Windows.Forms;
 
+    using Autofac;
     using Bugsnag.Clients;
     using GpgApi;
     using Octokit;

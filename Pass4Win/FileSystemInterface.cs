@@ -11,8 +11,7 @@
 */
 
 
-using Autofac;
-using SharpConfig;
+
 
 namespace Pass4Win
 {
@@ -22,6 +21,8 @@ namespace Pass4Win
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
+    using Autofac;
+    using SharpConfig;
 
     /// <summary>
     /// Class to interface with the file system ie read directories and file operations

@@ -83,10 +83,6 @@
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
-      <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Bugsnag, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll</HintPath>
       <Private>True</Private>
@@ -161,7 +157,6 @@
       <DependentUpon>Genpass.cs</DependentUpon>
     </Compile>
     <Compile Include="GitHandling.cs" />
-    <Compile Include="pgp.cs" />
     <Compile Include="pwgen.cs" />
     <Compile Include="config.cs">
       <SubType>Form</SubType>
