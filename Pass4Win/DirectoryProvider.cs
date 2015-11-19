@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using SharpConfig;
 
 namespace Pass4Win
 {
@@ -20,10 +15,10 @@ namespace Pass4Win
     }
     public class DirectoryProvider : IDirectoryProvider
     {
-        private readonly Config _config;
+        private readonly ConfigHandling _config;
         private DirectoryInfo _directoryInfo;
 
-        public DirectoryProvider(Config config)
+        public DirectoryProvider(ConfigHandling config)
         {
             _config = config;
 

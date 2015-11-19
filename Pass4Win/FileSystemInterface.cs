@@ -22,14 +22,13 @@ namespace Pass4Win
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
     using Autofac;
-    using SharpConfig;
 
     /// <summary>
     /// Class to interface with the file system ie read directories and file operations
     /// </summary>
     public class FileSystemInterface
     {
-        private readonly Config _config;
+        private readonly ConfigHandling _config;
         private readonly IDirectoryProvider _directoryProvider;
 
         /// <summary>
@@ -42,7 +41,7 @@ namespace Pass4Win
         /// </summary>
         /// <param name="config"></param>
         /// <param name="directoryProvider"></param>
-        public FileSystemInterface(Config config, IDirectoryProvider directoryProvider)
+        public FileSystemInterface(ConfigHandling config, IDirectoryProvider directoryProvider)
         {
             _config = config;
             _directoryProvider = directoryProvider;

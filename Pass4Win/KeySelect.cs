@@ -13,15 +13,14 @@
 using System;
 using System.Windows.Forms;
 using GpgApi;
-using SharpConfig;
 
 namespace Pass4Win
 {
     public partial class KeySelect : Form
     {
-        private readonly Config _config;
+        private readonly ConfigHandling _config;
 
-        public KeySelect(Config config)
+        public KeySelect(ConfigHandling config)
         {
             _config = config;
             InitializeComponent();

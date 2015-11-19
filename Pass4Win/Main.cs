@@ -33,7 +33,6 @@ namespace Pass4Win
     using Bugsnag.Clients;
     using GpgApi;
     using Octokit;
-    using SharpConfig;
     using Application = System.Windows.Forms.Application;
     using Repository = LibGit2Sharp.Repository;
     using Timer = System.Threading.Timer;
@@ -45,7 +44,7 @@ namespace Pass4Win
         /// </summary>
         private readonly FileSystemInterface fsi;
         private readonly KeySelect _keySelect;
-        private readonly Config _config;
+        private readonly ConfigHandling _config;
 
         // timer for clearing clipboard
         private static Timer clipboardTimer;
@@ -68,7 +67,7 @@ namespace Pass4Win
         /// <summary>
         ///     Inits the repo, gpg etc
         /// </summary>
-        public FrmMain(FileSystemInterface fileSystemInterface, KeySelect keySelect, Config config)
+        public FrmMain(FileSystemInterface fileSystemInterface, KeySelect keySelect, ConfigHandling config)
         {
             fsi = fileSystemInterface;
             _keySelect = keySelect;
@@ -172,7 +171,7 @@ namespace Pass4Win
             this.enableTray = true;
         }
 
-        public override sealed string Text
+        public sealed override string Text
         {
             get
             {

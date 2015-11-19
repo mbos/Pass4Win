@@ -13,15 +13,14 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using SharpConfig;
 
 namespace Pass4Win
 {
     public partial class FrmConfig : Form
     {
-        private readonly Config _config;
+        private readonly ConfigHandling _config;
 
-        public FrmConfig(Config config)
+        public FrmConfig(ConfigHandling config)
         {
             _config = config;
             InitializeComponent();     

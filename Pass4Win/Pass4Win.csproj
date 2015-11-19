@@ -102,10 +102,6 @@
       <HintPath>..\packages\Octokit.0.16.0\lib\net45\Octokit.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SimpleConfig, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sharp-Config.1.0.0\lib\SimpleConfig.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System">
       <Private>True</Private>
     </Reference>
@@ -147,6 +143,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigHandling.cs" />
     <Compile Include="DirectoryProvider.cs" />
     <Compile Include="FileProvider.cs" />
     <Compile Include="FileSystemInterface.cs" />

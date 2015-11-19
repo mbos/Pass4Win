@@ -10,8 +10,6 @@
  * A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content
 */
 
-using SharpConfig;
-
 namespace Pass4Win
 {
     using System;
@@ -30,13 +28,13 @@ namespace Pass4Win
     public partial class FrmKeyManager : Form
     {
         private readonly FileSystemInterface _fileSystemInterface;
-        private readonly Config _config;
+        private readonly ConfigHandling _config;
         private readonly KeySelect _keySelect;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrmKeyManager"/> class.
         /// </summary>
-        public FrmKeyManager(FileSystemInterface fileSystemInterface, Config config, KeySelect keySelect)
+        public FrmKeyManager(FileSystemInterface fileSystemInterface, ConfigHandling config, KeySelect keySelect)
         {
             _fileSystemInterface = fileSystemInterface;
             _config = config;

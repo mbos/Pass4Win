@@ -2,7 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Autofac;
-using SharpConfig;
 
 namespace Pass4Win
 {
@@ -33,7 +32,7 @@ namespace Pass4Win
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<FrmMain>().InstancePerLifetimeScope().AsSelf();
-            builder.RegisterInstance(new Config("Pass4Win", false, true)).AsSelf();
+            builder.RegisterInstance(new ConfigHandling()).AsSelf();
             builder.RegisterType<FrmKeyManager>().AsSelf();
             builder.RegisterType<FrmConfig>().AsSelf();
             builder.RegisterType<KeySelect>().AsSelf();
