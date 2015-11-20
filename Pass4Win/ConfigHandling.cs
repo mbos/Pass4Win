@@ -1,5 +1,6 @@
 ﻿namespace Pass4Win
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using Newtonsoft.Json;
@@ -70,7 +71,13 @@
                         json = reader.ReadToEnd();
                     }
                 }
-                this.values = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+                try
+                {
+                    this.values = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+                }
+                catch (Exception)
+                {
+                }
             }
         }
     }
