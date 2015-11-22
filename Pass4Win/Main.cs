@@ -171,6 +171,20 @@ namespace Pass4Win
             this.enableTray = true;
         }
 
+        /// <summary>
+        /// Helper function for one instance
+        /// </summary>
+        /// <param name="m"></param>
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == NativeMethods.WM_SHOWME)
+            {
+                Show();
+                WindowState = FormWindowState.Normal;
+            }
+            base.WndProc(ref m);
+        }
+
         public sealed override string Text
         {
             get

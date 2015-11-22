@@ -120,10 +120,10 @@
   <data name="statusPass.Text" xml:space="preserve">
     <value>Ready</value>
   </data>
-  <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
-    <value>Delete</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="txtPassDetail.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="toolStripOffline.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -146,11 +146,15 @@
   <data name="toolStripUpdateButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnMakeVisible.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
   <data name="toolStripBtnGenPass.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
-  <data name="&gt;&gt;statusPB.Name" xml:space="preserve">
-    <value>statusPB</value>
+  <data name="&gt;&gt;toolStripbtnQuit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="toolStripbtnAbout.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -167,14 +171,14 @@
   <data name="dirTreeView.Size" type="System.Drawing.Size, System.Drawing">
     <value>170, 251</value>
   </data>
+  <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">
+    <value>editToolStripMenuItem</value>
+  </data>
   <data name="copyPassDetailMenuItem.Text" xml:space="preserve">
     <value>Copy</value>
   </data>
-  <data name="&gt;&gt;toolStripbtnAbout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="toolStripbtnAbout.Text" xml:space="preserve">
-    <value>About</value>
+  <data name="listFileView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>190, 32</value>
   </data>
   <data name="dirTreeView.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 31</value>
@@ -187,6 +191,9 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Pass4Win</value>
+  </data>
+  <data name="&gt;&gt;toolStripSearch.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
   <data name="passDetailMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 26</value>
@@ -224,14 +231,11 @@
   <data name="&gt;&gt;statusTxt.Name" xml:space="preserve">
     <value>statusTxt</value>
   </data>
-  <data name="copyPassDetailMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>102, 22</value>
-  </data>
   <data name="toolStriptextSearch.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="ToolStripbtnAdd.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -6408,9 +6412,6 @@
   <data name="&gt;&gt;openSystrayMenuItem.Name" xml:space="preserve">
     <value>openSystrayMenuItem</value>
   </data>
-  <data name="txtPassDetail.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="toolStripStatusLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>32, 17</value>
   </data>
@@ -6435,8 +6436,8 @@
   <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>117, 22</value>
   </data>
-  <data name="toolStripBtnGenPass.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
+  <data name="txtPassDetail.Size" type="System.Drawing.Size, System.Drawing">
+    <value>311, 251</value>
   </data>
   <data name="txtPassDetail.Location" type="System.Drawing.Point, System.Drawing">
     <value>370, 32</value>
@@ -6453,6 +6454,9 @@
   <data name="statusPB.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 16</value>
   </data>
+  <data name="ToolStripbtnAdd.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
   <data name="renameToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>117, 22</value>
   </data>
@@ -6468,11 +6472,8 @@
   <data name="&gt;&gt;statusPass.Type" xml:space="preserve">
     <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;txtPassDetail.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;passDetailMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="toolStripbtnAbout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
   </data>
   <data name="&gt;&gt;toolStripStatusLabel1.Name" xml:space="preserve">
     <value>toolStripStatusLabel1</value>
@@ -6483,11 +6484,11 @@
   <data name="btnMakeVisible.Text" xml:space="preserve">
     <value>Make visible</value>
   </data>
-  <data name="txtPassDetail.Size" type="System.Drawing.Size, System.Drawing">
-    <value>311, 251</value>
+  <data name="&gt;&gt;quitSystrayMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="toolStripbtnQuit.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FrmMain</value>
   </data>
   <data name="&gt;&gt;toolStripSearch.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -12664,14 +12665,11 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
   </data>
-  <data name="toolStripbtnAbout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
   <data name="&gt;&gt;listFileView.Name" xml:space="preserve">
     <value>listFileView</value>
   </data>
-  <data name="listFileView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>190, 32</value>
+  <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="&gt;&gt;txtPassDetail.ZOrder" xml:space="preserve">
     <value>7</value>
@@ -12682,11 +12680,14 @@
   <data name="&gt;&gt;deleteToolStripMenuItem.Name" xml:space="preserve">
     <value>deleteToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;btnMakeVisible.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;btnMakeVisible.Name" xml:space="preserve">
+    <value>btnMakeVisible</value>
   </data>
   <data name="&gt;&gt;dirTreeView.Parent" xml:space="preserve">
     <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStripSearch.Name" xml:space="preserve">
+    <value>toolStripSearch</value>
   </data>
   <data name="statusPB.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -12718,14 +12719,14 @@
   <data name="txtPassDetail.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;toolStripBtnGenPass.Name" xml:space="preserve">
-    <value>toolStripBtnGenPass</value>
-  </data>
   <data name="&gt;&gt;toolStripOffline.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="notifyIcon1.BalloonTipText" xml:space="preserve">
     <value>Pass4Win</value>
+  </data>
+  <data name="&gt;&gt;dirTreeView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ToolStripbtnAdd.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -12736,8 +12737,8 @@
   <data name="SystrayMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 48</value>
   </data>
-  <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">
-    <value>editToolStripMenuItem</value>
+  <data name="&gt;&gt;toolStripBtnGenPass.Name" xml:space="preserve">
+    <value>toolStripBtnGenPass</value>
   </data>
   <data name="toolStriptextSearch.Size" type="System.Drawing.Size, System.Drawing">
     <value>353, 23</value>
@@ -12745,17 +12746,11 @@
   <data name="&gt;&gt;renameToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripbtnConfig.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;txtPassDetail.Name" xml:space="preserve">
     <value>txtPassDetail</value>
   </data>
   <data name="toolStripUpdateButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
-  </data>
-  <data name="&gt;&gt;quitSystrayMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="toolStripSearch.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -12769,11 +12764,19 @@
   <data name="ToolStripbtnAdd.Text" xml:space="preserve">
     <value>Add entry</value>
   </data>
-  <data name="&gt;&gt;btnMakeVisible.Name" xml:space="preserve">
-    <value>btnMakeVisible</value>
+  <data name="&gt;&gt;toolStripbtnAbout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;dataMenu.Name" xml:space="preserve">
     <value>dataMenu</value>
+  </data>
+  <data name="ToolStripbtnAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAH5JREFUWEe9zTEKwEAQw8D7/6eTVoUgXEAWTLPF+vzo+ZBno5Rno5Rno5Rno5Rn
+        o5Rno5Rno5Rno5Rno5Rno5Rno3SdPVnS45Iel/S4pMclPS7pcUmPS9fZE8qzUcqzUcqzUcqzUcqzUcqz
+        UcqzUcqzUcqzUcqzUcqzUbronBcpdL5QbHeqqAAAAABJRU5ErkJggg==
+</value>
   </data>
   <data name="toolStripOffline.Text" xml:space="preserve">
     <value>OFFLINE (click to sync)</value>
@@ -12814,14 +12817,14 @@
   <data name="&gt;&gt;TextDelay.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FrmMain</value>
-  </data>
   <data name="notifyIcon1.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="&gt;&gt;quitSystrayMenuItem.Name" xml:space="preserve">
     <value>quitSystrayMenuItem</value>
+  </data>
+  <data name="&gt;&gt;passDetailMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>117, 22</value>
@@ -12835,9 +12838,6 @@
   <data name="&gt;&gt;deleteToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="quitSystrayMenuItem.Text" xml:space="preserve">
-    <value>Quit</value>
-  </data>
   <data name="&gt;&gt;toolStriptextSearch.Name" xml:space="preserve">
     <value>toolStriptextSearch</value>
   </data>
@@ -12847,11 +12847,11 @@
   <data name="&gt;&gt;toolStripbtnQuit.Name" xml:space="preserve">
     <value>toolStripbtnQuit</value>
   </data>
-  <data name="&gt;&gt;toolStripbtnQuit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;btnMakeVisible.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="&gt;&gt;toolStripSearch.Name" xml:space="preserve">
-    <value>toolStripSearch</value>
+  <data name="toolStripbtnAbout.Text" xml:space="preserve">
+    <value>About</value>
   </data>
   <data name="dataMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>118, 92</value>
@@ -12859,32 +12859,8 @@
   <data name="toolStripOffline.Size" type="System.Drawing.Size, System.Drawing">
     <value>600, 17</value>
   </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="statusTxt.Text" xml:space="preserve">
-    <value>Ready</value>
-  </data>
-  <data name="&gt;&gt;ToolStripbtnAdd.Name" xml:space="preserve">
-    <value>ToolStripbtnAdd</value>
-  </data>
-  <data name="&gt;&gt;toolStripBtnGenPass.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;TextDelay.Name" xml:space="preserve">
     <value>TextDelay</value>
-  </data>
-  <data name="&gt;&gt;copyToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="toolStripbtnQuit.Text" xml:space="preserve">
-    <value>Quit</value>
-  </data>
-  <data name="openSystrayMenuItem.Text" xml:space="preserve">
-    <value>Open</value>
   </data>
   <data name="toolStripbtnQuit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -12900,6 +12876,27 @@
         t5prJi84tfDsxl44iLYn0VfvvHfnDU5HXhN9dM4nfuw1XJgn8Bm2ddKmW83VPnbB9cFknmQuoWcH67lz
         q363vFrhWotMN6PRT0z1O2PjY1fGAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="&gt;&gt;ToolStripbtnAdd.Name" xml:space="preserve">
+    <value>ToolStripbtnAdd</value>
+  </data>
+  <data name="&gt;&gt;toolStripBtnGenPass.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;copyToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="editToolStripMenuItem.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="toolStripbtnQuit.Text" xml:space="preserve">
+    <value>Quit</value>
+  </data>
+  <data name="openSystrayMenuItem.Text" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="toolStripbtnQuit.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
   </data>
   <data name="&gt;&gt;copyPassDetailMenuItem.Name" xml:space="preserve">
     <value>copyPassDetailMenuItem</value>
@@ -12949,11 +12946,14 @@
   <data name="&gt;&gt;toolStriptextSearch.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;dirTreeView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="statusTxt.Text" xml:space="preserve">
+    <value>Ready</value>
   </data>
   <data name="&gt;&gt;toolStripbtnAbout.Name" xml:space="preserve">
     <value>toolStripbtnAbout</value>
+  </data>
+  <data name="openSystrayMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 22</value>
   </data>
   <data name="toolStripbtnKey.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -12968,8 +12968,8 @@
   <data name="&gt;&gt;statusPass.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;toolStripSearch.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="quitSystrayMenuItem.Text" xml:space="preserve">
+    <value>Quit</value>
   </data>
   <data name="statusTxt.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 17</value>
@@ -12977,29 +12977,29 @@
   <data name="toolStripbtnConfig.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
+  <data name="toolStripBtnGenPass.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
   <data name="btnMakeVisible.Location" type="System.Drawing.Point, System.Drawing">
     <value>438, 138</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnMakeVisible.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+  <data name="&gt;&gt;statusPB.Name" xml:space="preserve">
+    <value>statusPB</value>
   </data>
   <data name="statusPass.Size" type="System.Drawing.Size, System.Drawing">
     <value>686, 22</value>
   </data>
-  <data name="ToolStripbtnAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAH5JREFUWEe9zTEKwEAQw8D7/6eTVoUgXEAWTLPF+vzo+ZBno5Rno5Rno5Rno5Rn
-        o5Rno5Rno5Rno5Rno5Rno5Rno3SdPVnS45Iel/S4pMclPS7pcUmPS9fZE8qzUcqzUcqzUcqzUcqzUcqz
-        UcqzUcqzUcqzUcqzUcqzUbronBcpdL5QbHeqqAAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="openSystrayMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 22</value>
+  <data name="copyPassDetailMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 22</value>
   </data>
   <data name="&gt;&gt;statusPB.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripbtnConfig.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtPassDetail.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="toolStripSearch.Size" type="System.Drawing.Size, System.Drawing">
     <value>686, 25</value>
@@ -13013,9 +13013,6 @@
   <data name="&gt;&gt;copyPassDetailMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>de</value>
-  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

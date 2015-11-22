@@ -2,6 +2,8 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Autofac;
+using System.Threading;
+using System.Diagnostics;
 
 namespace Pass4Win
 {
@@ -11,6 +13,9 @@ namespace Pass4Win
 
         [DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+        [return: MarshalAs(UnmanagedType.Bool)]
 
         /// <summary>
         ///     The main entry point for the application.
@@ -19,13 +24,29 @@ namespace Pass4Win
         private static void Main()
         {
             RegisterTypes();
-            if (Environment.OSVersion.Version.Major >= 6)
+            bool createdNew = true;
+            using (Mutex mutex = new Mutex(true, "Pass4Win", out createdNew))
             {
-                SetProcessDPIAware();
+                if (createdNew)
+                {
+
+                    if (Environment.OSVersion.Version.Major >= 6)
+                    {
+                        SetProcessDPIAware();
+                    }
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+                    Application.Run(Scope.Resolve<FrmMain>());
+                }
+                else
+                {
+                    NativeMethods.PostMessage(
+                                    (IntPtr)NativeMethods.HWND_BROADCAST,
+                                    NativeMethods.WM_SHOWME,
+                                    IntPtr.Zero,
+                                    IntPtr.Zero);
+                }
             }
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(Scope.Resolve<FrmMain>());
         }
 
         private static void RegisterTypes()
