@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,81 +117,198 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="statusTxt.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 17</value>
+  <metadata name="statusPass.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+  <data name="statusPass.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 359</value>
   </data>
-  <data name="statusTxt.Text" xml:space="preserve">
-    <value>Pronto</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+  <data name="statusPass.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 0, 19, 0</value>
   </data>
-  <data name="toolStripOffline.Size" type="System.Drawing.Size, System.Drawing">
-    <value>575, 17</value>
+  <data name="statusPass.Size" type="System.Drawing.Size, System.Drawing">
+    <value>915, 25</value>
   </data>
-  <data name="toolStripOffline.Text" xml:space="preserve">
-    <value>OFFLINE (Clicca per sincronizzare)</value>
-  </data>
-  <data name="toolStripStatusLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 17</value>
-  </data>
-  <data name="toolStripStatusLabel1.Text" xml:space="preserve">
-    <value>etichetta</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+  <data name="statusPass.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="statusPass.Text" xml:space="preserve">
     <value>Pronto</value>
   </data>
+  <data name="&gt;&gt;statusPass.Name" xml:space="preserve">
+    <value>statusPass</value>
+  </data>
+  <data name="&gt;&gt;statusPass.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;statusPass.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;statusPass.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="statusTxt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="statusTxt.Text" xml:space="preserve">
+    <value>Pronto</value>
+  </data>
+  <data name="statusPB.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 20</value>
+  </data>
+  <data name="statusPB.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="toolStripOffline.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt, style=Bold</value>
+  </data>
+  <data name="toolStripOffline.Size" type="System.Drawing.Size, System.Drawing">
+    <value>803, 20</value>
+  </data>
+  <data name="toolStripOffline.Text" xml:space="preserve">
+    <value>OFFLINE (Clicca per sincronizzare)</value>
+  </data>
+  <data name="toolStripOffline.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="toolStripStatusLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 20</value>
+  </data>
+  <data name="toolStripStatusLabel1.Text" xml:space="preserve">
+    <value>etichetta</value>
+  </data>
+  <metadata name="passDetailMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1140, 17</value>
+  </metadata>
+  <data name="passDetailMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 30</value>
+  </data>
+  <data name="&gt;&gt;passDetailMenu.Name" xml:space="preserve">
+    <value>passDetailMenu</value>
+  </data>
+  <data name="&gt;&gt;passDetailMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="txtPassDetail.Location" type="System.Drawing.Point, System.Drawing">
+    <value>493, 39</value>
+  </data>
+  <data name="txtPassDetail.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="txtPassDetail.Size" type="System.Drawing.Size, System.Drawing">
+    <value>413, 308</value>
+  </data>
+  <data name="txtPassDetail.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  
+  <data name="txtPassDetail.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;txtPassDetail.Name" xml:space="preserve">
+    <value>txtPassDetail</value>
+  </data>
+  <data name="&gt;&gt;txtPassDetail.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtPassDetail.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;txtPassDetail.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
   <data name="copyPassDetailMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 22</value>
+    <value>118, 26</value>
   </data>
   <data name="copyPassDetailMenuItem.Text" xml:space="preserve">
     <value>Copia</value>
   </data>
-  <data name="passDetailMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 26</value>
+  <metadata name="dataMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>293, 17</value>
+  </metadata>
+  <data name="dataMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 108</value>
+  </data>
+  <data name="&gt;&gt;dataMenu.Name" xml:space="preserve">
+    <value>dataMenu</value>
+  </data>
+  <data name="&gt;&gt;dataMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 22</value>
+    <value>138, 26</value>
   </data>
   <data name="copyToolStripMenuItem.Text" xml:space="preserve">
     <value>Copia</value>
   </data>
   <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 22</value>
+    <value>138, 26</value>
   </data>
   <data name="editToolStripMenuItem.Text" xml:space="preserve">
     <value>Modifica</value>
   </data>
   <data name="renameToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 22</value>
+    <value>138, 26</value>
   </data>
   <data name="renameToolStripMenuItem.Text" xml:space="preserve">
     <value>Rinomina</value>
   </data>
   <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 22</value>
+    <value>138, 26</value>
   </data>
   <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
     <value>Elimina</value>
   </data>
-  <data name="dataMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>126, 92</value>
+  <data name="btnMakeVisible.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnMakeVisible.Location" type="System.Drawing.Point, System.Drawing">
+    <value>584, 170</value>
+  </data>
+  <data name="btnMakeVisible.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="btnMakeVisible.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 47</value>
+  </data>
+  <data name="btnMakeVisible.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
   <data name="btnMakeVisible.Text" xml:space="preserve">
     <value>Rendi visibile</value>
   </data>
-  <data name="openSystrayMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 22</value>
+  <data name="&gt;&gt;btnMakeVisible.Name" xml:space="preserve">
+    <value>btnMakeVisible</value>
   </data>
-  <data name="openSystrayMenuItem.Text" xml:space="preserve">
-    <value>Apri</value>
+  <data name="&gt;&gt;btnMakeVisible.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="quitSystrayMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 22</value>
+  <data name="&gt;&gt;btnMakeVisible.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="quitSystrayMenuItem.Text" xml:space="preserve">
-    <value>Termina</value>
+  <data name="&gt;&gt;btnMakeVisible.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
+  <metadata name="notifyIcon1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>659, 17</value>
+  </metadata>
+  <data name="notifyIcon1.BalloonTipText" xml:space="preserve">
+    <value>Pass4Win</value>
+  </data>
+  <metadata name="SystrayMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>772, 17</value>
+  </metadata>
   <data name="SystrayMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 48</value>
+    <value>121, 56</value>
+  </data>
+  <data name="&gt;&gt;SystrayMenu.Name" xml:space="preserve">
+    <value>SystrayMenu</value>
+  </data>
+  <data name="&gt;&gt;SystrayMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="notifyIcon1.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -6365,13 +6482,67 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
   </data>
+  <data name="notifyIcon1.Text" xml:space="preserve">
+    <value>Pass4Win</value>
+  </data>
+  <data name="notifyIcon1.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="openSystrayMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 26</value>
+  </data>
+  <data name="openSystrayMenuItem.Text" xml:space="preserve">
+    <value>Apri</value>
+  </data>
+  <data name="quitSystrayMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 26</value>
+  </data>
+  <data name="quitSystrayMenuItem.Text" xml:space="preserve">
+    <value>Termina</value>
+  </data>
+  <metadata name="toolStripSearch.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>894, 17</value>
+  </metadata>
+  <data name="toolStripSearch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="toolStripSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>915, 27</value>
+  </data>
+  <data name="toolStripSearch.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;toolStripSearch.Name" xml:space="preserve">
+    <value>toolStripSearch</value>
+  </data>
+  <data name="&gt;&gt;toolStripSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSearch.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStripSearch.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="toolStriptextSearch.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="toolStriptextSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>469, 27</value>
+  </data>
   <data name="ToolStripbtnAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB+SURBVFhHvc0xCsBAEMPA+/+nk1aFIFxAFkyzxfr86PmQ
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAB+SURBVFhHvc0xCsBAEMPA+/+nk1aFIFxAFkyzxfr86PmQ
         Z6OUZ6OUZ6OUZ6OUZ6OUZ6OUZ6OUZ6OUZ6OUZ6OUZ6N0nT1Z0uOSHpf0uKTHJT0u6XFJj0vX2RPKs1HK
         s1HKs1HKs1HKs1HKs1HKs1HKs1HKs1HKs1HKs1G66JwXKXS+UGx3qqgAAAAASUVORK5CYII=
 </value>
+  </data>
+  <data name="ToolStripbtnAdd.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="ToolStripbtnAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 24</value>
   </data>
   <data name="ToolStripbtnAdd.Text" xml:space="preserve">
     <value>Aggiungi voce</value>
@@ -6379,7 +6550,7 @@
   <data name="toolStripbtnQuit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIbSURBVFhH7ZZJrw1BFIAvMexYWSDkESTiLxg2RGIhL6bE
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAIbSURBVFhH7ZZJrw1BFIAvMexYWSDkESTiLxg2RGIhL6bE
         ChESW4mNja3hJ2AhRFi+n4CN8AcMsWZpiJiH73t0cpzq6nv7vo4NX/LlDn3qVHVX1ekaTcGP5F/n/wD+
         nQGs/P2ZGTeARbji19fp2YYv8Pz8rz8ZN4AL+By3zv+agj34Bk3+DfdhpGsA+/E7+r85zNULG3zC2MFr
         3IgN8Zo2bMK3GK+Za+JBbMacwLu5jEuwIV7XhmV4DfN1n4S5O1mMjzA2dPRHMBNjNHMWm2lofIj2UeU4
@@ -6391,13 +6562,19 @@
         wfXBZJ5kLqFnB+u5c6t+t7xa4VqLTDej0U9M9Ttj42NXxgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="toolStripbtnQuit.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripbtnQuit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 24</value>
+  </data>
   <data name="toolStripbtnQuit.Text" xml:space="preserve">
     <value>Termina</value>
   </data>
   <data name="toolStripbtnAbout.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFQSURBVFhH7dY/KEZRGMfx689gEyXFYpEYWazKInaryWox
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAFQSURBVFhH7dY/KEZRGMfx689gEyXFYpEYWazKInaryWox
         vAajZJJJSaGMFqOVLBYsQpSYGMiG/Ps+on6d3nLO8Z5jub/6DO+te57nvue5p1tEpAGjWMEhHvCKN9zj
         CGsYRxNqmjFc4sPTHSZRk8yiWhEfG6hHdCZQbeEQ9gBRaYHtsy5m+72OYbTB5sK0f19bxjP0nid0IDjT
         0IVeYLPwW/rhNj6D4OxBF1mAb6ag9+4gOPt4xM8ivfBNH7SBM0SnFQOo+/rll25oA+fImiFoA7vImjlo
@@ -6406,13 +6583,19 @@
         UBSfJnyygGg5S5kAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="toolStripbtnAbout.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripbtnAbout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 24</value>
+  </data>
   <data name="toolStripbtnAbout.Text" xml:space="preserve">
     <value>Maggiori informazioni su</value>
   </data>
   <data name="toolStripbtnConfig.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAImSURBVFhHvddNSxVRHMfxC2kZuFE00NqriKY9aBSFvoMI
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAImSURBVFhHvddNSxVRHMfxC2kZuFE00NqriKY9aBSFvoMI
         xI0gvYZoUatEt1q0aBGJ1a7oHVSLaBPiW1Awo3xAwQTLBO37k3tkOvzPnLlxnB98kHvmnoeZO/8zY+U/
         M4BDz1WUltfwF/AKpaQVv+EvQG0tSJJ+PEHH0ad/8xD+5M4D+OmCxuo9+lQgmnwTGvAA73Ebp6Cz/wp/
         YmcZTdB37+Aj3LENRBfRBze5TxPvem2WHax4bY4W0YNgnsPqmNIzBHMZVqeULiI3X2B1TOEzohmD1TmF
@@ -6424,18 +6607,30 @@
         zXoEP9fwsvo3SbRRWdu2Ln0bSslb+At4g9JyC/4CbqLGVCp/AV2WFIFkJ3jxAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="toolStripbtnConfig.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripbtnConfig.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 24</value>
+  </data>
   <data name="toolStripbtnConfig.Text" xml:space="preserve">
     <value>Impostazioni</value>
   </data>
   <data name="toolStripbtnKey.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADuSURBVFhH7ZNLCsJAEESzUxSPoh5E9HR+8DDiJQTxJrpR
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAADuSURBVFhH7ZNLCsJAEESzUxSPoh5E9HR+8DDiJQTxJrpR
         qyFCM1YsxpQ7HzwIk67uzCRpvmAOd/ACb61xvYUz+DOGcA/v8NFh3NvAAbQSw4+QDWUeYGRsxM7ZoE/G
         SViId14e+wmu4ASO4KJdyzWRmcLexAeXG8egGFwSa+VDrGFv4gvPTWPnXSxhrj3D3sRvlpuy3b8Yw1x7
         hb3JDUNFbb2ktmFtvaS2YW29pLZhbf0bZQO3EhZyKmEhpxIWciphIacSFnIqYSGnEhZyKmEhpxIWciph
         IacSFnIqYSGnEhZyKmEhpxIWcvrnT6JpnnJ+6U5TbHooAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="toolStripbtnKey.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripbtnKey.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 24</value>
   </data>
   <data name="toolStripbtnKey.Text" xml:space="preserve">
     <value>Gestione delle chiavi</value>
@@ -6443,7 +6638,7 @@
   <data name="toolStripBtnGenPass.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFVSURBVFhHtdXfKgdBGMbxzQGFwoURiohciz83QCn3QFyO
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAFVSURBVFhHtdXfKgdBGMbxzQGFwoURiohciz83QCn3QFyO
         5ICEY+WMA3yf8qu36d3ZmZ13n/qUg/m9z+zu7OqCsoAj3OEF3//09y0OoTWTZA/v+B3whl2EZQ5X8Mpy
         LqHfNmdM+Yw20RTddm/wzD3WsYglbOABds0ORkWHKffMVb6CNKuwm3jFPKqj024LU7ryvmzCrj1AdfSq
         2SEp3fa+LMOuvUF19G7bISk9876kG3hGdfSBsUNSOnB92YJd+4Xq2AEeHTQduDRreIRdO2oDn7BDPNqE
@@ -6452,13 +6647,19 @@
         4fFKcgLTdX8QzuNXLnxzMwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="toolStripBtnGenPass.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripBtnGenPass.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 24</value>
+  </data>
   <data name="toolStripBtnGenPass.Text" xml:space="preserve">
     <value>Genera Password</value>
   </data>
   <data name="toolStripUpdateButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIQSURBVFhHxdfPSxRhHMfxFTWzrPAQSB006ZhCN6/hQUoo
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAIQSURBVFhHxdfPSxRhHMfxFTWzrPAQSB006ZhCN6/hQUoo
         CMQO0l/gPRSCggil1ItIWp27dO5fiCQjipQiCCK0yALJDoVR78+6s3z38ZnhmZl4/MCLXfbHM5+ZfWbm
         2UqOHMEV3McyvuI3dmrPn2Eel9CGkNyoPWbmNLTRn/gb6DumcRxpmcH27lN/DmIK2kvfRkJsYRxNsJmF
         3k8t0IuXcAcs6gmOQZlD8rq3QB82YAdIvMNNnEMXWtGCkxiG5sA3+L77Gvec1/YU0J5/hv2QvMVFuIfS
@@ -6470,8 +6671,80 @@
         SH/PN/EcDzGGTgSkUvkHEbdNV9CWNSAAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="toolStripUpdateButton.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripUpdateButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 24</value>
+  </data>
   <data name="toolStripUpdateButton.Text" xml:space="preserve">
     <value>Sincronizzazione con Git</value>
+  </data>
+  <metadata name="TextDelay.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1029, 17</value>
+  </metadata>
+  <data name="dirTreeView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 38</value>
+  </data>
+  <data name="dirTreeView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="dirTreeView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>225, 308</value>
+  </data>
+  <data name="dirTreeView.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;dirTreeView.Name" xml:space="preserve">
+    <value>dirTreeView</value>
+  </data>
+  <data name="&gt;&gt;dirTreeView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dirTreeView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;dirTreeView.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="listFileView.HorizontalScrollbar" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="listFileView.ItemHeight" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="listFileView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>253, 39</value>
+  </data>
+  <data name="listFileView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="listFileView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 308</value>
+  </data>
+  <data name="listFileView.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;listFileView.Name" xml:space="preserve">
+    <value>listFileView</value>
+  </data>
+  <data name="&gt;&gt;listFileView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;listFileView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;listFileView.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 16</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>915, 384</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -12644,5 +12917,143 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Pass4Win</value>
+  </data>
+  <data name="&gt;&gt;statusTxt.Name" xml:space="preserve">
+    <value>statusTxt</value>
+  </data>
+  <data name="&gt;&gt;statusTxt.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;statusPB.Name" xml:space="preserve">
+    <value>statusPB</value>
+  </data>
+  <data name="&gt;&gt;statusPB.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripOffline.Name" xml:space="preserve">
+    <value>toolStripOffline</value>
+  </data>
+  <data name="&gt;&gt;toolStripOffline.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripStatusLabel1.Name" xml:space="preserve">
+    <value>toolStripStatusLabel1</value>
+  </data>
+  <data name="&gt;&gt;toolStripStatusLabel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;copyPassDetailMenuItem.Name" xml:space="preserve">
+    <value>copyPassDetailMenuItem</value>
+  </data>
+  <data name="&gt;&gt;copyPassDetailMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;copyToolStripMenuItem.Name" xml:space="preserve">
+    <value>copyToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;copyToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">
+    <value>editToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;editToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;renameToolStripMenuItem.Name" xml:space="preserve">
+    <value>renameToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;renameToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;deleteToolStripMenuItem.Name" xml:space="preserve">
+    <value>deleteToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;deleteToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;notifyIcon1.Name" xml:space="preserve">
+    <value>notifyIcon1</value>
+  </data>
+  <data name="&gt;&gt;notifyIcon1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;openSystrayMenuItem.Name" xml:space="preserve">
+    <value>openSystrayMenuItem</value>
+  </data>
+  <data name="&gt;&gt;openSystrayMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;quitSystrayMenuItem.Name" xml:space="preserve">
+    <value>quitSystrayMenuItem</value>
+  </data>
+  <data name="&gt;&gt;quitSystrayMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStriptextSearch.Name" xml:space="preserve">
+    <value>toolStriptextSearch</value>
+  </data>
+  <data name="&gt;&gt;toolStriptextSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripbtnAdd.Name" xml:space="preserve">
+    <value>ToolStripbtnAdd</value>
+  </data>
+  <data name="&gt;&gt;ToolStripbtnAdd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripbtnQuit.Name" xml:space="preserve">
+    <value>toolStripbtnQuit</value>
+  </data>
+  <data name="&gt;&gt;toolStripbtnQuit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripbtnAbout.Name" xml:space="preserve">
+    <value>toolStripbtnAbout</value>
+  </data>
+  <data name="&gt;&gt;toolStripbtnAbout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripbtnConfig.Name" xml:space="preserve">
+    <value>toolStripbtnConfig</value>
+  </data>
+  <data name="&gt;&gt;toolStripbtnConfig.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripbtnKey.Name" xml:space="preserve">
+    <value>toolStripbtnKey</value>
+  </data>
+  <data name="&gt;&gt;toolStripbtnKey.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripBtnGenPass.Name" xml:space="preserve">
+    <value>toolStripBtnGenPass</value>
+  </data>
+  <data name="&gt;&gt;toolStripBtnGenPass.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripUpdateButton.Name" xml:space="preserve">
+    <value>toolStripUpdateButton</value>
+  </data>
+  <data name="&gt;&gt;toolStripUpdateButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextDelay.Name" xml:space="preserve">
+    <value>TextDelay</value>
+  </data>
+  <data name="&gt;&gt;TextDelay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FrmMain</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

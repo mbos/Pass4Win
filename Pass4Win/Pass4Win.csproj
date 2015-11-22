@@ -192,11 +192,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="About.de.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="About.it.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="About.nl.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config.de.resx">
+      <DependentUpon>config.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="config.it.resx">
       <DependentUpon>config.cs</DependentUpon>
@@ -210,6 +216,9 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Genpass.de.resx">
+      <DependentUpon>Genpass.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Genpass.it.resx">
       <DependentUpon>Genpass.cs</DependentUpon>
     </EmbeddedResource>
@@ -219,17 +228,26 @@
     <EmbeddedResource Include="Genpass.resx">
       <DependentUpon>Genpass.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="KeyMgm.de.resx">
+      <DependentUpon>KeyMgm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="KeyMgm.it.resx">
       <DependentUpon>KeyMgm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="KeyMgm.nl.resx">
       <DependentUpon>KeyMgm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="KeySelect.de.resx">
+      <DependentUpon>KeySelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="KeySelect.it.resx">
       <DependentUpon>KeySelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="KeySelect.nl.resx">
       <DependentUpon>KeySelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.de.resx">
+      <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.it.resx">
       <DependentUpon>Main.cs</DependentUpon>
@@ -256,6 +274,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Strings.de.resx" />
     <EmbeddedResource Include="Strings.it.resx" />
     <EmbeddedResource Include="Strings.nl.resx" />
     <EmbeddedResource Include="Strings.resx">

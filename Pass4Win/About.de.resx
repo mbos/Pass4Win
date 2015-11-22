@@ -133,15 +133,16 @@
     <value>0</value>
   </data>
   <data name="richTextBox1.Text" xml:space="preserve">
-    <value>Pass4Win è derivato da Pass (l'http://www.passwordstore.org/) nel senso che l'archivio (struttura di password) è e deve essere esattamente lo stesso tra i due programmi. 
+    <value>Pass4Win basiert auf Pass (http://www.passwordstore.org/) und ist hinsichtlich der Speicherung und Verschlüsselung der Passwortinformationen mit dem Original kompatibel.
 
-Per ottenere aiuto, segnalare bug o ottenere l'ultima versione è possibile visitare https://github.com/mbos/Pass4Win. 
+Für Hilfe, Bugreports oder die neuste Version besuche bitte die offizielle Seite des Projekte: https://github.com/mbos/Pass4Win.
 
-Copyright (C) 2015 da Mike Bos 
+Copyright (C) 2015 by Mike Bos
 
-Questo programma è software libero; può essere redistribuito e/o modificato secondo i termini della GNU General Public License come pubblicata dalla Free Software Foundation; versione 3 della licenza, o qualsiasi versione successiva. 
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or any later version.
 
-Questo programma è distribuito nella speranza che sia utile, ma SENZA ALCUNA GARANZIA; senza neppure la garanzia implicita di COMMERCIABILITA' o IDONEITA' PER UNO SCOPO PARTICOLARE. Vedi la GNU General Public License per maggiori dettagli. Una copia della licenza è ottenibile presso http://www.gnu.org/licenses/gpl-3.0.en.html#content</value>
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content</value>
   </data>
   <data name="&gt;&gt;richTextBox1.Name" xml:space="preserve">
     <value>richTextBox1</value>
@@ -171,7 +172,7 @@ Questo programma è distribuito nella speranza che sia utile, ma SENZA ALCUNA GA
     <value>1</value>
   </data>
   <data name="txtPassVersion.Text" xml:space="preserve">
-    <value>Versione Pass4Win</value>
+    <value>Pass4Win Version</value>
   </data>
   <data name="&gt;&gt;txtPassVersion.Name" xml:space="preserve">
     <value>txtPassVersion</value>
@@ -198,7 +199,7 @@ Questo programma è distribuito nella speranza che sia utile, ma SENZA ALCUNA GA
     <value>430, 278</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Maggiori informazioni su</value>
+    <value>Über das Programm</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FrmAbout</value>

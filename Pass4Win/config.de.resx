@@ -122,7 +122,7 @@
     <value>MiddleRight</value>
   </data>
   <data name="folderBrowserDialog1.Description" xml:space="preserve">
-    <value>Selezionare la directory dove si desidera memorizzare le password</value>
+    <value>Wähle das Verzeichnis aus, in dem Deine Passwörter gespeichert werden sollen</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
@@ -167,7 +167,7 @@
     <value>306, 20</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
-    <value>Indirizzo host git (HTTPS o GIT)</value>
+    <value>Git Server-Adresse (HTTPS oder GIT)</value>
   </data>
   <data name="&gt;&gt;label1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -209,7 +209,7 @@
     <value>$this</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Configurazione</value>
+    <value>Konfiguration</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>11</value>
@@ -249,10 +249,10 @@
     <value>0</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>Utilizzare un repository git remoto?</value>
+    <value>Ein entferntes Git Repository verwenden?</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>Password di git</value>
+    <value>Git Passwort</value>
   </data>
   <data name="&gt;&gt;txtGitHost.Parent" xml:space="preserve">
     <value>$this</value>
@@ -404,7 +404,7 @@
   </data>
   
   <data name="btnSave.Text" xml:space="preserve">
-    <value>Salva</value>
+    <value>Speichern</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
     <value>163, 78</value>
@@ -446,7 +446,7 @@
     <value>label3</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
-    <value>Posizione di gpg.exe</value>
+    <value>Speicherort der gpg.exe</value>
   </data>
   
   <data name="txtGitHost.Location" type="System.Drawing.Point, System.Drawing">
@@ -478,7 +478,7 @@
     <value>True</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>La directory dove si desidera memorizzare le password</value>
+    <value>Das Verzeichnis, in dem Du DeinePasswörter speichern möchtest</value>
   </data>
   <data name="label5.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
@@ -566,7 +566,7 @@
     <value>True</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>Nome utente git</value>
+    <value>Git Benutzername</value>
   </data>
   <data name="&gt;&gt;txtGitUser.Parent" xml:space="preserve">
     <value>$this</value>
