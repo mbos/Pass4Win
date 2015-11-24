@@ -9,14 +9,14 @@
 # These three must be integers
 !define VERSIONMAJOR 1
 !define VERSIONMINOR 1
-!define VERSIONBUILD 5
+!define VERSIONBUILD 6
 # These will be displayed by the "Click here for support information" link in "Add/Remove Programs"
 # It is possible to use "mailto:" links in here to open the email client
 !define HELPURL "https://github.com/mbos/Pass4Win" # "Support Information" link
 !define UPDATEURL "https://github.com/mbos/Pass4Win" # "Product Updates" link
 !define ABOUTURL "https://github.com/mbos/Pass4Win" # "Publisher" link
 # This is the size (in kB) of all the files copied into "Program Files"
-!define INSTALLSIZE 7381
+!define INSTALLSIZE 8091
 
 #SilentInstall silent
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
@@ -83,6 +83,8 @@ section "install"
   file "${src_dir}\Pass4Win\bin\Release\nl\Pass4Win.resources.dll"
   SetOutPath "$INSTDIR\it"
   file "${src_dir}\Pass4Win\bin\Release\it\Pass4Win.resources.dll"
+  SetOutPath "$INSTDIR\de"
+  file "${src_dir}\Pass4Win\bin\Release\de\Pass4Win.resources.dll"
    
  
   # Uninstaller - See function un.onInit and section "uninstall" for configuration
@@ -148,6 +150,8 @@ section "uninstall"
   RMDir $INSTDIR\nl
   Delete $INSTDIR\it\Pass4Win.resources.dll
   RMDir $INSTDIR\it
+  Delete $INSTDIR\de\Pass4Win.resources.dll
+  RMDir $INSTDIR\de
 
   # Always delete uninstaller as the last action
   delete $INSTDIR\uninstall.exe

@@ -11,12 +11,6 @@ namespace Pass4Win
     {
         public static ILifetimeScope Scope { get; private set; }
 
-        [DllImport("user32.dll")]
-        private static extern bool SetProcessDPIAware();
-        [DllImport("user32.dll")]
-        private static extern bool SetForegroundWindow(IntPtr hWnd);
-        [return: MarshalAs(UnmanagedType.Bool)]
-
         /// <summary>
         ///     The main entry point for the application.
         /// </summary>
@@ -32,7 +26,7 @@ namespace Pass4Win
 
                     if (Environment.OSVersion.Version.Major >= 6)
                     {
-                        SetProcessDPIAware();
+                        NativeMethods.SetProcessDPIAware();
                     }
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
