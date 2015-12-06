@@ -209,7 +209,7 @@ namespace Pass4Win
 
             // online version
             var newversion = releases[0].TagName.Remove(0, 8);
-            newversion = newversion.Remove(5);
+            if (newversion.Length > 5) newversion = newversion.Remove(5);
 
             // if diff warn and redirect
             if (_config["version"] != newversion)
