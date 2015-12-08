@@ -248,7 +248,14 @@ namespace Pass4Win
             // Stage the file
             if (fileToCommit != null)
             {
-                this.gitRepo.Stage(fileToCommit);
+                try
+                {
+                    this.gitRepo.Stage(fileToCommit);
+                }
+                catch (Exception)
+                {
+                    // file most likely already staged. We'll just ignore the error.
+                }
             }
 
             // Commit

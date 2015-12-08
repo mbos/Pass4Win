@@ -26,7 +26,6 @@ namespace Pass4Win
     using System.Reflection;
     using System.Security.Cryptography;
     using System.Text;
-    using System.Threading.Tasks;
     using System.Windows.Forms;
 
     using Autofac;
@@ -48,9 +47,6 @@ namespace Pass4Win
 
         // timer for clearing clipboard
         private static Timer clipboardTimer;
-
-        // Setting up config second parameter should be false for normal install and true for portable
-        //public static Config _config = new Config("Pass4Win", false, true);
 
         // UI Trayicon toggle
         private readonly bool enableTray;
@@ -88,10 +84,9 @@ namespace Pass4Win
 
             Text = @"Pass4Win " + Strings.Version + @" " + _config["version"];
 
-            // checking for update this an async operation
-#pragma warning disable 4014
+            // checking for update in the backgroud
             LatestPass4WinRelease();
-#pragma warning restore 4014
+
 
             // Do we have a valid password store and settings
             try
@@ -201,7 +196,7 @@ namespace Pass4Win
         ///     Async latest version checker, gives a popup if a different version is detected
         /// </summary>
         /// <returns></returns>
-        public async Task LatestPass4WinRelease()
+        public async void LatestPass4WinRelease()
         {
             var client = new GitHubClient(new ProductHeaderValue("Pass4Win"));
             var releaseClient = client.Release;
