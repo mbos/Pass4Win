@@ -29,24 +29,34 @@ namespace Pass4Win
             if (_config["FirstRun"] == false)
             {
                 // set config values
-                txtPassFolder.Text = _config["PassDirectory"];
-                txtGPG.Text = _config["GPGEXE"];
-                chkboxRemoteRepo.Checked = _config["UseGitRemote"];
-                txtGitUser.Text = _config["GitUser"];
-                txtGitPass.Text = _config["GitPass"];
-                txtGitHost.Text = _config["GitRemote"];
+                try {
+                    txtPassFolder.Text = _config["PassDirectory"];
+                    txtGPG.Text = _config["GPGEXE"];
+                    chkboxRemoteRepo.Checked = _config["UseGitRemote"];
+                    txtGitUser.Text = _config["GitUser"];
+                    txtGitPass.Text = _config["GitPass"];
+                    txtGitHost.Text = _config["GitRemote"];
+                    ExternalGit.Checked = _config["ExternalGit"];
+                }
+                catch { }
 
                 // set access
                 txtGitUser.ReadOnly = !chkboxRemoteRepo.Checked;
                 txtGitPass.ReadOnly = !chkboxRemoteRepo.Checked;
                 txtGitHost.ReadOnly = !chkboxRemoteRepo.Checked;
-                _config["FirstRun"] = false;
+                txtGitUser.Visible = chkboxRemoteRepo.Checked;
+                txtGitPass.Visible = chkboxRemoteRepo.Checked;
+                txtGitHost.Visible = chkboxRemoteRepo.Checked;
+                label4.Visible = chkboxRemoteRepo.Checked;
+                label5.Visible = chkboxRemoteRepo.Checked;
+                label6.Visible = chkboxRemoteRepo.Checked;
             } else
             {
                 _config["UseGitRemote"] = false;
                 _config["GitUser"] = "";
                 _config["GitPass"] = "";
                 _config["GitRemote"] = "";
+                _config["ExternalGit"] = "";
                 _config["FirstRun"] = false;
             }
         }
@@ -124,6 +134,14 @@ namespace Pass4Win
             txtGitUser.ReadOnly = !chkboxRemoteRepo.Checked;
             txtGitPass.ReadOnly = !chkboxRemoteRepo.Checked;
             txtGitHost.ReadOnly = !chkboxRemoteRepo.Checked;
+            txtGitUser.Visible = chkboxRemoteRepo.Checked;
+            txtGitPass.Visible = chkboxRemoteRepo.Checked;
+            txtGitHost.Visible = chkboxRemoteRepo.Checked;
+            label4.Visible = chkboxRemoteRepo.Checked;
+            label5.Visible = chkboxRemoteRepo.Checked;
+            label6.Visible = chkboxRemoteRepo.Checked;
+            if (chkboxRemoteRepo.Checked)
+                ExternalGit.Checked = false;
         }
 
         /// <summary>
@@ -274,6 +292,21 @@ namespace Pass4Win
         private void BtnSaveClick(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void ExternalGit_CheckedChanged(object sender, EventArgs e)
+        {
+            _config["ExternalGit"] = ExternalGit.Checked;
+            if (ExternalGit.Checked)
+            {
+                MessageBox.Show(Strings.Config_ExternalGit_Warning, Strings.Config_ExternalGit_Warning_Title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (openFileDialog2.ShowDialog() == DialogResult.OK)
+                {
+                    _config["ExternalGitLocation"] = openFileDialog2.FileName;
+                    chkboxRemoteRepo.Checked = false;
+                }
+            }
+                
         }
     }
 }

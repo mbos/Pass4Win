@@ -248,4 +248,10 @@
   <data name="FrmMain_EncryptCallback_Push_to_remote_repo_failed_" xml:space="preserve">
     <value>Push to remote repo failed.</value>
   </data>
+  <data name="Config_ExternalGit_Warning" xml:space="preserve">
+    <value>When using an external Git program Pass4Win assumes you know what you're doing and will not init the repo or change connection strings. The connection should be setup for use without passphrases.</value>
+  </data>
+  <data name="Config_ExternalGit_Warning_Title" xml:space="preserve">
+    <value>Pay Attention!</value>
+  </data>
 </root>

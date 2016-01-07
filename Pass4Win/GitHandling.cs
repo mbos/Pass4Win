@@ -31,7 +31,7 @@ namespace Pass4Win
         /// <summary>
         ///     The host.
         /// </summary>
-        private readonly string host;
+        private string host;
 
         /// <summary>
         ///     The repo location.
@@ -45,11 +45,6 @@ namespace Pass4Win
         private readonly string ExternalGitPath;
         
         /// <summary>
-        ///     Connection string when using external git 
-        /// </summary>
-        private readonly string ConnectionString;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GitHandling"/> class.
         /// </summary>
         /// <param name="repoLocation">
@@ -58,30 +53,15 @@ namespace Pass4Win
         /// <param name="host">
         /// The host.
         /// </param>
-        /// <param name="GitLocation">
-        /// The full path of the Git executable.
-        /// </param>
-        public GitHandling(string repoLocation, string host, string GitLocation, string ConnectionString)
+        public GitHandling(string repoLocation, string host, string GitLocation="null")
         {
             this.repoLocation = repoLocation;
-            this.host = host;
             this.ExternalGitPath = GitLocation;
-            this.ConnectionString = ConnectionString;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GitHandling"/> class.
-        /// </summary>
-        /// <param name="repoLocation">
-        /// The repo location.
-        /// </param>
-        /// <param name="host">
-        /// The host.
-        /// </param>
-        public GitHandling(string repoLocation, string host)
-        {
-            this.repoLocation = repoLocation;
-            this.host = host;
+            if (GitLocation == "null")
+                this.host = host;
+            else
+                GetHost();
+           
         }
 
         /// <summary>
@@ -91,6 +71,15 @@ namespace Pass4Win
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        private bool GetHost()
+        {
+            string result = ExecuteGitCommand("remote -v");
+            Regex linkParser = new Regex(@"\b(?:https?://|git)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            foreach (Match m in linkParser.Matches(result))
+                this.host = m.Value;
+            return true;
         }
 
         /// <summary>
@@ -119,6 +108,7 @@ namespace Pass4Win
         public static bool CheckConnection(string hostName)
         {
             Uri hostTest;
+
             if (Uri.TryCreate(hostName, UriKind.Absolute, out hostTest))
             {
                 var client = new TcpClient();
@@ -184,7 +174,7 @@ namespace Pass4Win
             {
                 if (File.Exists(ExternalGitPath))
                 {
-                    // nothing to do here as yet
+                    return true;
                 }
                 else
                 {
@@ -258,12 +248,7 @@ namespace Pass4Win
         {
             if (File.Exists(ExternalGitPath))
             {
-                string GitOutput = ExecuteGitCommand("clone " + ConnectionString + " " + repoLocation);
-                bool result = Regex.IsMatch(GitOutput, "\\bfatal\\b", RegexOptions.IgnoreCase);
-                if (!result)
-                {
-                    return false;
-                }
+                // we don't do this if you have an external git program
             }
             else
             {
@@ -309,7 +294,7 @@ namespace Pass4Win
             {
                 string GitOutput = ExecuteGitCommand("pull");
                 bool result = Regex.IsMatch(GitOutput, "\\bfatal\\b", RegexOptions.IgnoreCase);
-                if (!result)
+                if (result == true)
                 {
                     return false;
                 }
@@ -360,9 +345,15 @@ namespace Pass4Win
             {
                 if (File.Exists(ExternalGitPath))
                 {
-                    string GitOutput = ExecuteGitCommand("git add" + fileToCommit);
+                    string GitOutput = ExecuteGitCommand("add " + fileToCommit);
                     bool result = Regex.IsMatch(GitOutput, "\\bfatal\\b", RegexOptions.IgnoreCase);
-                    if (!result)
+                    if (result == true)
+                    {
+                        return false;
+                    }
+                    GitOutput = ExecuteGitCommand("commit -m Pass4Win");
+                    result = Regex.IsMatch(GitOutput, "\\bfatal\\b", RegexOptions.IgnoreCase);
+                    if (result == true)
                     {
                         return false;
                     }
@@ -377,21 +368,22 @@ namespace Pass4Win
                     {
                         // file most likely already staged. We'll just ignore the error.
                     }
+                    try
+                    {
+                        this.gitRepo.Commit(
+                            "password changes",
+                            new Signature("pass4win", "pass4win", DateTimeOffset.Now),
+                            new Signature("pass4win", "pass4win", DateTimeOffset.Now));
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
                 }
             }
 
             // Commit
-            try
-            {
-                this.gitRepo.Commit(
-                    "password changes", 
-                    new Signature("pass4win", "pass4win", DateTimeOffset.Now), 
-                    new Signature("pass4win", "pass4win", DateTimeOffset.Now));
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            
 
             return true;
         }
@@ -410,26 +402,22 @@ namespace Pass4Win
         /// </returns>
         public bool Push(string gitUser, string gitPass)
         {
-            var tc = this.gitRepo.Diff.Compare<TreeChanges>(
-                            this.gitRepo.Branches["origin/master"].Tip.Tree,
-                this.gitRepo.Head.Tip.Tree);
-            if (!tc.Any())
-            {
-                return true;
-            }
-
             if (File.Exists(ExternalGitPath))
             {
-                string GitOutput = ExecuteGitCommand("git commit -m Pass4Win_commit");
+                string GitOutput = ExecuteGitCommand("push");
                 bool result = Regex.IsMatch(GitOutput, "\\bfatal\\b", RegexOptions.IgnoreCase);
-                if (!result)
+                if (result == true)
                 {
                     return false;
                 }
             }
             else
             {
-
+                var tc = this.gitRepo.Diff.Compare<TreeChanges>(this.gitRepo.Branches["origin/master"].Tip.Tree,this.gitRepo.Head.Tip.Tree);
+                if (!tc.Any())
+                {
+                    return true;
+                }
                 var remote = this.gitRepo.Network.Remotes["origin"];
                 var options = new PushOptions
                 {
@@ -468,9 +456,9 @@ namespace Pass4Win
         {
             if (File.Exists(ExternalGitPath))
             {
-                string GitOutput = ExecuteGitCommand("git rm " + removeFile);
+                string GitOutput = ExecuteGitCommand("rm " + removeFile);
                 bool result = Regex.IsMatch(GitOutput, "\\bfatal\\b", RegexOptions.IgnoreCase);
-                if (!result)
+                if (result == true)
                 {
                     return false;
                 }

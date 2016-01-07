@@ -103,12 +103,15 @@ namespace Pass4Win
             }
 
             // making new git object
-            GitRepo = new GitHandling(_config["PassDirectory"], _config["GitRemote"]);
+            if (_config["ExternalGit"])
+                GitRepo = new GitHandling(_config["PassDirectory"], _config["GitRemote"], _config["ExternalGitLocation"]);
+            else
+                GitRepo = new GitHandling(_config["PassDirectory"], _config["GitRemote"]);
 
             //checking git status
-            if (_config["UseGitRemote"] == true)
+            if (_config["UseGitRemote"] == true || _config["ExternalGit"])
             { 
-                if (GitRepo.ConnectToRepo())
+                if (GitRepo.ConnectToRepo() || _config["ExternalGit"])
                 {
                     this.gitRepoOffline = false;
                     toolStripOffline.Visible = false;
@@ -356,7 +359,7 @@ namespace Pass4Win
                 }
 
                 // Check if we want to sync with remote
-                if (_config["UseGitRemote"] == false || this.gitRepoOffline)
+                if (this.gitRepoOffline)
                 {
                     return;
                 }

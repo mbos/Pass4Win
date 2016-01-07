@@ -61,6 +61,24 @@ namespace Pass4Win {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to When using an external Git program Pass4Win assumes you know what you&apos;re doing and will not init the repo or change connection strings. The connection should be setup for use without passphrases..
+        /// </summary>
+        internal static string Config_ExternalGit_Warning {
+            get {
+                return ResourceManager.GetString("Config_ExternalGit_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pay Attention!.
+        /// </summary>
+        internal static string Config_ExternalGit_Warning_Title {
+            get {
+                return ResourceManager.GetString("Config_ExternalGit_Warning_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string Error {
