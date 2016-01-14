@@ -25,7 +25,13 @@
         {
             get
             {
-                return this.values[key];
+                try { 
+                    return this.values[key];
+                } 
+                catch
+                {
+                    return "";
+                }
             }
             set
             {
