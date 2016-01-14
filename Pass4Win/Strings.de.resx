@@ -248,4 +248,10 @@
   <data name="FrmMain_EncryptCallback_Push_to_remote_repo_failed_" xml:space="preserve">
     <value>Hochladen auf das entfernte Repository ist fehlgeschlagen.</value>
   </data>
+  <data name="Config_ExternalGit_Warning" xml:space="preserve">
+    <value>Wenn Sie eine externe Git Installation verwenden, geht Pass4Win davon aus, dass Sie wissen was Sie tun. Pass4Win wird nicht das Repo initialisieren oder die Verbindungsdaten ändern. Die Verbindung sollte ohne Passphrasen aufgebaut werden.</value>
+  </data>
+  <data name="Config_ExternalGit_Warning_Title" xml:space="preserve">
+    <value>Achtung!</value>
+  </data>
 </root>

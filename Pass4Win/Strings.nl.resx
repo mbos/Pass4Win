@@ -248,4 +248,10 @@
   <data name="FrmMain_EncryptCallback_Push_to_remote_repo_failed_" xml:space="preserve">
     <value>Push naar externe repo is mislukt.</value>
   </data>
+  <data name="Config_ExternalGit_Warning" xml:space="preserve">
+    <value>Wanneer u een externe Git installatie gebruikt in Pass4Win wordt ervan uitgegaan dat weet u wat u doet. Pass4Win zal geen init uitvoeren of connectie instelligen wijzigen. De verbinding moet worden opgezet voor gebruik zonder wachtwoorden.</value>
+  </data>
+  <data name="Config_ExternalGit_Warning_Title" xml:space="preserve">
+    <value>Let op!</value>
+  </data>
 </root>

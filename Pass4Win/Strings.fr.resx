@@ -117,91 +117,141 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
-  <data name="richTextBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+  <data name="Error" xml:space="preserve">
+    <value>Erreur</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;txtPassVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Error_already_exists" xml:space="preserve">
+    <value>L'entrée existe déjà.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="richTextBox1.Text" xml:space="preserve">
-    <value>Pass4Win basiert auf Pass (http://www.passwordstore.org/) und ist hinsichtlich der Speicherung und Verschlüsselung der Passwortinformationen mit dem Original kompatibel.
-
-Für Hilfe, Bugreports oder die neuste Version besuche bitte die offizielle Seite des Projekte: https://github.com/mbos/Pass4Win.
-
-Copyright (C) 2015 by Mike Bos
-
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content</value>
+  <data name="Error_connection" xml:space="preserve">
+    <value>N'a pas pu se connecter au dépôt git distant. Pass4Win réglé en mode hors connexion.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Error_git_unreachable" xml:space="preserve">
+    <value>Ne peut pas se connecter le serveur GIT. Pass4Win réglé en mode hors ligne.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;richTextBox1.Name" xml:space="preserve">
-    <value>richTextBox1</value>
+  <data name="Error_host_unreachable" xml:space="preserve">
+    <value>Serveur inatteignable !</value>
+    <comment>config.cs validating</comment>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+  <data name="Error_keys_set" xml:space="preserve">
+    <value>Pas encore de clé configuré</value>
+    <comment>KeyMgm.cs treeView1_AfterSelect() and various other functions</comment>
   </data>
-  <data name="&gt;&gt;txtPassVersion.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="Error_key_missing_part1" xml:space="preserve">
+    <value>Il semble que la clé défini dans .gpg-id n'est pas dans listé en tant que clé publique dans votre gestionnaire de clé. Merci de corriger ça. Clé</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="richTextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 33</value>
+  <data name="Error_key_missing_part2" xml:space="preserve">
+    <value>manquante.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="richTextBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>428, 243</value>
+  <data name="Error_nokey" xml:space="preserve">
+    <value>Besoins d'une clé... Redémarrer le programme et essayer de nouveau.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;richTextBox1.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="Error_notvalid_URL" xml:space="preserve">
+    <value>Ceci n'est pas une adresse URL valide !</value>
+    <comment>Config.cs validating</comment>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>430, 278</value>
+  <data name="Error_not_empty" xml:space="preserve">
+    <value>La valeur de ce champ ne peut être vide.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;txtPassVersion.Name" xml:space="preserve">
-    <value>txtPassVersion</value>
+  <data name="Error_remote_disabled" xml:space="preserve">
+    <value>Dans la configuration le serveur GIT distant est désactivé.</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="txtPassVersion.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt, style=Bold</value>
+  <data name="Error_required_field" xml:space="preserve">
+    <value>Ceci est un champ obligatoire !</value>
+    <comment>Config.cs validating functions</comment>
   </data>
-  <data name="txtPassVersion.Text" xml:space="preserve">
-    <value>Pass4Win Version</value>
+  <data name="Error_valid_filename" xml:space="preserve">
+    <value>Ceci n'est pas un nom valide, vous ne pouvez utiliser que des caractère de l'alphabet et _ - \\.</value>
+    <comment>main.cs</comment>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
-  <data name="txtPassVersion.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="Error_weird_shit_happened" xml:space="preserve">
+    <value>Une erreur s'est produite.....</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="txtPassVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>118, 9</value>
+  <data name="Error_weird_shit_happened_encryption" xml:space="preserve">
+    <value>Vous ne devriez pas voir cela... Le chiffrement a échoué</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FrmAbout</value>
+  <data name="Info_new_version" xml:space="preserve">
+    <value>Une nouvelle version de Pass4Win existe, voulez-vous mettre à jour ?</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="txtPassVersion.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="Info_new_version_caption" xml:space="preserve">
+    <value>Mise à jour disponible</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;txtPassVersion.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="Input_new_name" xml:space="preserve">
+    <value>Entrer un nouveau nom</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Über das Programm</value>
+  <data name="Input_new_name_label" xml:space="preserve">
+    <value>Nom:</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;richTextBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Ready" xml:space="preserve">
+    <value>Prêt</value>
+    <comment>Main.cs</comment>
   </data>
-  <data name="txtPassVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 20</value>
+  <data name="Statusbar_countdown" xml:space="preserve">
+    <value>Compte à rebours pour effacer le presse-papiers</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="richTextBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="Version" xml:space="preserve">
+    <value>version</value>
+    <comment>main.cs</comment>
   </data>
-  <data name="&gt;&gt;richTextBox1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="Info_git_error" xml:space="preserve">
+    <value>N'a pas pu récupérer (pull) les données du serveur Git</value>
+    <comment>main.cs</comment>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="Info_git_pull" xml:space="preserve">
+    <value>Récupère données du serveur Git</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="Info_git_succes" xml:space="preserve">
+    <value>Données récupéré avec succès du serveur Git</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="InputBox_Show_OK" xml:space="preserve">
+    <value>OK</value>
+    <comment>Main.cs</comment>
+  </data>
+  <data name="InputBox_Show_Cancel" xml:space="preserve">
+    <value>Annuler</value>
+    <comment>Main.cs</comment>
+  </data>
+  <data name="InputBox_Show_Validation_Error" xml:space="preserve">
+    <value>Erreur de validation</value>
+  </data>
+  <data name="Info_add_dialog" xml:space="preserve">
+    <value>Nouveau fichier</value>
+    <comment>main.cs</comment>
+  </data>
+  <data name="FrmMain_DecryptPass_Empty_file" xml:space="preserve">
+    <value>Fichier Vide</value>
+  </data>
+  <data name="FrmMain_RenameToolStripMenuItemClick_Rename" xml:space="preserve">
+    <value>Renommer</value>
+  </data>
+  <data name="FrmMain_EncryptCallback_Commit_failed_" xml:space="preserve">
+    <value>L'enregistrement (commit) a échoué.</value>
+  </data>
+  <data name="FrmMain_EncryptCallback_Push_to_remote_repo_failed_" xml:space="preserve">
+    <value>L'envoie (push) vers le dépôt distant à échoué.</value>
+  </data>
+  <data name="Config_ExternalGit_Warning" xml:space="preserve">
+    <value>Lorsque vous utilisez un programme Git externe Pass4Win suppose que vous savez ce que vous faites et n’initiera pas un dépôt ou ne changera pas les configurations. La connexion doit être configurer pour être utiliser sans phrase secrète.</value>
+  </data>
+  <data name="Config_ExternalGit_Warning_Title" xml:space="preserve">
+    <value>Faites attention !</value>
+  </data>
 </root>

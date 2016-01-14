@@ -117,22 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;lblChars.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
-  <data name="lblChars.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;btnCopy.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+  <data name="lblChars.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="btnCopy.Location" type="System.Drawing.Point, System.Drawing">
     <value>151, 82</value>
   </data>
-  <data name="txtGenPass.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;lblChars.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="tbChars.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -143,13 +143,10 @@
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>435, 129</value>
-  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Genpass</value>
   </data>
-  <data name="&gt;&gt;tbChars.Parent" xml:space="preserve">
+  <data name="&gt;&gt;txtGenPass.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="lblChars.TabIndex" type="System.Int32, mscorlib">
@@ -173,13 +170,13 @@
   <data name="&gt;&gt;btnCopy.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="btnCopy.Text" xml:space="preserve">
-    <value>Naar klembord kopiëren</value>
-  </data>
-  <data name="&gt;&gt;tbChars.Name" xml:space="preserve">
-    <value>tbChars</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>435, 129</value>
   </data>
   <data name="&gt;&gt;lblChars.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txtGenPass.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="btnCopy.TabIndex" type="System.Int32, mscorlib">
@@ -188,11 +185,14 @@
   <data name="lblChars.Size" type="System.Drawing.Size, System.Drawing">
     <value>19, 13</value>
   </data>
+  <data name="&gt;&gt;tbChars.Name" xml:space="preserve">
+    <value>tbChars</value>
+  </data>
   <data name="lblChars.Location" type="System.Drawing.Point, System.Drawing">
     <value>390, 16</value>
   </data>
-  <data name="&gt;&gt;txtGenPass.Name" xml:space="preserve">
-    <value>txtGenPass</value>
+  <data name="&gt;&gt;tbChars.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="tbChars.Size" type="System.Drawing.Size, System.Drawing">
     <value>410, 45</value>
@@ -200,8 +200,8 @@
   <data name="&gt;&gt;btnCopy.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;txtGenPass.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;txtGenPass.Name" xml:space="preserve">
+    <value>txtGenPass</value>
   </data>
   <data name="&gt;&gt;lblChars.Name" xml:space="preserve">
     <value>lblChars</value>
@@ -209,8 +209,8 @@
   <data name="lblChars.Text" xml:space="preserve">
     <value>10</value>
   </data>
-  <data name="&gt;&gt;btnCopy.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="btnCopy.Text" xml:space="preserve">
+    <value>Naar klembord kopiëren</value>
   </data>
   <data name="&gt;&gt;lblChars.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -229,8 +229,5 @@
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>it</value>
   </metadata>
 </root>

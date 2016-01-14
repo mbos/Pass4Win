@@ -117,117 +117,77 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;btnCopy.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+  <data name="ExternalGit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 17</value>
   </data>
-  <data name="btnCopy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>151, 82</value>
+  <data name="ExternalGit.Text" xml:space="preserve">
+    <value>Utiliser un programme externe git ?</value>
   </data>
-  <data name="&gt;&gt;lblChars.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>Sauvegarder</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tbChars.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>88, 154</value>
   </data>
-  <data name="&gt;&gt;tbChars.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 13</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Adresse du serveur GIT (HTTPS ou GIT)</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>435, 129</value>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>201, 129</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>Genpass</value>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 13</value>
   </data>
-  <data name="&gt;&gt;btnCopy.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Mot de passe Git</value>
   </data>
-  <data name="&gt;&gt;txtGenPass.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>188, 103</value>
   </data>
-  <data name="lblChars.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 13</value>
   </data>
-  <data name="&gt;&gt;txtGenPass.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Nom d'utilisateur Git</value>
   </data>
-  <data name="&gt;&gt;tbChars.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>113, 78</value>
   </data>
-  <data name="&gt;&gt;btnCopy.Name" xml:space="preserve">
-    <value>btnCopy</value>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 13</value>
   </data>
-  <data name="tbChars.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 40</value>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Voulez-utilisez un dépôt git distant ?</value>
   </data>
-  <data name="txtGenPass.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 13</value>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>161, 51</value>
   </data>
-  <data name="&gt;&gt;btnCopy.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 13</value>
   </data>
-  <data name="btnCopy.Text" xml:space="preserve">
-    <value>Copy to Clipboard</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Emplacement de gpg.exe</value>
   </data>
-  <data name="&gt;&gt;tbChars.Name" xml:space="preserve">
-    <value>tbChars</value>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>30, 20</value>
   </data>
-  <data name="&gt;&gt;lblChars.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>258, 13</value>
   </data>
-  <data name="btnCopy.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="lblChars.Size" type="System.Drawing.Size, System.Drawing">
-    <value>19, 13</value>
-  </data>
-  <data name="lblChars.Location" type="System.Drawing.Point, System.Drawing">
-    <value>390, 16</value>
-  </data>
-  <data name="&gt;&gt;txtGenPass.Name" xml:space="preserve">
-    <value>txtGenPass</value>
-  </data>
-  <data name="tbChars.Size" type="System.Drawing.Size, System.Drawing">
-    <value>410, 45</value>
-  </data>
-  <data name="lblChars.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;lblChars.Name" xml:space="preserve">
-    <value>lblChars</value>
-  </data>
-  <data name="txtGenPass.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="txtGenPass.Size" type="System.Drawing.Size, System.Drawing">
-    <value>371, 20</value>
-  </data>
-  <data name="lblChars.Text" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;lblChars.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbChars.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Dossier où vous souhaiter stocker vos mots de passe</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Generate Password</value>
+    <value>Configuration</value>
   </data>
-  <data name="btnCopy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>132, 23</value>
+  <data name="folderBrowserDialog1.Description" xml:space="preserve">
+    <value>Sélectionner le dossier dans lequel vous voulez enregistrer vos mots de passes</value>
   </data>
-  <data name="&gt;&gt;txtGenPass.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="openFileDialog2.Filter" xml:space="preserve">
+    <value>fichier de commande git|git.exe</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
 </root>

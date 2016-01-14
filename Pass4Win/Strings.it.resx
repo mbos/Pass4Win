@@ -248,4 +248,10 @@
   <data name="FrmMain_EncryptCallback_Push_to_remote_repo_failed_" xml:space="preserve">
     <value>Inserimento nell'archivio remoto fallito.</value>
   </data>
+  <data name="Config_ExternalGit_Warning" xml:space="preserve">
+    <value>Quando si un programma esterno Git, Pass4Win presuppone che si sappia cosa si sta facendo e non inizializzerà l'archivio o cambierà la stringa di connessione. La connessione dovrebbe essere configurata per l'uso senza passfrase.</value>
+  </data>
+  <data name="Config_ExternalGit_Warning_Title" xml:space="preserve">
+    <value>Presta attenzione!</value>
+  </data>
 </root>
