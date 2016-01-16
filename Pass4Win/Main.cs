@@ -81,35 +81,25 @@ namespace Pass4Win
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             var version = fvi.FileVersion;
             _config["version"] = version.Remove(5, 2);
-
             Text = @"Pass4Win " + Strings.Version + @" " + _config["version"];
-
-            // checking for update in the backgroud
-            LatestPass4WinRelease();
-
-
             // Do we have a valid password store and settings
-            try
-            {
-                if (_config["PassDirectory"] == "")
-                {
-                    // this will fail, I know ugly hack
-                }
-            }
-            catch (Exception)
+            if (_config["PassDirectory"] == "")
             {
                 _config["FirstRun"] = true;
                 Program.Scope.Resolve<FrmConfig>().ShowDialog();
             }
 
+            // checking for update in the backgroud
+            LatestPass4WinRelease();
+
             // making new git object
-            if (_config["ExternalGit"])
+            if (!(_config["ExternalGit"] is string) && _config["ExternalGit"])
                 GitRepo = new GitHandling(_config["PassDirectory"], _config["GitRemote"], _config["ExternalGitLocation"]);
             else
                 GitRepo = new GitHandling(_config["PassDirectory"], _config["GitRemote"]);
 
             //checking git status
-            if (_config["UseGitRemote"] == true || _config["ExternalGit"])
+            if (_config["UseGitRemote"] == true || (!(_config["ExternalGit"] is string) && _config["ExternalGit"]))
             { 
                 if (GitRepo.ConnectToRepo() || _config["ExternalGit"])
                 {
