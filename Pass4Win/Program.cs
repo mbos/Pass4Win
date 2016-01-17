@@ -60,6 +60,8 @@ namespace Pass4Win
             builder.RegisterType<FrmAbout>().AsSelf();
             builder.RegisterType<FileSystemInterface>().AsSelf();
             builder.RegisterType<DirectoryProvider>().As<IDirectoryProvider>();
+            builder.RegisterType<GitHandling>().AsSelf();
+
             Scope = builder.Build().BeginLifetimeScope();
         }
 
