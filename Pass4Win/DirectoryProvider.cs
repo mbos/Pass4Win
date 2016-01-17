@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -26,7 +27,7 @@ namespace Pass4Win
             {
                 _directoryInfo = new DirectoryInfo(_config["PassDirectory"]);
             }
-            catch (KeyNotFoundException)
+            catch (ArgumentException)
             {
             }
         }
