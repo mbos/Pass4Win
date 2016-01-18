@@ -1,7 +1,6 @@
 ﻿namespace Pass4WinTests
 {
     using System;
-    using System.Collections.Generic;
     using NUnit.Framework;
     using Pass4Win;
 
@@ -53,10 +52,7 @@
         {
             int value = 1024;
             {
-                var standardConfig = new ConfigHandling();
-
-                standardConfig["test"] = value;
-
+                var standardConfig = new ConfigHandling {["test"] = value};
                 standardConfig.Save();
             }
 
@@ -68,20 +64,12 @@
         }
 
         [Test]
-        [ExpectedException(typeof(KeyNotFoundException))]
         public void Delete()
         {
             var standardConfig = new ConfigHandling();
             standardConfig["test"] = 1024;
-
-
             standardConfig.Delete("test");
-
-            if (standardConfig["test"] == 1024)
-            {
-                Assert.Fail("Deleted key still exists.");
-            }
-
+            Assert.IsEmpty(standardConfig["test"]);
         }
     }
 }
