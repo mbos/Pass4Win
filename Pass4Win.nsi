@@ -6,10 +6,8 @@
 
 !define APPNAME "Pass4Win"
 !define DESCRIPTION "Windows version of Pass (http://www.passwordstore.org/) in the sense that the store (password structure) is and should be exactly the same between the two programs."
-# These three must be integers
-!define VERSIONMAJOR 1
-!define VERSIONMINOR 1
-!define VERSIONBUILD 8
+
+
 # These will be displayed by the "Click here for support information" link in "Add/Remove Programs"
 # It is possible to use "mailto:" links in here to open the email client
 !define HELPURL "https://github.com/mbos/Pass4Win" # "Support Information" link
@@ -24,9 +22,9 @@ RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on
 InstallDir "$PROGRAMFILES\${APPNAME}"
  
 # This will be in the installer/uninstaller's title bar
-Name "${APPNAME} version ${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
+Name "${APPNAME} version $%APPVEYOR_BUILD_VERSION%"
 Icon "Pass4Win/icon/lock.ico"
-outFile "Pass4Win-Setup-v${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}.exe"
+outFile "Pass4Win-Setup-v$%APPVEYOR_BUILD_VERSION%.exe"
  
 !include LogicLib.nsh
  
@@ -107,9 +105,8 @@ section "install"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "HelpLink" "$\"${HELPURL}$\""
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "URLUpdateInfo" "$\"${UPDATEURL}$\""
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "URLInfoAbout" "$\"${ABOUTURL}$\""
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayVersion" "$\"${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}$\""
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "VersionMajor" ${VERSIONMAJOR}
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "VersionMinor" ${VERSIONMINOR}
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayVersion" "$\"$%APPVEYOR_BUILD_VERSION%$\""
+
   # There is no option for modifying or repairing the install
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "NoRepair" 1
