@@ -2,7 +2,7 @@
 # Pass4Win NSIS script
 # 
 
-!define src_dir "./Pass4Win"
+!define src_dir ".\Pass4Win"
 
 !define APPNAME "Pass4Win"
 !define DESCRIPTION "Windows version of Pass (http://www.passwordstore.org/) in the sense that the store (password structure) is and should be exactly the same between the two programs."
