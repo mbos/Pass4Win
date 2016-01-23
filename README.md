@@ -1,4 +1,5 @@
 # Pass4Win
+[![Build status](https://ci.appveyor.com/api/projects/status/vv9ne2d4au8b5e9p/branch/master?svg=true)](https://ci.appveyor.com/project/mbos/pass4win/branch/master)
 
 [![Join the chat at https://gitter.im/mbos/Pass4Win](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mbos/Pass4Win?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 

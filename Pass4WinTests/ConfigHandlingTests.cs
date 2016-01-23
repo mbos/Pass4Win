@@ -1,7 +1,6 @@
 ﻿namespace Pass4WinTests
 {
     using System;
-    using System.Collections.Generic;
     using NUnit.Framework;
     using Pass4Win;
 
@@ -53,10 +52,7 @@
         {
             int value = 1024;
             {
-                var standardConfig = new ConfigHandling();
-
-                standardConfig["test"] = value;
-
+                var standardConfig = new ConfigHandling {["test"] = value};
                 standardConfig.Save();
             }
 
@@ -68,33 +64,12 @@
         }
 
         [Test]
-        public void CheckDelete()
-        {
-            var ex = Assert.Throws<ArgumentException>(() => this.Delete());
-            Assert.That(ex.Message, Is.EqualTo("Test passed"));
-        }
-
         public void Delete()
         {
             var standardConfig = new ConfigHandling();
-            standardConfig["test"] = "1024";
-            try
-            {
-                standardConfig.Delete("test");
-            }
-            catch (Exception)
-            {
-                throw new ArgumentException("Delete failed");
-            }
-
-            try {
-                if (standardConfig["test"] == string.Empty)
-                    throw new ArgumentException("Test passed");
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new ArgumentException("Test passed");
-            }
+            standardConfig["test"] = 1024;
+            standardConfig.Delete("test");
+            Assert.IsEmpty(standardConfig["test"]);
         }
     }
 }
