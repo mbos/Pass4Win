@@ -68,20 +68,33 @@
         }
 
         [Test]
-        [ExpectedException(typeof(KeyNotFoundException))]
+        public void CheckDelete()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => this.Delete());
+            Assert.That(ex.Message, Is.EqualTo("Test passed"));
+        }
+
         public void Delete()
         {
             var standardConfig = new ConfigHandling();
-            standardConfig["test"] = 1024;
-
-
-            standardConfig.Delete("test");
-
-            if (standardConfig["test"] == 1024)
+            standardConfig["test"] = "1024";
+            try
             {
-                Assert.Fail("Deleted key still exists.");
+                standardConfig.Delete("test");
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Delete failed");
             }
 
+            try {
+                if (standardConfig["test"] == string.Empty)
+                    throw new ArgumentException("Test passed");
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new ArgumentException("Test passed");
+            }
         }
     }
 }

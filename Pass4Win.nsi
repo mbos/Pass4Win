@@ -85,7 +85,8 @@ section "install"
   file "${src_dir}\Pass4Win\bin\Release\it\Pass4Win.resources.dll"
   SetOutPath "$INSTDIR\de"
   file "${src_dir}\Pass4Win\bin\Release\de\Pass4Win.resources.dll"
-   
+  SetOutPath "$INSTDIR\fr"
+  file "${src_dir}\Pass4Win\bin\Release\fr\Pass4Win.resources.dll" 
  
   # Uninstaller - See function un.onInit and section "uninstall" for configuration
   writeUninstaller "$INSTDIR\uninstall.exe"
@@ -152,6 +153,8 @@ section "uninstall"
   RMDir $INSTDIR\it
   Delete $INSTDIR\de\Pass4Win.resources.dll
   RMDir $INSTDIR\de
+  Delete $INSTDIR\fr\Pass4Win.resources.dll
+  RMDir $INSTDIR\fr
 
   # Always delete uninstaller as the last action
   delete $INSTDIR\uninstall.exe
