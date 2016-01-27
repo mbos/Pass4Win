@@ -2,7 +2,7 @@
 # Pass4Win NSIS script
 # 
 
-!define src_dir "C:\projects\pass4win"
+!define src_dir "."
 
 !define APPNAME "Pass4Win"
 !define DESCRIPTION "Windows version of Pass (http://www.passwordstore.org/) in the sense that the store (password structure) is and should be exactly the same between the two programs."
@@ -67,24 +67,24 @@ section "install"
   # Files for the install directory - to build the installer, these should be in the same directory as the install script (this file)
   setOutPath $INSTDIR
   # Files added here should be removed by the uninstaller (see section "uninstall")
-  file "${src_dir}\Pass4Win\bin\Release\Pass4Win.exe"
-  file "${src_dir}\Pass4Win\bin\Release\Pass4Win.exe.config"
+  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\Pass4Win.exe"
+  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\Pass4Win.exe.config"
 
   SetOutPath "$INSTDIR\NativeBinaries\x86"
-  file "${src_dir}\Pass4Win\bin\Release\NativeBinaries\x86\git2-e0902fb.dll"
+  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\NativeBinaries\x86\git2-e0902fb.dll"
 
   SetOutPath "$INSTDIR\NativeBinaries\amd64"
-  file "${src_dir}\Pass4Win\bin\Release\NativeBinaries\amd64\git2-e0902fb.dll"  
+  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\NativeBinaries\amd64\git2-e0902fb.dll"  
 
   # Localezation
   SetOutPath "$INSTDIR\nl"
-  file "${src_dir}\Pass4Win\bin\Release\nl\Pass4Win.resources.dll"
+  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\nl\Pass4Win.resources.dll"
   SetOutPath "$INSTDIR\it"
-  file "${src_dir}\Pass4Win\bin\Release\it\Pass4Win.resources.dll"
+  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\it\Pass4Win.resources.dll"
   SetOutPath "$INSTDIR\de"
-  file "${src_dir}\Pass4Win\bin\Release\de\Pass4Win.resources.dll"
+  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\de\Pass4Win.resources.dll"
   SetOutPath "$INSTDIR\fr"
-  file "${src_dir}\Pass4Win\bin\Release\fr\Pass4Win.resources.dll" 
+  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\fr\Pass4Win.resources.dll" 
  
   # Uninstaller - See function un.onInit and section "uninstall" for configuration
   writeUninstaller "$INSTDIR\uninstall.exe"
