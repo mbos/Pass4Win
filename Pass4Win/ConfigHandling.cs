@@ -8,6 +8,9 @@
 
     public class ConfigHandling
     {
+        // Logging
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private Dictionary<string, object> values = new Dictionary<string, object>();
         private readonly IsolatedStorageFile isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
 
@@ -64,6 +67,14 @@
         }
 
         /// <summary>
+        /// Resets the config</summary>
+        public void ResetConfig()
+        {
+            isoStore.DeleteFile(configName);
+        }
+
+
+        /// <summary>
         /// Reloads the configuration from the disk.</summary>
         private void Load()
         {
@@ -81,8 +92,9 @@
                 {
                     this.values = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
                 }
-                catch (Exception)
+                catch (Exception message)
                 {
+                    log.Debug(message.Message);
                 }
             }
         }

@@ -38,6 +38,9 @@ namespace Pass4Win
 
     public partial class FrmMain : Form
     {
+        // Logging
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         ///     Global variable for filesystem interface
         /// </summary>
@@ -65,26 +68,45 @@ namespace Pass4Win
         /// </summary>
         public FrmMain(FileSystemInterface fileSystemInterface, KeySelect keySelect, ConfigHandling config)
         {
+            log.Debug("Init variables");
             fsi = fileSystemInterface;
             _keySelect = keySelect;
             _config = config;
             InitializeComponent();
             toolStripStatusLabel1.Text = "";
 
+            log.Debug("init Bugsnag");
             // ReSharper disable once UnusedVariable
             var bugsnag = new BaseClient("23814316a6ecfe8ff344b6a467f07171");
 
             this.enableTray = false;
 
             // Getting actual version
+            log.Debug("Getting program version");
             var assembly = Assembly.GetExecutingAssembly();
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             var version = fvi.FileVersion;
             _config["version"] = version.Remove(5, 2);
             Text = @"Pass4Win " + Strings.Version + @" " + _config["version"];
-            // Do we have a valid password store and settings
-            if (_config["PassDirectory"] == "")
+            // check config input
+            log.Debug("Checking config validity");
+            try
             {
+                bool ChkBool = Directory.Exists(_config["PassDirectory"]);
+                if (!ChkBool)
+                    throw new Exception("Pass directory fail");
+                ChkBool = File.Exists(_config["GPGEXE"]);
+                if (!ChkBool)
+                    throw new Exception("GPG location fail");
+                if (_config["UseGitRemote"] || _config["ExternalGit"])
+                {
+                    // nobody cares, we want the exception and it's auto generated due to a null value or not a boolean
+                }
+            }
+            catch
+            {
+                // no matter if it's a first run or a corrupt entry, let them fix it.
+                log.Debug("Config corrupt or first run");
                 _config["FirstRun"] = true;
                 Program.Scope.Resolve<FrmConfig>().ShowDialog();
             }
@@ -93,15 +115,15 @@ namespace Pass4Win
             LatestPass4WinRelease();
 
             // making new git object
-            if (!(_config["ExternalGit"] is string) && _config["ExternalGit"])
+            if (_config["ExternalGit"])
                 GitRepo = new GitHandling(_config["PassDirectory"], _config["GitRemote"], _config["ExternalGitLocation"]);
             else
                 GitRepo = new GitHandling(_config["PassDirectory"], _config["GitRemote"]);
 
             //checking git status
-            if (_config["UseGitRemote"] == true || (!(_config["ExternalGit"] is string) && _config["ExternalGit"]))
-            { 
-                if (GitRepo.ConnectToRepo() || _config["ExternalGit"])
+            if (_config["UseGitRemote"] == true || _config["ExternalGit"])
+            {
+                if (GitRepo.ConnectToRepo() || (_config["ExternalGit"]))
                 {
                     this.gitRepoOffline = false;
                     toolStripOffline.Visible = false;
@@ -111,11 +133,11 @@ namespace Pass4Win
                         CheckOnline(false);
                     }
                 }
-            }
-            else if (!GitRepo.GitClone(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
-            {
-                Repository.Init(_config["PassDirectory"], false);
-                toolStripOffline.Visible = true;
+                else if (!GitRepo.GitClone(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+                {
+                    Repository.Init(_config["PassDirectory"], false);
+                    toolStripOffline.Visible = true;
+                }
             }
 
             // Init GPG if needed
@@ -882,7 +904,6 @@ namespace Pass4Win
                 // setting up GUI
                 listFileView.SelectedIndex = 0;
                 dirTreeView.SelectedNode = FindTreeNodeText(dirTreeView.Nodes, Path.GetFileName(_config["PassDirectory"]));
-
                 this.DecryptPass(dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg");
                 btnMakeVisible.Visible = true;
                 txtPassDetail.Visible = false;

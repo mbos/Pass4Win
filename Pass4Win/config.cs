@@ -52,11 +52,12 @@ namespace Pass4Win
                 label6.Visible = chkboxRemoteRepo.Checked;
             } else
             {
+                _config.ResetConfig();
                 _config["UseGitRemote"] = false;
                 _config["GitUser"] = "";
                 _config["GitPass"] = "";
                 _config["GitRemote"] = "";
-                _config["ExternalGit"] = "";
+                _config["ExternalGit"] = false;
                 _config["FirstRun"] = false;
             }
         }

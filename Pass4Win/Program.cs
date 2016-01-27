@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Autofac;
 using System.Threading;
-using System.Diagnostics;
+using log4net.Config;
 
 namespace Pass4Win
 {
     internal static class Program
     {
         public static ILifetimeScope Scope { get; private set; }
+        // logging
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         ///     The main entry point for the application.
@@ -17,14 +18,16 @@ namespace Pass4Win
         [STAThread]
         private static void Main()
         {
-            ThreadExceptionHandler handler =
-            new ThreadExceptionHandler();
+            XmlConfigurator.Configure();
+            log.Debug("Application started");
+            ThreadExceptionHandler handler = new ThreadExceptionHandler();
 
             Application.ThreadException +=
                 new ThreadExceptionEventHandler(
                     handler.Application_ThreadException);
             RegisterTypes();
             bool createdNew = true;
+            log.Debug("Checking if not already loaded");
             using (Mutex mutex = new Mutex(true, "Pass4Win", out createdNew))
             {
                 if (createdNew)
@@ -34,6 +37,7 @@ namespace Pass4Win
                     {
                         NativeMethods.SetProcessDPIAware();
                     }
+                    log.Debug("Load main form");
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     Application.Run(Scope.Resolve<FrmMain>());

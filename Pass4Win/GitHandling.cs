@@ -55,7 +55,7 @@ namespace Pass4Win
         /// </param>
         public GitHandling(string repoLocation, string host, string GitLocation="null")
         {
-            this.repoLocation = repoLocation;
+            this.repoLocation = "d:\\pass\\test"; // repoLocation;
             this.ExternalGitPath = GitLocation;
             if (GitLocation == "null")
                 this.host = host;
