@@ -24,7 +24,7 @@ InstallDir "$PROGRAMFILES\${APPNAME}"
 # This will be in the installer/uninstaller's title bar
 Name "${APPNAME} version $%APPVEYOR_BUILD_VERSION%"
 Icon "Pass4Win/icon/lock.ico"
-outFile "Pass4Win-Setup-v$%APPVEYOR_BUILD_VERSION%.exe"
+outFile "Pass4Win-Setup-v$%APPVEYOR_BUILD_VERSION%-%PLATFORM%.exe"
  
 !include LogicLib.nsh
  
