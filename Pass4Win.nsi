@@ -22,9 +22,9 @@ RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on
 InstallDir "$PROGRAMFILES\${APPNAME}"
  
 # This will be in the installer/uninstaller's title bar
-Name "${APPNAME} version $%APPVEYOR_BUILD_VERSION%"
+Name "${APPNAME} version ${VERSION}"
 Icon "Pass4Win/icon/lock.ico"
-outFile "Pass4Win-Setup-v$%APPVEYOR_BUILD_VERSION%-%PLATFORM%.exe"
+outFile "Pass4Win-Setup-v${VERSION}-${PLATFORM}.exe"
  
 !include LogicLib.nsh
  
@@ -67,24 +67,24 @@ section "install"
   # Files for the install directory - to build the installer, these should be in the same directory as the install script (this file)
   setOutPath $INSTDIR
   # Files added here should be removed by the uninstaller (see section "uninstall")
-  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\Pass4Win.exe"
-  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\Pass4Win.exe.config"
+  file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\Pass4Win.exe"
+  file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\Pass4Win.exe.config"
 
   SetOutPath "$INSTDIR\NativeBinaries\x86"
-  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\NativeBinaries\x86\git2-e0902fb.dll"
+  file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\NativeBinaries\x86\git2-e0902fb.dll"
 
   SetOutPath "$INSTDIR\NativeBinaries\amd64"
-  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\NativeBinaries\amd64\git2-e0902fb.dll"  
+  file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\NativeBinaries\amd64\git2-e0902fb.dll"  
 
   # Localezation
   SetOutPath "$INSTDIR\nl"
-  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\nl\Pass4Win.resources.dll"
+  file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\nl\Pass4Win.resources.dll"
   SetOutPath "$INSTDIR\it"
-  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\it\Pass4Win.resources.dll"
+  file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\it\Pass4Win.resources.dll"
   SetOutPath "$INSTDIR\de"
-  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\de\Pass4Win.resources.dll"
+  file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\de\Pass4Win.resources.dll"
   SetOutPath "$INSTDIR\fr"
-  file "${src_dir}\Pass4Win\bin\%PLATFORM%\Release\fr\Pass4Win.resources.dll" 
+  file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\fr\Pass4Win.resources.dll" 
  
   # Uninstaller - See function un.onInit and section "uninstall" for configuration
   writeUninstaller "$INSTDIR\uninstall.exe"
@@ -106,7 +106,7 @@ section "install"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "HelpLink" "$\"${HELPURL}$\""
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "URLUpdateInfo" "$\"${UPDATEURL}$\""
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "URLInfoAbout" "$\"${ABOUTURL}$\""
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayVersion" "$\"$%APPVEYOR_BUILD_VERSION%$\""
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayVersion" "$\"${VERSION}$\""
 
   # There is no option for modifying or repairing the install
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "NoModify" 1

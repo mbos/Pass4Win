@@ -38,8 +38,14 @@ namespace Pass4Win
                         NativeMethods.SetProcessDPIAware();
                     }
                     log.Debug("Load main form");
-                    Application.EnableVisualStyles();
-                    Application.SetCompatibleTextRenderingDefault(false);
+                    try {
+                        Application.EnableVisualStyles();
+                        Application.SetCompatibleTextRenderingDefault(false);
+                    }
+                    catch (Exception message)
+                    {
+                        log.Debug(message);
+                    }
                     Application.Run(Scope.Resolve<FrmMain>());
                 }
                 else
