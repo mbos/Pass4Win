@@ -23,6 +23,9 @@ namespace Pass4Win
     /// </summary>
     public class GitHandling : IDisposable
     {
+        // logging
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         ///     The repo remote location object.
         /// </summary>
@@ -55,7 +58,8 @@ namespace Pass4Win
         /// </param>
         public GitHandling(string repoLocation, string host, string GitLocation="null")
         {
-            this.repoLocation = "d:\\pass\\test"; // repoLocation;
+            log.Debug("Init GitHandling");
+            this.repoLocation = repoLocation;
             this.ExternalGitPath = GitLocation;
             if (GitLocation == "null")
                 this.host = host;
@@ -69,12 +73,14 @@ namespace Pass4Win
         /// </summary>
         public void Dispose()
         {
+            log.Debug("Dispose GitHandling");
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         private bool GetHost()
         {
+            log.Debug("Getting host from external git executable");
             string result = ExecuteGitCommand("remote -v");
             Regex linkParser = new Regex(@"\b(?:https?://|git)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             foreach (Match m in linkParser.Matches(result))
@@ -93,6 +99,7 @@ namespace Pass4Win
         /// </returns>
         public static bool IsValid(string location)
         {
+            log.Debug("Check if repo is valid");
             return Repository.IsValid(location);
         }
 
@@ -107,6 +114,13 @@ namespace Pass4Win
         /// </returns>
         public static bool CheckConnection(string hostName)
         {
+            if (String.IsNullOrEmpty(hostName))
+            {
+                log.Debug("No remote host, connection check auto passed");
+                return true;
+            }
+
+            log.Debug("Check if we have a connection to the remote host");
             Uri hostTest;
 
             if (Uri.TryCreate(hostName, UriKind.Absolute, out hostTest))
@@ -152,8 +166,9 @@ namespace Pass4Win
                         return true;
                     }
                 }
-                catch (Exception)
+                catch (Exception message)
                 {
+                    log.Debug(message);
                     return false;
                 }
             }
@@ -170,6 +185,7 @@ namespace Pass4Win
         /// </returns>
         public bool ConnectToRepo()
         {
+            log.Debug("Connect to repo");
             if (CheckConnection(this.host) && Repository.IsValid(this.repoLocation))
             {
                 if (File.Exists(ExternalGitPath))
@@ -186,8 +202,9 @@ namespace Pass4Win
                         this.gitRepo.Config.Set("core.autocrlf", true);
                         return true;
                     }
-                    catch (Exception)
+                    catch (Exception message)
                     {
+                        log.Debug(message);
                         return false;
                     }
                 }
@@ -197,6 +214,7 @@ namespace Pass4Win
 
         private string ExecuteGitCommand(string command)
         {
+            log.Debug("Executing: " + command);
             ProcessStartInfo gitInfo = new ProcessStartInfo();
             string output = "";
             string error = string.Empty;
@@ -246,6 +264,7 @@ namespace Pass4Win
         /// </returns>
         public bool GitClone(string username, string password)
         {
+            log.Debug("Clone the remote repo");
             if (File.Exists(ExternalGitPath))
             {
                 // we don't do this if you have an external git program
@@ -268,11 +287,13 @@ namespace Pass4Win
                                     }
                         });
                 }
-                catch (Exception)
+                catch (Exception message)
                 {
+                    log.Debug(message);
                     return false;
                 }
             }
+            ConnectToRepo();
             return true;
         }
 
@@ -290,6 +311,7 @@ namespace Pass4Win
         /// </returns>
         public bool Fetch(string gitUser, string gitPass)
         {
+            log.Debug("Fetch on remote repo");
             if (File.Exists(ExternalGitPath))
             {
                 string GitOutput = ExecuteGitCommand("pull");
@@ -321,8 +343,9 @@ namespace Pass4Win
                     var pullOptions = new PullOptions { FetchOptions = fetchOptions, MergeOptions = mergeOptions };
                     this.gitRepo.Network.Pull(signature, pullOptions);
                 }
-                catch (Exception)
+                catch (Exception message)
                 {
+                    log.Debug(message);
                     return false;
                 }
             }
@@ -340,6 +363,7 @@ namespace Pass4Win
         /// </returns>
         public bool Commit(string fileToCommit = null)
         {
+            log.Debug("Commit: " + fileToCommit);
             // Stage the file
             if (fileToCommit != null)
             {
@@ -360,31 +384,26 @@ namespace Pass4Win
                 }
                 else
                 {
-                    try
+                    RepositoryStatus status = gitRepo.RetrieveStatus();
+                    if (status.IsDirty)
                     {
-                        this.gitRepo.Stage(fileToCommit);
-                    }
-                    catch (Exception)
-                    {
-                        // file most likely already staged. We'll just ignore the error.
-                    }
-                    try
-                    {
-                        this.gitRepo.Commit(
+                        try
+                        {
+                            gitRepo.Stage("*");
+                            gitRepo.Commit(
                             "password changes",
                             new Signature("pass4win", "pass4win", DateTimeOffset.Now),
                             new Signature("pass4win", "pass4win", DateTimeOffset.Now));
-                    }
-                    catch (Exception)
-                    {
-                        return false;
+                        }
+                        catch (Exception message)
+                        {
+                            log.Debug(message);
+                            return false;
+                        }
                     }
                 }
             }
-
             // Commit
-            
-
             return true;
         }
 
@@ -402,6 +421,7 @@ namespace Pass4Win
         /// </returns>
         public bool Push(string gitUser, string gitPass)
         {
+            log.Debug("Push commits");
             if (File.Exists(ExternalGitPath))
             {
                 string GitOutput = ExecuteGitCommand("push");
@@ -434,8 +454,9 @@ namespace Pass4Win
                 {
                     this.gitRepo.Network.Push(remote, pushRefSpec, options);
                 }
-                catch (Exception)
+                catch (Exception message)
                 {
+                    log.Debug(message);
                     return false;
                 }
             }
@@ -454,6 +475,7 @@ namespace Pass4Win
         /// </returns>
         public bool RemoveFile(string removeFile)
         {
+            log.Debug("Remove: " + removeFile);
             if (File.Exists(ExternalGitPath))
             {
                 string GitOutput = ExecuteGitCommand("rm " + removeFile);
@@ -469,8 +491,9 @@ namespace Pass4Win
                 {
                     this.gitRepo.Remove(removeFile);
                 }
-                catch (Exception)
+                catch (Exception message)
                 {
+                    log.Debug(message);
                     return false;
                 }
             }

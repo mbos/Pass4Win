@@ -112,19 +112,27 @@ namespace Pass4Win
             }
 
             // checking for update in the backgroud
+            log.Debug("Checking online for latest release");
             LatestPass4WinRelease();
 
             // making new git object
             if (_config["ExternalGit"])
+            {
+                log.Debug("Using an external git executable");
                 GitRepo = new GitHandling(_config["PassDirectory"], _config["GitRemote"], _config["ExternalGitLocation"]);
+            }
             else
+            {
+                log.Debug("Using the internal git executable");
                 GitRepo = new GitHandling(_config["PassDirectory"], _config["GitRemote"]);
-
+            }
+                
             //checking git status
             if (_config["UseGitRemote"] == true || _config["ExternalGit"])
             {
                 if (GitRepo.ConnectToRepo() || (_config["ExternalGit"]))
                 {
+                    log.Debug("Remote Git is valid and active");
                     this.gitRepoOffline = false;
                     toolStripOffline.Visible = false;
                     if (!GitRepo.Fetch(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
@@ -133,11 +141,22 @@ namespace Pass4Win
                         CheckOnline(false);
                     }
                 }
+                // checking if we can clone, otherwise make a new one
                 else if (!GitRepo.GitClone(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
                 {
+                    log.Debug("Making a new git repo");
                     Repository.Init(_config["PassDirectory"], false);
+                    GitRepo.ConnectToRepo();
                     toolStripOffline.Visible = true;
                 }
+            }
+            // no connection, no repo. So make a new one
+            else if (!GitHandling.IsValid(_config["PassDirectory"]))
+            {
+                log.Debug("Making a new git repo");
+                Repository.Init(_config["PassDirectory"], false);
+                GitRepo.ConnectToRepo();
+                toolStripOffline.Visible = true;
             }
 
             // Init GPG if needed
@@ -146,6 +165,7 @@ namespace Pass4Win
             // Check if we need to init the directory
             if (!File.Exists(gpgfile))
             {
+                log.Debug("Creating .gpg-id");
                 // ReSharper disable once AssignNullToNotNullAttribute
                 Directory.CreateDirectory(Path.GetDirectoryName(gpgfile));
                 if (_keySelect.ShowDialog() == DialogResult.OK)

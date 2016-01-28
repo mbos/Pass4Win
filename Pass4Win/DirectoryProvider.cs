@@ -39,6 +39,8 @@ namespace Pass4Win
 
         public IFileProvider[] GetFiles()
         {
+            if (_directoryInfo?.Exists == false)
+                _directoryInfo.Create();
             return _directoryInfo?.GetFiles().Select(f=>(IFileProvider)new FileProvider(f)).ToArray() ?? new IFileProvider[0];
         }
 
