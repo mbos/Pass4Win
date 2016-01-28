@@ -73,7 +73,6 @@ namespace Pass4Win
         /// </summary>
         public void Dispose()
         {
-            log.Debug("Dispose GitHandling");
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
