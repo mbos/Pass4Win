@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Autofac;
 using System.Threading;
 using log4net.Config;
+using System.IO;
 
 namespace Pass4Win
 {
@@ -18,8 +19,21 @@ namespace Pass4Win
         [STAThread]
         private static void Main()
         {
+            // parsing command line
+            string[] args = Environment.GetCommandLineArgs();
+            string PersonalFolder = Path.GetTempPath() + "Pass4Win.log";
+            if (args.Length > 1 && args[1].Equals("debug"))
+            {
+                PersonalFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Pass4Win.log";
+            }
+            
+            // setting up logging
+            
+            Environment.SetEnvironmentVariable("log4netFileName", PersonalFolder + "\\Pass4Win.log");
+
             XmlConfigurator.Configure();
             log.Debug("Application started");
+
             ThreadExceptionHandler handler = new ThreadExceptionHandler();
 
             Application.ThreadException +=
