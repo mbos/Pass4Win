@@ -47,6 +47,7 @@
         /// Saves the configuration to the disk.</summary>
         public void Save()
         {
+            log.Debug("Saving config");
             string json = JsonConvert.SerializeObject(this.values, Formatting.Indented);
             using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream(configName, FileMode.OpenOrCreate, isoStore))
             {
@@ -62,6 +63,7 @@
         /// Removes an item from the collection.</summary>
         public void Delete(string key)
         {
+            log.Debug("Deleting: " + key);
             this.values.Remove(key);
             Save();
         }
@@ -70,6 +72,7 @@
         /// Resets the config</summary>
         public void ResetConfig()
         {
+            log.Debug("Deleting config file");
             isoStore.DeleteFile(configName);
         }
 
@@ -78,6 +81,7 @@
         /// Reloads the configuration from the disk.</summary>
         private void Load()
         {
+            log.Debug("Loading config file");
             if (isoStore.FileExists(configName))
             {
                 string json;
