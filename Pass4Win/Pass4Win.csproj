@@ -139,6 +139,10 @@
       <HintPath>..\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CommonMark, Version=0.1.0.0, Culture=neutral, PublicKeyToken=001ef8810438905d, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonMark.NET.0.11.0\lib\net45\CommonMark.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GpgApi">
       <HintPath>..\packages\GpgAPI.1.5.0\lib\GpgApi.dll</HintPath>
     </Reference>

@@ -32,7 +32,7 @@ namespace Pass4Win
     using Application = System.Windows.Forms.Application;
     using Repository = LibGit2Sharp.Repository;
     using Timer = System.Threading.Timer;
-
+    using System.Threading;
     public partial class FrmMain : Form
     {
         // Logging
@@ -107,7 +107,7 @@ namespace Pass4Win
                 Program.Scope.Resolve<FrmConfig>().ShowDialog();
             }
 
-            // checking for update in the backgroud
+            // checking for update in the background
             log.Debug("Checking online for latest release");
             LatestPass4WinRelease();
 
@@ -270,6 +270,7 @@ namespace Pass4Win
         {
             if (txtPassDetail.ReadOnly == false)
             {
+                HTMLShowDetails.Visible = false;
                 txtPassDetail.ReadOnly = true;
                 txtPassDetail.Visible = false;
                 btnMakeVisible.Visible = true;
@@ -331,7 +332,7 @@ namespace Pass4Win
                 {
                     w.Write(txtPassDetail.Text);
                 }
-                log.Debug("Begin encryption");
+                log.Debug("Begin encryption of: " + dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem);
                 var encrypt = new GpgEncrypt(tmpFile, tmpFile2, false, false, null, recipients, CipherAlgorithm.None);
                 var encResult = encrypt.Execute();
                 this.EncryptCallback(encResult, tmpFile, tmpFile2, dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg");
@@ -345,7 +346,7 @@ namespace Pass4Win
         /// <param name="clear"></param>
         private void DecryptPass(string path, bool clear = true)
         {
-            log.Debug("Start decryption");
+            log.Debug("Start decryption of: " + path);
             var f = new FileInfo(path);
             if (f.Exists && f.Length > 0)
             {
@@ -360,6 +361,7 @@ namespace Pass4Win
             else
             {
                 txtPassDetail.Text = Strings.FrmMain_DecryptPass_Empty_file;
+                ShowHTML(txtPassDetail.Text);
             }
         }
 
@@ -407,6 +409,14 @@ namespace Pass4Win
             }
         }
 
+        public void ShowHTML(String Markdown)
+        {
+            HTMLShowDetails.Navigate("about:blank");
+            HTMLShowDetails.Document.OpenNew(false);
+            string RenderResult = CommonMark.CommonMarkConverter.Convert(Markdown);
+            HTMLShowDetails.Document.Write(RenderResult);
+        }
+
         /// <summary>
         ///     Callback for the decrypt thread
         /// </summary>
@@ -417,6 +427,7 @@ namespace Pass4Win
             if (result.Status == GpgInterfaceStatus.Success)
             {
                 txtPassDetail.Text = File.ReadAllText(this.tmpfile);
+                ShowHTML(txtPassDetail.Text);
                 File.Delete(this.tmpfile);
                 // copy to clipboard
                 if (txtPassDetail.Text != "")
@@ -439,16 +450,17 @@ namespace Pass4Win
             else
             {
                 txtPassDetail.Text = Strings.Error_weird_shit_happened;
+                ShowHTML(txtPassDetail.Text);
             }
         }
 
-        /// <summary>
-        ///     Encrypt the git password
-        /// </summary>
-        /// <param name="password"></param>
-        /// <param name="salt"></param>
-        /// <returns></returns>
-        public static string EncryptConfig(string password, string salt)
+    /// <summary>
+    ///     Encrypt the git password
+    /// </summary>
+    /// <param name="password"></param>
+    /// <param name="salt"></param>
+    /// <returns></returns>
+    public static string EncryptConfig(string password, string salt)
         {
             var passwordBytes = Encoding.Unicode.GetBytes(password);
             var saltBytes = Encoding.Unicode.GetBytes(salt);
@@ -680,7 +692,7 @@ namespace Pass4Win
         private void BtnMakeVisibleClick(object sender, EventArgs e)
         {
             btnMakeVisible.Visible = false;
-            txtPassDetail.Visible = true;
+            HTMLShowDetails.Visible = true;
         }
 
         /// <summary>
@@ -980,6 +992,7 @@ namespace Pass4Win
 
             btnMakeVisible.Visible = true;
             txtPassDetail.Visible = false;
+            HTMLShowDetails.Visible = false;
         }
     }
 }
