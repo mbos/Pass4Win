@@ -10,9 +10,6 @@
  * A copy of the license is obtainable at http://www.gnu.org/licenses/gpl-3.0.en.html#content
 */
 
-// ReSharper disable once RedundantUsingDirective
-
-
 namespace Pass4Win
 {
     using System;
@@ -76,7 +73,6 @@ namespace Pass4Win
             toolStripStatusLabel1.Text = "";
 
             log.Debug("init Bugsnag");
-            // ReSharper disable once UnusedVariable
             var bugsnag = new BaseClient("23814316a6ecfe8ff344b6a467f07171");
 
             this.enableTray = false;
@@ -296,6 +292,7 @@ namespace Pass4Win
                         gpgRec.Add(line.TrimEnd(' '));
                     }
                 }
+                log.Debug("Matching GPG Keys");
                 // match keyid
                 var recipients = new List<KeyId>();
                 foreach (var line in gpgRec)
@@ -334,7 +331,7 @@ namespace Pass4Win
                 {
                     w.Write(txtPassDetail.Text);
                 }
-
+                log.Debug("Begin encryption");
                 var encrypt = new GpgEncrypt(tmpFile, tmpFile2, false, false, null, recipients, CipherAlgorithm.None);
                 var encResult = encrypt.Execute();
                 this.EncryptCallback(encResult, tmpFile, tmpFile2, dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg");
@@ -348,6 +345,7 @@ namespace Pass4Win
         /// <param name="clear"></param>
         private void DecryptPass(string path, bool clear = true)
         {
+            log.Debug("Start decryption");
             var f = new FileInfo(path);
             if (f.Exists && f.Length > 0)
             {
@@ -405,6 +403,7 @@ namespace Pass4Win
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
+                log.Debug("Encryption finished");
             }
         }
 
@@ -433,6 +432,7 @@ namespace Pass4Win
                         statusTxt.Text = Strings.Statusbar_countdown + @" ";
                         //Create the timer
                         clipboardTimer = new Timer(ClearClipboard, null, 0, 1000);
+                        log.Debug("Decryption finished");
                     }
                 }
             }
