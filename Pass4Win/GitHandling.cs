@@ -17,7 +17,7 @@ namespace Pass4Win
     using System.IO;
     using System.Diagnostics;
     using System.Text.RegularExpressions;
-
+    using System.Threading.Tasks;
     /// <summary>
     ///     Class to interface with the Git Repo
     /// </summary>
@@ -214,39 +214,43 @@ namespace Pass4Win
         private string ExecuteGitCommand(string command)
         {
             log.Debug("Executing: " + command);
-            ProcessStartInfo gitInfo = new ProcessStartInfo();
-            string output = "";
-            string error = string.Empty;
-
-            gitInfo.CreateNoWindow = true;
-            gitInfo.RedirectStandardError = true;
-            gitInfo.RedirectStandardOutput = true;
-            gitInfo.UseShellExecute = false;
-            gitInfo.FileName = this.ExternalGitPath;
-
-            Process gitProcess = new Process();
-            gitInfo.Arguments = command;
-            gitInfo.WorkingDirectory = this.repoLocation;
-
-            gitProcess.StartInfo = gitInfo;
-            gitProcess.Start();
-
-            using (System.IO.StreamReader myOutput = gitProcess.StandardOutput)
+            Task.Factory.StartNew(() =>
             {
-                output = myOutput.ReadToEnd();
-            }
-            using (System.IO.StreamReader myError = gitProcess.StandardError)
-            {
-                error = myError.ReadToEnd();
+                ProcessStartInfo gitInfo = new ProcessStartInfo();
+                string output = string.Empty;
+                string error = string.Empty;
 
-            }
+                gitInfo.CreateNoWindow = true;
+                gitInfo.RedirectStandardError = true;
+                gitInfo.RedirectStandardOutput = true;
+                gitInfo.UseShellExecute = false;
+                gitInfo.FileName = this.ExternalGitPath;
 
-            gitProcess.WaitForExit();
-            gitProcess.Close();
+                Process gitProcess = new Process();
+                gitInfo.Arguments = command;
+                gitInfo.WorkingDirectory = this.repoLocation;
 
-            // give the output or the error message
-            if (error.Length == 0) return output;
-            else return error;
+                gitProcess.StartInfo = gitInfo;
+                gitProcess.Start();
+
+                using (System.IO.StreamReader myOutput = gitProcess.StandardOutput)
+                {
+                    output = myOutput.ReadToEnd();
+                }
+                using (System.IO.StreamReader myError = gitProcess.StandardError)
+                {
+                    error = myError.ReadToEnd();
+
+                }
+
+                gitProcess.WaitForExit();
+                gitProcess.Close();
+                
+                // give the output or the error message
+                if (error.Length == 0) return output;
+                else return error;
+            });
+            return ("Thread error");
         }
 
         /// <summary>
