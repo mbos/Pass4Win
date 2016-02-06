@@ -82,7 +82,7 @@ namespace Pass4Win
             var assembly = Assembly.GetExecutingAssembly();
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             var version = fvi.FileVersion;
-            _config["version"] = version.Remove(5, 2);
+            _config["version"] = version.Remove(5);
             Text = @"Pass4Win " + Strings.Version + @" " + _config["version"];
             // check config input
             log.Debug("Checking config validity");
