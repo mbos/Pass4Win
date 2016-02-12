@@ -1,6 +1,6 @@
 #
 # Pass4Win NSIS script
-# 
+#
 
 !define src_dir "."
 
@@ -14,24 +14,28 @@
 !define UPDATEURL "https://github.com/mbos/Pass4Win" # "Product Updates" link
 !define ABOUTURL "https://github.com/mbos/Pass4Win" # "Publisher" link
 # This is the size (in kB) of all the files copied into "Program Files"
-!define INSTALLSIZE 8091
+!define INSTALLSIZE 8349
 
 #SilentInstall silent
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
- 
-InstallDir "$PROGRAMFILES\${APPNAME}"
- 
+
+${If} ${PLATFORM} == "x64"
+  InstallDir "$PROGRAMFILES64\${APPNAME}"
+${Else}
+  InstallDir "$PROGRAMFILES\${APPNAME}"
+${EndIf}
+
 # This will be in the installer/uninstaller's title bar
 Name "${APPNAME} version ${VERSION}"
 Icon "Pass4Win/icon/lock.ico"
 outFile "Pass4Win-Setup-v${VERSION}-${PLATFORM}.exe"
- 
+
 !include LogicLib.nsh
- 
+
 # Just three pages - license agreement, install location, and installation
 page directory
 Page instfiles
- 
+
 !macro VerifyUserIsAdmin
 UserInfo::GetAccountType
 pop $0
@@ -41,10 +45,12 @@ ${If} $0 != "admin" ;Require admin rights on NT4+
         quit
 ${EndIf}
 !macroend
- 
+
  Function .onInit
   setShellVarContext all
   !insertmacro VerifyUserIsAdmin
+  Push "Pass4Win"
+  Call un.CloseProgram
   ReadRegStr $R0 HKLM \
   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" \
   "UninstallString"
@@ -57,11 +63,27 @@ ${EndIf}
 
   IfErrors no_remove_uninstaller done
   no_remove_uninstaller:
- 
+
 done:
- 
+
 FunctionEnd
 
+!include WinMessages.nsh
+
+Function un.CloseProgram
+  Exch $1
+  Push $0
+  loop:
+    FindWindow $0 $1
+    IntCmp $0 0 done
+      #SendMessage $0 ${WM_DESTROY} 0 0
+      SendMessage $0 ${WM_CLOSE} 0 0
+    Sleep 100
+    Goto loop
+  done:
+  Pop $0
+  Pop $1
+FunctionEnd
 
 section "install"
   # Files for the install directory - to build the installer, these should be in the same directory as the install script (this file)
@@ -74,7 +96,7 @@ section "install"
   file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\NativeBinaries\x86\git2-e0902fb.dll"
 
   SetOutPath "$INSTDIR\NativeBinaries\amd64"
-  file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\NativeBinaries\amd64\git2-e0902fb.dll"  
+  file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\NativeBinaries\amd64\git2-e0902fb.dll"
 
   # Localezation
   SetOutPath "$INSTDIR\nl"
@@ -84,18 +106,18 @@ section "install"
   SetOutPath "$INSTDIR\de"
   file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\de\Pass4Win.resources.dll"
   SetOutPath "$INSTDIR\fr"
-  file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\fr\Pass4Win.resources.dll" 
- 
+  file "${src_dir}\Pass4Win\bin\${PLATFORM}\Release\fr\Pass4Win.resources.dll"
+
   # Uninstaller - See function un.onInit and section "uninstall" for configuration
   writeUninstaller "$INSTDIR\uninstall.exe"
- 
+
   # Start Menu
   createDirectory "$SMPROGRAMS\${APPNAME}"
   createShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\Pass4Win.exe" "" "$INSTDIR\Pass4Win.exe"
 
   # Desktop
   CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\Pass4Win.exe" "" "$INSTDIR\Pass4Win.exe"
- 
+
   # Registry information for add/remove programs
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME} - ${DESCRIPTION}"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
@@ -114,17 +136,17 @@ section "install"
   # Set the INSTALLSIZE constant (!defined at the top of this script) so Add/Remove Programs can accurately report the size
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "EstimatedSize" ${INSTALLSIZE}
 sectionEnd
- 
+
 # Uninstaller
- 
+
 function un.onInit
   SetShellVarContext all
   #Verify the uninstaller - last chance to back out
   !insertmacro VerifyUserIsAdmin
 functionEnd
- 
+
 section "uninstall"
- 
+
   # Remove Start Menu launcher
   delete "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk"
   # Try to remove the Start Menu folder - this will only happen if it is empty
@@ -132,10 +154,10 @@ section "uninstall"
   # Remove desktop shortcut
   Delete "$DESKTOP\${APPNAME}.lnk"
 
- 
+
   # Remove files
   delete $INSTDIR\Pass4Win.exe
- 
+
   delete $INSTDIR\NativeBinaries\x86\git2-e0902fb.dll
   rmdir $INSTDIR\NativeBinaries\x86
 
@@ -155,11 +177,10 @@ section "uninstall"
 
   # Always delete uninstaller as the last action
   delete $INSTDIR\uninstall.exe
- 
+
   # Try to remove the install directory - this will only happen if it is empty
   rmDir $INSTDIR
- 
+
   # Remove uninstaller information from the registry
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
 sectionEnd
-
