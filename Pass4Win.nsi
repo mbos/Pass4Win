@@ -19,6 +19,7 @@
 #SilentInstall silent
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
 
+!include LogicLib.nsh
 ${If} ${PLATFORM} == "x64"
   InstallDir "$PROGRAMFILES64\${APPNAME}"
 ${Else}
@@ -29,8 +30,6 @@ ${EndIf}
 Name "${APPNAME} version ${VERSION}"
 Icon "Pass4Win/icon/lock.ico"
 outFile "Pass4Win-Setup-v${VERSION}-${PLATFORM}.exe"
-
-!include LogicLib.nsh
 
 # Just three pages - license agreement, install location, and installation
 page directory
