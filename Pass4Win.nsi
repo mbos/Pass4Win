@@ -43,7 +43,7 @@ ${EndIf}
  Function .onInit
   !include LogicLib.nsh
   ${If} ${PLATFORM} == "x64"
-    StrCpy $INSTDIR "$PROGRAMFILES64\${APPNAME}""
+    StrCpy $INSTDIR "$PROGRAMFILES64\${APPNAME}"
   {EndIf}
   setShellVarContext all
   !insertmacro VerifyUserIsAdmin
