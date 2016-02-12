@@ -24,12 +24,7 @@ Name "${APPNAME} version ${VERSION}"
 Icon "Pass4Win/icon/lock.ico"
 outFile "Pass4Win-Setup-v${VERSION}-${PLATFORM}.exe"
 
-!include LogicLib.nsh
-${If} ${PLATFORM} == "x64"
-  InstallDir "$PROGRAMFILES64\${APPNAME}"
-${Else}
-  InstallDir "$PROGRAMFILES\${APPNAME}"
-${EndIf}
+InstallDir "$PROGRAMFILES\${APPNAME}"
 
 # Just three pages - license agreement, install location, and installation
 page directory
@@ -46,7 +41,10 @@ ${EndIf}
 !macroend
 
  Function .onInit
-
+  !include LogicLib.nsh
+  ${If} ${PLATFORM} == "x64"
+    StrCpy $INSTDIR "$PROGRAMFILES64\${APPNAME}""
+  {EndIf}
   setShellVarContext all
   !insertmacro VerifyUserIsAdmin
   !include WinMessages.nsh
