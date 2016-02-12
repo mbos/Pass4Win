@@ -39,9 +39,9 @@ ${EndIf}
 !macroend
 
  Function .onInit
+  !include LogicLib.nsh
   setShellVarContext all
   !insertmacro VerifyUserIsAdmin
-  !include LogicLib.nsh
   !include WinMessages.nsh
 
   ${If} ${PLATFORM} == "x64"
