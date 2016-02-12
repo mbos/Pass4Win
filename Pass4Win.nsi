@@ -49,7 +49,7 @@ ${EndIf}
   !insertmacro VerifyUserIsAdmin
   !include WinMessages.nsh
   Push "Pass4Win"
-  Call un.CloseProgram
+  Call .CloseProgram
   ReadRegStr $R0 HKLM \
   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" \
   "UninstallString"
@@ -67,7 +67,7 @@ done:
 
 FunctionEnd
 
-Function un.CloseProgram
+Function .CloseProgram
   Exch $1
   Push $0
   loop:
