@@ -48,8 +48,12 @@ ${EndIf}
   setShellVarContext all
   !insertmacro VerifyUserIsAdmin
   !include WinMessages.nsh
-  Push "Pass4Win"
-  Call .CloseProgram
+  System::Call 'kernel32::OpenMutex(i 0x100000, b 0, t "Pass4Win") i .R0'
+  IntCmp $R0 0 notRunning
+  System::Call 'kernel32::CloseHandle(i $R0)'
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Pass4Win is running. Please close it first" /SD IDOK
+  Abort
+  notRunning:
   ReadRegStr $R0 HKLM \
   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" \
   "UninstallString"
@@ -65,21 +69,6 @@ ${EndIf}
 
 done:
 
-FunctionEnd
-
-Function .CloseProgram
-  Exch $1
-  Push $0
-  loop:
-    FindWindow $0 $1
-    IntCmp $0 0 done
-      #SendMessage $0 ${WM_DESTROY} 0 0
-      SendMessage $0 ${WM_CLOSE} 0 0
-    Sleep 100
-    Goto loop
-  done:
-  Pop $0
-  Pop $1
 FunctionEnd
 
 section "install"
