@@ -19,13 +19,6 @@
 #SilentInstall silent
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
 
-!include LogicLib.nsh
-${If} ${PLATFORM} == "x64"
-  InstallDir "$PROGRAMFILES64\${APPNAME}"
-${Else}
-  InstallDir "$PROGRAMFILES\${APPNAME}"
-${EndIf}
-
 # This will be in the installer/uninstaller's title bar
 Name "${APPNAME} version ${VERSION}"
 Icon "Pass4Win/icon/lock.ico"
@@ -48,6 +41,15 @@ ${EndIf}
  Function .onInit
   setShellVarContext all
   !insertmacro VerifyUserIsAdmin
+  !include LogicLib.nsh
+  !include WinMessages.nsh
+
+  ${If} ${PLATFORM} == "x64"
+    InstallDir "$PROGRAMFILES64\${APPNAME}"
+  ${Else}
+    InstallDir "$PROGRAMFILES\${APPNAME}"
+  ${EndIf}
+
   Push "Pass4Win"
   Call un.CloseProgram
   ReadRegStr $R0 HKLM \
@@ -66,8 +68,6 @@ ${EndIf}
 done:
 
 FunctionEnd
-
-!include WinMessages.nsh
 
 Function un.CloseProgram
   Exch $1
