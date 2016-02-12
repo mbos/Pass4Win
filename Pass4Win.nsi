@@ -44,7 +44,7 @@ ${EndIf}
   !include LogicLib.nsh
   ${If} ${PLATFORM} == "x64"
     StrCpy $INSTDIR "$PROGRAMFILES64\${APPNAME}"
-  {EndIf}
+  ${EndIf}
   setShellVarContext all
   !insertmacro VerifyUserIsAdmin
   !include WinMessages.nsh
