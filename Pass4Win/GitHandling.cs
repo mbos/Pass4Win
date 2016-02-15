@@ -245,8 +245,10 @@ namespace Pass4Win
 
                 gitProcess.WaitForExit();
                 gitProcess.Close();
-                
+
                 // give the output or the error message
+                log.Debug("Git output: " + output);
+                log.Debug("Git error: " + error);
                 if (error.Length == 0) return output;
                 else return error;
             });
