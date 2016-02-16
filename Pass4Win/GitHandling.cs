@@ -213,6 +213,11 @@ namespace Pass4Win
 
         private string ExecuteGitCommand(string command)
         {
+            if (!File.Exists(this.ExternalGitPath))
+            {
+                log.Debug("Git executable not found!");
+                return ("fatal");
+            }
             log.Debug("Executing: " + command);
             Task.Factory.StartNew(() =>
             {
@@ -252,7 +257,7 @@ namespace Pass4Win
                 if (error.Length == 0) return output;
                 else return error;
             });
-            return ("Thread error");
+            return ("fatal thread error");
         }
 
         /// <summary>
