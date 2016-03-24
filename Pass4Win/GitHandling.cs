@@ -46,7 +46,7 @@ namespace Pass4Win
         ///     When filled in it's external
         /// </summary>
         private readonly string ExternalGitPath;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GitHandling"/> class.
         /// </summary>
@@ -56,7 +56,7 @@ namespace Pass4Win
         /// <param name="host">
         /// The host.
         /// </param>
-        public GitHandling(string repoLocation, string host, string GitLocation="null")
+        public GitHandling(string repoLocation, string host, string GitLocation = "null")
         {
             log.Debug("Init GitHandling");
             this.repoLocation = repoLocation;
@@ -65,7 +65,7 @@ namespace Pass4Win
                 this.host = host;
             else
                 GetHost();
-           
+
         }
 
         /// <summary>
@@ -219,45 +219,41 @@ namespace Pass4Win
                 return ("fatal");
             }
             log.Debug("Executing: " + command);
-            Task.Factory.StartNew(() =>
+            ProcessStartInfo gitInfo = new ProcessStartInfo();
+            string output = string.Empty;
+            string error = string.Empty;
+
+            gitInfo.CreateNoWindow = true;
+            gitInfo.RedirectStandardError = true;
+            gitInfo.RedirectStandardOutput = true;
+            gitInfo.UseShellExecute = false;
+            gitInfo.FileName = this.ExternalGitPath;
+
+            Process gitProcess = new Process();
+            gitInfo.Arguments = command;
+            gitInfo.WorkingDirectory = this.repoLocation;
+
+            gitProcess.StartInfo = gitInfo;
+            gitProcess.Start();
+
+            using (System.IO.StreamReader myOutput = gitProcess.StandardOutput)
             {
-                ProcessStartInfo gitInfo = new ProcessStartInfo();
-                string output = string.Empty;
-                string error = string.Empty;
+                output = myOutput.ReadToEnd();
+            }
+            using (System.IO.StreamReader myError = gitProcess.StandardError)
+            {
+                error = myError.ReadToEnd();
 
-                gitInfo.CreateNoWindow = true;
-                gitInfo.RedirectStandardError = true;
-                gitInfo.RedirectStandardOutput = true;
-                gitInfo.UseShellExecute = false;
-                gitInfo.FileName = this.ExternalGitPath;
+            }
 
-                Process gitProcess = new Process();
-                gitInfo.Arguments = command;
-                gitInfo.WorkingDirectory = this.repoLocation;
+            gitProcess.WaitForExit();
+            gitProcess.Close();
 
-                gitProcess.StartInfo = gitInfo;
-                gitProcess.Start();
-
-                using (System.IO.StreamReader myOutput = gitProcess.StandardOutput)
-                {
-                    output = myOutput.ReadToEnd();
-                }
-                using (System.IO.StreamReader myError = gitProcess.StandardError)
-                {
-                    error = myError.ReadToEnd();
-
-                }
-
-                gitProcess.WaitForExit();
-                gitProcess.Close();
-
-                // give the output or the error message
-                log.Debug("Git output: " + output);
-                log.Debug("Git error: " + error);
-                if (error.Length == 0) return output;
-                else return error;
-            });
-            return ("fatal thread error");
+            // give the output or the error message
+            log.Debug("Git output: " + output);
+            log.Debug("Git error: " + error);
+            if (error.Length == 0) return output;
+            else return error;
         }
 
         /// <summary>
@@ -443,7 +439,7 @@ namespace Pass4Win
             }
             else
             {
-                var tc = this.gitRepo.Diff.Compare<TreeChanges>(this.gitRepo.Branches["origin/master"].Tip.Tree,this.gitRepo.Head.Tip.Tree);
+                var tc = this.gitRepo.Diff.Compare<TreeChanges>(this.gitRepo.Branches["origin/master"].Tip.Tree, this.gitRepo.Head.Tip.Tree);
                 if (!tc.Any())
                 {
                     return true;

@@ -36,7 +36,9 @@ namespace Pass4Win
                     txtGitUser.Text = _config["GitUser"];
                     txtGitPass.Text = _config["GitPass"];
                     txtGitHost.Text = _config["GitRemote"];
+                    ExternalGit.CheckedChanged -= ExternalGit_CheckedChanged;
                     ExternalGit.Checked = _config["ExternalGit"];
+                    ExternalGit.CheckedChanged += ExternalGit_CheckedChanged;
                 }
                 catch { }
 
