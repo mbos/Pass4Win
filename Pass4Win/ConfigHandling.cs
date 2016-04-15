@@ -16,9 +16,69 @@
 
         private string configName = "Pass4Win.json";
 
+        private int defaultPassValidTime = 45;
+        private int passValidTimeBottom = 15;
+        private int passValidTimeTop = 300;
+
+        private int cachedPassValidTime = 0;
+
         public ConfigHandling()
         {
             Load();
+        }
+
+        /// <summary>
+        ///  Default length of time a password will be kept in the clipboard before clearing, in seconds
+        /// </summary>
+        public int DefaultPassValidTime
+        {
+            get
+            {
+                return defaultPassValidTime;
+            }
+        }
+
+        /// <summary>
+        /// Length of time the password is kept in the clipboard before clearing, in seconds.
+        /// </summary>
+        public int PassValidTime
+        {
+            get
+            {
+                if (cachedPassValidTime == 0)
+                {
+                    // this is a little paranoid, but a user may have edited the config by hand.
+                    if (! int.TryParse(this["PassValidTime"], out cachedPassValidTime) ||
+                        ! this.PassValidTimeValidator(cachedPassValidTime))
+                    {
+                        cachedPassValidTime = defaultPassValidTime;
+                    }
+                }
+
+                return cachedPassValidTime;
+            }
+        }
+
+        /// <summary>
+        /// Bottom end of PassValidTime values, in seconds
+        /// </summary>
+        public int PassValidTimeBottom
+        {
+            get
+            {
+                return passValidTimeBottom;
+            }
+        }
+
+        /// <summary>
+        /// Top end of PassValidTime values, in seconds
+        /// </summary>
+        public int PassValidTimeTop
+        {
+            get
+            {
+                return passValidTimeTop;
+            }
         }
 
         /// <summary>
@@ -47,15 +107,26 @@
         /// Saves the configuration to the disk.</summary>
         public void Save()
         {
+            cachedPassValidTime = 0;  // reset cache so a new config value will apply
+
             log.Debug("Saving config");
             string json = JsonConvert.SerializeObject(this.values, Formatting.Indented);
-            using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream(configName, FileMode.OpenOrCreate, isoStore))
+            IsolatedStorageFileStream isoStream = null;
+
+            try
             {
+                isoStream = new IsolatedStorageFileStream(configName, FileMode.OpenOrCreate, isoStore);
+
                 using (StreamWriter writer = new StreamWriter(isoStream))
                 {
+                    isoStream = null;
                     writer.Write(json);
-
                 }
+            }
+            finally
+            {
+                if (isoStream != null)
+                    isoStream.Dispose();
             }
         }
 
@@ -76,6 +147,15 @@
             isoStore.DeleteFile(configName);
         }
 
+        /// <summary>
+        /// Validate value of PassValidTime.
+        /// </summary>
+        /// <param name="value">PassValidTime in seconds</param>
+        /// <returns>True if within bounds, else False</returns>
+        public bool PassValidTimeValidator(int value)
+        {
+            return value >= passValidTimeBottom && value <= passValidTimeTop;
+        }
 
         /// <summary>
         /// Reloads the configuration from the disk.</summary>
@@ -85,13 +165,24 @@
             if (isoStore.FileExists(configName))
             {
                 string json;
-                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream(configName, FileMode.Open, isoStore))
+                IsolatedStorageFileStream isoStream = null;
+
+                // need to use a try/finally because a nested using could Dispose of the stream twice
+                try
                 {
+                    isoStream = new IsolatedStorageFileStream(configName, FileMode.Open, isoStore);
                     using (StreamReader reader = new StreamReader(isoStream))
                     {
+                        isoStream = null;
                         json = reader.ReadToEnd();
                     }
                 }
+                finally
+                {
+                    if (isoStream != null)
+                        isoStream.Dispose();
+                }
+
                 try
                 {
                     this.values = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);

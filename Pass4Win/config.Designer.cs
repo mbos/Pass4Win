@@ -48,6 +48,8 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.ExternalGit = new System.Windows.Forms.CheckBox();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.txtPassValidTime = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -206,12 +208,26 @@
             this.openFileDialog2.FileName = "git.exe";
             resources.ApplyResources(this.openFileDialog2, "openFileDialog2");
             this.openFileDialog2.RestoreDirectory = true;
+            // txtPassValidTime
+            // 
+            resources.ApplyResources(this.txtPassValidTime, "txtPassValidTime");
+            this.txtPassValidTime.Name = "txtPassValidTime";
+            this.txtPassValidTime.Leave += new System.EventHandler(this.TxtPassValidTimeLeave);
+            this.txtPassValidTime.Validating += new System.ComponentModel.CancelEventHandler(this.TxtPassValidTimeValidating);
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            // 
             // 
             // FrmConfig
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.ExternalGit);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.txtPassValidTime);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtGitHost);
             this.Controls.Add(this.label6);
@@ -258,5 +274,7 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.CheckBox ExternalGit;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtPassValidTime;
     }
 }
