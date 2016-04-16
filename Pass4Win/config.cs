@@ -31,6 +31,7 @@ namespace Pass4Win
                 // set config values
                 try {
                     txtPassFolder.Text = _config["PassDirectory"];
+                    txtPassValidTime.Text = _config.PassValidTime.ToString();
                     txtGPG.Text = _config["GPGEXE"];
                     chkboxRemoteRepo.Checked = _config["UseGitRemote"];
                     txtGitUser.Text = _config["GitUser"];
@@ -55,6 +56,7 @@ namespace Pass4Win
             } else
             {
                 _config.ResetConfig();
+                _config["PassValidTime"] = _config.DefaultPassValidTime.ToString();
                 _config["UseGitRemote"] = false;
                 _config["GitUser"] = "";
                 _config["GitPass"] = "";
@@ -109,6 +111,16 @@ namespace Pass4Win
                 _config["PassDirectory"] = folderBrowserDialog1.SelectedPath;
                 txtPassFolder.Text = folderBrowserDialog1.SelectedPath;
             }
+        }
+
+        /// <summary>
+        /// Save PassValidTime input
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TxtPassValidTimeLeave(object sender, EventArgs e)
+        {
+            _config["PassValidTime"] = txtPassValidTime.Text;
         }
 
         /// <summary>
@@ -189,6 +201,36 @@ namespace Pass4Win
                 errorProvider1.SetError(txtPassFolder, Strings.Error_required_field);
                 if (this.valCancel) e.Cancel = true;
             }
+        }
+
+        /// <summary>
+        /// Validate PassValidTime value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TxtPassValidTimeValidating(object sender, CancelEventArgs e)
+        {
+            bool valid = true;
+
+            if (txtPassValidTime.Text == "")
+            {
+                errorProvider1.SetError(txtPassValidTime, Strings.Error_required_field);
+                valid = false;
+            }
+            else
+            {
+                int value;
+                if (! int.TryParse(txtPassValidTime.Text, out value) ||
+                    ! _config.PassValidTimeValidator(value))
+                {
+                    errorProvider1.SetError(txtPassValidTime, String.Format(Strings.Error_invalid_PassValidTime,
+                                                                            _config.PassValidTimeBottom,
+                                                                            _config.PassValidTimeTop));
+                    valid = false;
+                }
+            }
+
+            if (! valid && this.valCancel) e.Cancel = true;
         }
 
         /// <summary>

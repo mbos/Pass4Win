@@ -124,6 +124,15 @@ namespace Pass4Win {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Value must be between {0} and {1}, in seconds.
+        /// </summary>
+        internal static string Error_invalid_PassValidTime {
+            get {
+                return ResourceManager.GetString("Error_invalid_PassValidTime", resourceCulture);
+            }
+        }
+ 
+        /// <summary>
         ///   Looks up a localized string similar to So it seems you have a key defined in .gpg-id that&apos;s not in your GPG keystore as public key. Please correct this. Key.
         /// </summary>
         internal static string Error_key_missing_part1 {

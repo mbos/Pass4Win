@@ -436,7 +436,7 @@ namespace Pass4Win
                     if (clear)
                     {
                         // set progressbar as notification
-                        statusPB.Maximum = 45;
+                        statusPB.Maximum = _config.PassValidTime;
                         statusPB.Value = 0;
                         statusPB.Step = 1;
                         statusPB.Visible = true;
@@ -619,7 +619,7 @@ namespace Pass4Win
         /// <param name="o"></param>
         private void ClearClipboard(object o)
         {
-            if (statusPB.Value == 45)
+            if (statusPB.Value == _config.PassValidTime)
             {
                 if (InvokeRequired)
                 {
