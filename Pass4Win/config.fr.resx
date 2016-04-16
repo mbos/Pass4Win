@@ -118,17 +118,38 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>630, 253</value>
+  </data>
+  <data name="ExternalGit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>411, 94</value>
+  </data>
   <data name="ExternalGit.Size" type="System.Drawing.Size, System.Drawing">
     <value>188, 17</value>
   </data>
   <data name="ExternalGit.Text" xml:space="preserve">
     <value>Utiliser un programme externe git ?</value>
   </data>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>51, 39</value>
+  </data>
+  <data name="txtPassValidTime.Location" type="System.Drawing.Point, System.Drawing">
+    <value>293, 39</value>
+  </data>
+  <data name="txtPassValidTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>306, 20</value>
+  </data>
+  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>520, 209</value>
+  </data>
   <data name="btnSave.Text" xml:space="preserve">
     <value>Sauvegarder</value>
   </data>
+  <data name="txtGitHost.Location" type="System.Drawing.Point, System.Drawing">
+    <value>293, 168</value>
+  </data>
   <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>88, 154</value>
+    <value>88, 170</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>200, 13</value>
@@ -136,8 +157,11 @@
   <data name="label6.Text" xml:space="preserve">
     <value>Adresse du serveur GIT (HTTPS ou GIT)</value>
   </data>
+  <data name="txtGitPass.Location" type="System.Drawing.Point, System.Drawing">
+    <value>293, 142</value>
+  </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>201, 129</value>
+    <value>201, 145</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 13</value>
@@ -145,8 +169,11 @@
   <data name="label5.Text" xml:space="preserve">
     <value>Mot de passe Git</value>
   </data>
+  <data name="txtGitUser.Location" type="System.Drawing.Point, System.Drawing">
+    <value>293, 116</value>
+  </data>
   <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>188, 103</value>
+    <value>188, 119</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 13</value>
@@ -154,8 +181,11 @@
   <data name="label4.Text" xml:space="preserve">
     <value>Nom d'utilisateur Git</value>
   </data>
+  <data name="chkboxRemoteRepo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>191, 97</value>
+  </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>113, 78</value>
+    <value>212, 95</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 13</value>
@@ -163,8 +193,11 @@
   <data name="label3.Text" xml:space="preserve">
     <value>Voulez-utilisez un dépôt git distant ?</value>
   </data>
+  <data name="txtGPG.Location" type="System.Drawing.Point, System.Drawing">
+    <value>293, 65</value>
+  </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>161, 51</value>
+    <value>161, 65</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 13</value>
@@ -183,6 +216,9 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Configuration</value>
+  </data>
+  <data name="txtPassFolder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>293, 13</value>
   </data>
   <data name="folderBrowserDialog1.Description" xml:space="preserve">
     <value>Sélectionner le dossier dans lequel vous voulez enregistrer vos mots de passes</value>

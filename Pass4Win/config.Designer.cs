@@ -47,9 +47,9 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnSave = new System.Windows.Forms.Button();
             this.ExternalGit = new System.Windows.Forms.CheckBox();
-            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.txtPassValidTime = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -203,14 +203,12 @@
             this.ExternalGit.UseVisualStyleBackColor = true;
             this.ExternalGit.CheckedChanged += new System.EventHandler(this.ExternalGit_CheckedChanged);
             // 
-            // openFileDialog2
-            // 
-            this.openFileDialog2.FileName = "git.exe";
-            resources.ApplyResources(this.openFileDialog2, "openFileDialog2");
-            this.openFileDialog2.RestoreDirectory = true;
             // txtPassValidTime
             // 
             resources.ApplyResources(this.txtPassValidTime, "txtPassValidTime");
+            this.errorProvider1.SetError(this.txtPassValidTime, resources.GetString("txtPassValidTime.Error"));
+            this.errorProvider1.SetIconAlignment(this.txtPassValidTime, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("txtPassValidTime.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.txtPassValidTime, ((int)(resources.GetObject("txtPassValidTime.IconPadding"))));
             this.txtPassValidTime.Name = "txtPassValidTime";
             this.txtPassValidTime.Leave += new System.EventHandler(this.TxtPassValidTimeLeave);
             this.txtPassValidTime.Validating += new System.ComponentModel.CancelEventHandler(this.TxtPassValidTimeValidating);
@@ -218,8 +216,16 @@
             // label7
             // 
             resources.ApplyResources(this.label7, "label7");
+            this.errorProvider1.SetError(this.label7, resources.GetString("label7.Error"));
+            this.errorProvider1.SetIconAlignment(this.label7, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label7.IconAlignment"))));
+            this.errorProvider1.SetIconPadding(this.label7, ((int)(resources.GetObject("label7.IconPadding"))));
             this.label7.Name = "label7";
             // 
+            // openFileDialog2
+            // 
+            this.openFileDialog2.FileName = "git.exe";
+            resources.ApplyResources(this.openFileDialog2, "openFileDialog2");
+            this.openFileDialog2.RestoreDirectory = true;
             // 
             // FrmConfig
             // 
