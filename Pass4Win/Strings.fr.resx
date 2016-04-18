@@ -254,4 +254,8 @@
   <data name="Config_ExternalGit_Warning_Title" xml:space="preserve">
     <value>Faites attention !</value>
   </data>
+  <data name="Error_invalid_PassValidTime" xml:space="preserve">
+    <value>La valeur doit être entre {0} et {1}, en secondes</value>
+    <comment>Config.cs PassValidTime validation</comment>
+  </data>
 </root>
