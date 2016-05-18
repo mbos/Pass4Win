@@ -159,6 +159,9 @@
   <data name="label3.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
@@ -231,8 +234,8 @@
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="label3.Error" xml:space="preserve">
+    <value />
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -267,8 +270,8 @@
   <data name="label6.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="txtGPG.Location" type="System.Drawing.Point, System.Drawing">
-    <value>291, 69</value>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
   </data>
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -306,8 +309,8 @@
   <data name="txtGitUser.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
-  <data name="chkboxRemoteRepo.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="txtGPG.Location" type="System.Drawing.Point, System.Drawing">
+    <value>291, 69</value>
   </data>
   <data name="txtGitPass.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
@@ -384,8 +387,8 @@
   <data name="&gt;&gt;label7.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label3.Error" xml:space="preserve">
-    <value />
+  <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
   </data>
   <data name="&gt;&gt;txtGitUser.ZOrder" xml:space="preserve">
     <value>8</value>
@@ -411,6 +414,9 @@
   <data name="ExternalGit.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 17</value>
   </data>
+  <data name="chkboxRemoteRepo.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
   </data>
@@ -432,8 +438,8 @@
   <data name="&gt;&gt;ExternalGit.Name" xml:space="preserve">
     <value>ExternalGit</value>
   </data>
-  <data name="ExternalGit.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;txtPassFolder.Name" xml:space="preserve">
+    <value>txtPassFolder</value>
   </data>
   <data name="txtGitPass.Location" type="System.Drawing.Point, System.Drawing">
     <value>291, 146</value>
@@ -441,14 +447,14 @@
   <data name="txtGitPass.Error" xml:space="preserve">
     <value />
   </data>
-  <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
   <data name="txtGitUser.Error" xml:space="preserve">
     <value />
   </data>
   <data name="&gt;&gt;folderBrowserDialog1.Name" xml:space="preserve">
     <value>folderBrowserDialog1</value>
+  </data>
+  <data name="ExternalGit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="txtPassValidTime.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -458,9 +464,6 @@
   </data>
   <data name="ExternalGit.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
-  </data>
-  <data name="txtGitHost.IconPadding" type="System.Int32, mscorlib">
-    <value>0</value>
   </data>
   <data name="&gt;&gt;label4.Name" xml:space="preserve">
     <value>label4</value>
@@ -498,8 +501,8 @@
   <data name="label2.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
-  <data name="label6.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+  <data name="txtGitHost.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="label3.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
@@ -639,9 +642,6 @@
   <data name="label6.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;txtPassFolder.Name" xml:space="preserve">
-    <value>txtPassFolder</value>
-  </data>
   <data name="&gt;&gt;label7.Name" xml:space="preserve">
     <value>label7</value>
   </data>
@@ -687,14 +687,14 @@
   <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
     <value>77, 27</value>
   </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;txtGPG.ZOrder" xml:space="preserve">
+    <value>12</value>
   </data>
   <data name="&gt;&gt;folderBrowserDialog1.Type" xml:space="preserve">
     <value>System.Windows.Forms.FolderBrowserDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;txtGPG.ZOrder" xml:space="preserve">
-    <value>12</value>
+  <data name="label6.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
   </data>
   <data name="label4.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
