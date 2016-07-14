@@ -1,6 +1,4 @@
 ﻿using CommandLine;
-using CommandLine.Text;
-
 
 namespace Pass4Win
 {
@@ -12,8 +10,8 @@ namespace Pass4Win
         [Option('r', "reset", DefaultValue = false, HelpText = "Resets the config file")]
         public bool Reset { get; set; }
 
-        [Option('g', "git", DefaultValue = true, HelpText = "Use git.")]
-        public bool UseGit { get; set; }
+        [Option('g', "nogit", DefaultValue = false, HelpText = "Use git.")]
+        public bool NoGit { get; set; }
 
     }
 }

@@ -5,8 +5,6 @@ using System.Threading;
 using log4net.Config;
 using System.IO;
 using System.IO.IsolatedStorage;
-using CommandLine;
-using CommandLine.Text;
 
 namespace Pass4Win
 {
@@ -15,6 +13,8 @@ namespace Pass4Win
         public static ILifetimeScope Scope { get; private set; }
         // logging
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public static bool NoGit { get; private set; }
 
         /// <summary>
         ///     The main entry point for the application.
@@ -25,19 +25,6 @@ namespace Pass4Win
             // parsing command line
             string[] args = Environment.GetCommandLineArgs();
             string PersonalFolder = Path.GetTempPath() + "Pass4Win.log";
-            /*
-            // Set logfile location to personal directory
-            if (args.Length > 1 && args[1].Equals("debug"))
-            {
-                PersonalFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Pass4Win.log";
-            }
-            // Delete config file
-            if (args.Length > 1 && args[1].Equals("resetconfig"))
-            {
-                IsolatedStorageFile isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
-                isoStore.DeleteFile("Pass4Win.json");
-            }
-            */
 
             var options = new CmdLineOptions();
             if (CommandLine.Parser.Default.ParseArguments(args, options))
@@ -52,9 +39,10 @@ namespace Pass4Win
                     IsolatedStorageFile isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
                     isoStore.DeleteFile("Pass4Win.json");
                 }
-                if (!options.UseGit)
+                NoGit = false;
+                if (options.NoGit)
                 {
-                    // do stuff
+                    NoGit = true;
                 }
             }
 

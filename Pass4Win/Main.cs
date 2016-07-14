@@ -76,7 +76,6 @@ namespace Pass4Win
             var bugsnag = new BaseClient("23814316a6ecfe8ff344b6a467f07171");
 
             this.enableTray = false;
-
             // Getting actual version
             log.Debug("Getting program version");
             var assembly = Assembly.GetExecutingAssembly();
@@ -112,47 +111,50 @@ namespace Pass4Win
             LatestPass4WinRelease();
 
             // making new git object
-            if (_config["ExternalGit"])
+            if (_config["ExternalGit"] && !Program.NoGit)
             {
                 log.Debug("Using an external git executable");
                 GitRepo = new GitHandling(_config["PassDirectory"], _config["GitRemote"], _config["ExternalGitLocation"]);
             }
-            else
+            else if (!Program.NoGit)
             {
                 log.Debug("Using the internal git executable");
                 GitRepo = new GitHandling(_config["PassDirectory"], _config["GitRemote"]);
             }
-                
+
             //checking git status
             if (_config["UseGitRemote"] == true || _config["ExternalGit"])
             {
-                if (GitRepo.ConnectToRepo() || (_config["ExternalGit"]))
+                if (!Program.NoGit)
                 {
-                    log.Debug("Remote Git is valid and active");
-                    this.gitRepoOffline = false;
-                    toolStripOffline.Visible = false;
-                    if (!GitRepo.Fetch(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+                    if (GitRepo.ConnectToRepo() || (_config["ExternalGit"]))
                     {
-                        // Something failed which shouldn't fail, rechecking online status
-                        CheckOnline(false);
+                        log.Debug("Remote Git is valid and active");
+                        this.gitRepoOffline = false;
+                        toolStripOffline.Visible = false;
+                        if (!GitRepo.Fetch(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+                        {
+                            // Something failed which shouldn't fail, rechecking online status
+                            CheckOnline(false);
+                        }
+                    }
+                    // checking if we can clone, otherwise make a new one
+                    else if (!GitRepo.GitClone(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+                    {
+                        log.Debug("Making a new git repo");
+                        Repository.Init(_config["PassDirectory"], false);
+                        GitRepo.ConnectToRepo();
+                        toolStripOffline.Visible = true;
+                    }
+                    // no connection, no repo. So make a new one
+                    else if (!GitHandling.IsValid(_config["PassDirectory"]))
+                    {
+                        log.Debug("Making a new git repo");
+                        Repository.Init(_config["PassDirectory"], false);
+                        GitRepo.ConnectToRepo();
+                        toolStripOffline.Visible = true;
                     }
                 }
-                // checking if we can clone, otherwise make a new one
-                else if (!GitRepo.GitClone(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
-                {
-                    log.Debug("Making a new git repo");
-                    Repository.Init(_config["PassDirectory"], false);
-                    GitRepo.ConnectToRepo();
-                    toolStripOffline.Visible = true;
-                }
-            }
-            // no connection, no repo. So make a new one
-            else if (!GitHandling.IsValid(_config["PassDirectory"]))
-            {
-                log.Debug("Making a new git repo");
-                Repository.Init(_config["PassDirectory"], false);
-                GitRepo.ConnectToRepo();
-                toolStripOffline.Visible = true;
             }
 
             // Init GPG if needed
@@ -171,14 +173,17 @@ namespace Pass4Win
                         w.Write(_keySelect.Gpgkey);
                     }
 
-                    if (!GitRepo.Commit(gpgfile))
+                    if (!Program.NoGit)
                     {
-                        MessageBox.Show(
-                            Strings.FrmMain_EncryptCallback_Commit_failed_,
-                            Strings.Error,
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                        return;
+                        if (!GitRepo.Commit(gpgfile))
+                        {
+                            MessageBox.Show(
+                                Strings.FrmMain_EncryptCallback_Commit_failed_,
+                                Strings.Error,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                            return;
+                        }
                     }
                 }
                 else
@@ -380,14 +385,17 @@ namespace Pass4Win
                 File.Delete(path);
                 File.Move(tmpFile2, path);
                 // add to git
-                if (!GitRepo.Commit(path))
+                if (!Program.NoGit)
                 {
-                    MessageBox.Show(
-                        Strings.FrmMain_EncryptCallback_Commit_failed_,
-                        Strings.Error,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    return;
+                    if (!GitRepo.Commit(path))
+                    {
+                        MessageBox.Show(
+                            Strings.FrmMain_EncryptCallback_Commit_failed_,
+                            Strings.Error,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        return;
+                    }
                 }
 
                 // Check if we want to sync with remote
@@ -397,13 +405,16 @@ namespace Pass4Win
                 }
 
                 // sync with remote
-                if (!GitRepo.Push(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+                if (!Program.NoGit)
                 {
-                    MessageBox.Show(
-                        Strings.FrmMain_EncryptCallback_Push_to_remote_repo_failed_,
-                        Strings.Error,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                    if (!GitRepo.Push(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+                    {
+                        MessageBox.Show(
+                            Strings.FrmMain_EncryptCallback_Push_to_remote_repo_failed_,
+                            Strings.Error,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
                 }
                 log.Debug("Encryption finished");
             }
@@ -531,17 +542,20 @@ namespace Pass4Win
             Directory.CreateDirectory(Path.GetDirectoryName(tmpFileName));
             File.Copy(dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg", tmpFileName);
 
-            GitRepo.RemoveFile(dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg");
-
-            // add to git
-            if (!GitRepo.Commit(tmpFileName))
+            if (!Program.NoGit)
             {
-                MessageBox.Show(
-                    Strings.FrmMain_EncryptCallback_Commit_failed_,
-                    Strings.Error,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
+                GitRepo.RemoveFile(dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg");
+
+                // add to git
+                if (!GitRepo.Commit(tmpFileName))
+                {
+                    MessageBox.Show(
+                        Strings.FrmMain_EncryptCallback_Commit_failed_,
+                        Strings.Error,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
             }
 
             // Check if we want to sync with remote
@@ -551,16 +565,18 @@ namespace Pass4Win
                 return;
             }
 
-            // sync with remote
-            if (!GitRepo.Push(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+            if (!Program.NoGit)
             {
-                MessageBox.Show(
-                    Strings.FrmMain_EncryptCallback_Push_to_remote_repo_failed_,
-                    Strings.Error,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                // sync with remote
+                if (!GitRepo.Push(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+                {
+                    MessageBox.Show(
+                        Strings.FrmMain_EncryptCallback_Push_to_remote_repo_failed_,
+                        Strings.Error,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
-
             this.CreateNodes();
         }
 
@@ -572,15 +588,18 @@ namespace Pass4Win
         private void DeleteToolStripMenuItemClick(object sender, EventArgs e)
         {
             // remove from git
-            GitRepo.RemoveFile(dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg");
-            if (!GitRepo.Commit())
+            if (!Program.NoGit)
             {
-                MessageBox.Show(
-                    Strings.FrmMain_EncryptCallback_Commit_failed_,
-                    Strings.Error,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
+                GitRepo.RemoveFile(dirTreeView.SelectedNode.Tag + "\\" + listFileView.SelectedItem + ".gpg");
+                if (!GitRepo.Commit())
+                {
+                    MessageBox.Show(
+                        Strings.FrmMain_EncryptCallback_Commit_failed_,
+                        Strings.Error,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
             }
 
             // Check if we want to sync with remote
@@ -591,13 +610,16 @@ namespace Pass4Win
             }
 
             // sync with remote
-            if (!GitRepo.Push(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+            if (!Program.NoGit)
             {
-                MessageBox.Show(
-                    Strings.FrmMain_EncryptCallback_Push_to_remote_repo_failed_,
-                    Strings.Error,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                if (!GitRepo.Push(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+                {
+                    MessageBox.Show(
+                        Strings.FrmMain_EncryptCallback_Push_to_remote_repo_failed_,
+                        Strings.Error,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
 
             this.CreateNodes();
@@ -745,49 +767,52 @@ namespace Pass4Win
 
         private void CheckOnline(bool silent = false)
         {
-            // Is remote on in the config
-            if (_config["UseGitRemote"])
+            if (!Program.NoGit)
             {
-                // Check if the remote is there
-                if (GitHandling.CheckConnection(_config["GitRemote"]))
+                // Is remote on in the config
+                if (_config["UseGitRemote"])
                 {
-                    // looks good, let's try
-                    this.gitRepoOffline = false;
-                }
+                    // Check if the remote is there
+                    if (GitHandling.CheckConnection(_config["GitRemote"]))
+                    {
+                        // looks good, let's try
+                        this.gitRepoOffline = false;
+                    }
 
-                // Do a fetch to get the latest repo.
-                if (!GitRepo.Fetch(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
-                {
-                    // nope not online
-                    this.gitRepoOffline = true;
-                    MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // Do a fetch to get the latest repo.
+                    if (!GitRepo.Fetch(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+                    {
+                        // nope not online
+                        this.gitRepoOffline = true;
+                        MessageBox.Show(Strings.Error_connection, Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        // We're online
+                        toolStripOffline.Visible = false;
+                        // sync with remote
+                        if (!GitRepo.Push(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+                        {
+                            MessageBox.Show(
+                                Strings.FrmMain_EncryptCallback_Push_to_remote_repo_failed_,
+                                Strings.Error,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+
+                    }
                 }
                 else
                 {
-                    // We're online
-                    toolStripOffline.Visible = false;
-                    // sync with remote
-                    if (!GitRepo.Push(_config["GitUser"], DecryptConfig(_config["GitPass"], "pass4win")))
+                    // no remote checkbox so we're staying offline
+                    if (!silent)
                     {
                         MessageBox.Show(
-                            Strings.FrmMain_EncryptCallback_Push_to_remote_repo_failed_,
+                            Strings.Error_remote_disabled,
                             Strings.Error,
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
                     }
-
-                }
-            }
-            else
-            {
-                // no remote checkbox so we're staying offline
-                if (!silent)
-                {
-                    MessageBox.Show(
-                        Strings.Error_remote_disabled,
-                        Strings.Error,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
                 }
             }
         }
@@ -869,14 +894,17 @@ namespace Pass4Win
             }
 
             // add to git
-            if (!GitRepo.Commit(tmpFileName))
+            if (!Program.NoGit)
             {
-                MessageBox.Show(
-                    Strings.FrmMain_EncryptCallback_Commit_failed_,
-                    Strings.Error,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
+                if (!GitRepo.Commit(tmpFileName))
+                {
+                    MessageBox.Show(
+                        Strings.FrmMain_EncryptCallback_Commit_failed_,
+                        Strings.Error,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
             }
 
             // dispose timer thread and clear ui.
