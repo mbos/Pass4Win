@@ -139,6 +139,10 @@
       <HintPath>..\packages\Bugsnag.1.2.0.0\lib\Net45\Bugsnag.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CommandLine, Version=1.9.71.2, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CommonMark, Version=0.1.0.0, Culture=neutral, PublicKeyToken=001ef8810438905d, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonMark.NET.0.11.0\lib\net45\CommonMark.dll</HintPath>
       <Private>True</Private>
@@ -203,6 +207,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CmdLineOptions.cs" />
     <Compile Include="ConfigHandling.cs" />
     <Compile Include="DirectoryProvider.cs" />
     <Compile Include="FileProvider.cs" />
