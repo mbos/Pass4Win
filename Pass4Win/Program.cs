@@ -4,6 +4,7 @@ using Autofac;
 using System.Threading;
 using log4net.Config;
 using System.IO;
+using System.IO.IsolatedStorage;
 
 namespace Pass4Win
 {
@@ -26,9 +27,14 @@ namespace Pass4Win
             {
                 PersonalFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Pass4Win.log";
             }
+            if (args.Length > 1 && args[1].Equals("resetconfig"))
+            {
+                IsolatedStorageFile isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+                isoStore.DeleteFile("Pass4Win.json");
+            }
             
             // setting up logging
-            
+
             Environment.SetEnvironmentVariable("log4netFileName", PersonalFolder + "\\Pass4Win.log");
 
             XmlConfigurator.Configure();
