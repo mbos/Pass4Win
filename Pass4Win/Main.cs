@@ -921,7 +921,15 @@ namespace Pass4Win
         {
             var frmConfig = Program.Scope.Resolve<FrmConfig>();
             frmConfig.SendOffline += this.ConfigSendOffline;
+            frmConfig.Closing += new System.ComponentModel.CancelEventHandler(OnChildClosing);
+            FrmMain.ActiveForm.Enabled = false;
             frmConfig.Show();
+        }
+
+        // Universal main form enabler when a child form closes
+        private void OnChildClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.Enabled = true;
         }
 
         private void ToolStripbtnAboutClick(object sender, EventArgs e)
