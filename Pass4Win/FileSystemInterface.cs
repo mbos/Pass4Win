@@ -31,6 +31,9 @@ namespace Pass4Win
         private readonly ConfigHandling _config;
         private readonly IDirectoryProvider _directoryProvider;
 
+        // logging
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Gets the Search list
         /// </summary>
@@ -146,7 +149,7 @@ namespace Pass4Win
             return "^" + Regex.Escape(pattern)
                               .Replace(@"\*", ".*")
                               .Replace(@"\?", ".")
-                       + "$";
+                       + ".*";
         }
     }
 }
