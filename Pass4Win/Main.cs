@@ -161,7 +161,7 @@ namespace Pass4Win
             string gpgfile = _config["PassDirectory"];
             gpgfile += "\\.gpg-id";
             // Check if we need to init the directory
-            if (!File.Exists(gpgfile))
+            if (!File.Exists(gpgfile) || (new FileInfo(gpgfile).Length == 0))
             {
                 log.Debug("Creating .gpg-id");
                 // ReSharper disable once AssignNullToNotNullAttribute
