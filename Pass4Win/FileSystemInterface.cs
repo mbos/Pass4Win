@@ -146,7 +146,7 @@ namespace Pass4Win
 
         private string WildcardToRegex(string pattern)
         {
-            return "^" + Regex.Escape(pattern)
+            return ".*" + Regex.Escape(pattern)
                               .Replace(@"\*", ".*")
                               .Replace(@"\?", ".")
                        + ".*";
