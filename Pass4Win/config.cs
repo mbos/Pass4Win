@@ -323,10 +323,10 @@ namespace Pass4Win
         /// <param name="e"></param>
         private void FrmConfigFormClosing(object sender, FormClosingEventArgs e)
         {
-            this.valCancel = true;
-            if (!ValidateChildren()) e.Cancel = true;
-            OnSendOffline(null);
-            this.valCancel = false;
+            if ( (this.valCancel = _config["FirstRun"]) )
+                if (!ValidateChildren()) e.Cancel = true;
+                OnSendOffline(null);
+                this.valCancel = false;
         }
 
         /// <summary>

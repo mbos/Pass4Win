@@ -35,7 +35,10 @@ namespace Pass4Win
             {
                 comboBox1.Items.Add(key.UserInfos[0].Email + "(" + key.Id + ")");
             }
-            comboBox1.SelectedIndex= 0;
+            if (comboBox1.Items.Count>0)
+            {
+                comboBox1.SelectedIndex = 0;
+            }
             TopMost = true;
         }
 
