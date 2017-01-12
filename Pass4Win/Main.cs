@@ -235,7 +235,7 @@ namespace Pass4Win
         public async void LatestPass4WinRelease()
         {
             var client = new GitHubClient(new ProductHeaderValue("Pass4Win"));
-            var releaseClient = client.Release;
+            var releaseClient = client.Repository.Release;
             var releases = await releaseClient.GetAll("mbos", "Pass4Win");
 
             // online version
