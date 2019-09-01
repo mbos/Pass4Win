@@ -15,6 +15,7 @@ The setup can be downloaded from https://github.com/mbos/Pass4Win/releases
 
 I'm using GpgAPI (https://gpgapi.codeplex.com/) for interfacing with GnuPG. And LibGit2Sharp (https://github.com/libgit2/libgit2sharp) for git integration.
 
+[<img src="https://global-uploads.webflow.com/5c741219fd0819540590e785/5c741219fd0819856890e790_asset%2039.svg" alt="Bugsnag" width="100">](https://www.bugsnag.com) is used for error reporting and monitoring.
 
 Regards,
 
